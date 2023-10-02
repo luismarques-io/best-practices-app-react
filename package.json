@@ -20,8 +20,15 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier:check": "prettier --check src",
+    "prettier": "prettier --write src",
+    "lint": "eslint src"
   },
+  "pre-commit": [
+    "prettier:check",
+    "lint"
+  ],
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -39,5 +46,28 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.5",
+    "@typescript-eslint/parser": "^4.28.5",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.32.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "^2.3.2"
+  },
+  "jest": {
+    "clearMocks": true,
+    "collectCoverageFrom": [
+      "!<rootDir>/src/index.tsx",
+      "!<rootDir>/src/helpers/testsHelpers.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
   }
 }
