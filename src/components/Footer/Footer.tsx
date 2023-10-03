@@ -1,11 +1,14 @@
+import { Link } from 'react-router-dom';
+
 export function Footer() {
+  const year = new Date().getFullYear();
   return (
     <footer>
       <div className='container'>
-        2023{' '}
-        <a href='/' className='link-secondary'>
+        <span className='pe-2'>{year}</span>
+        <Link to='/' className='link-secondary'>
           General Purpose App
-        </a>
+        </Link>
       </div>
     </footer>
   );
