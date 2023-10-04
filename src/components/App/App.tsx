@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
@@ -7,19 +8,19 @@ import { NotFound } from '../Pages/NotFound/NotFound';
 import { Login } from '../Pages/Login/Login';
 import { Register } from '../Pages/Register/Register';
 
-function App() {
+export function App() {
   return (
-    <>
-      <Header />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-      <Footer />
-    </>
+    <React.StrictMode>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/' element={<Home />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </React.StrictMode>
   );
 }
-
-export default App;
