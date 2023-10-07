@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { NavItem } from '../NavItem/NavItem';
 
 import { useAuth, logout } from '../../features/auth';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch } from '../../hooks/store';
 
 export function Header() {
   const dispatch = useAppDispatch();

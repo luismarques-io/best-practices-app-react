@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import settings from '../config/settings';
-import { RootState } from './store';
+import { API_URL } from '../config';
+import { RootState } from '../stores/store';
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: settings.baseApiUrl,
+    baseUrl: API_URL,
     prepareHeaders: (headers, { getState }) => {
       // By default, if we have a token in the store, let's use that for authenticated requests
       const token = (getState() as RootState).auth.token;

@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
-import { store } from '../../app/store';
+import { store } from '../../stores/store';
 import { Header } from './Header';
 
 it('Should render', () => {

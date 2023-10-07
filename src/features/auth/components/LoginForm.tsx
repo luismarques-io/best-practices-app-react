@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../../app/hooks';
+import { useAppDispatch } from '../../../hooks/store';
 
-import { rememberAuth } from '../state/authSlice';
+import { rememberAuth } from '../stores/authSlice';
 import { useLoginMutation } from '../services/authService';
 import type { LoginRequest } from '../services/authService';
 import { Link } from 'react-router-dom';

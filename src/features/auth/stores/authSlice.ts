@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { extendedApi as api, User } from '../services/authService';
-import type { RootState } from '../../../app/store';
+import type { RootState } from '../../../stores/store';
+import storage from '../../../utils/storage';
 
 type AuthState = {
   user: User | null;
@@ -19,7 +20,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     loadUser: (state) => {
-      const token = localStorage.getItem('token');
+      const token = storage.getToken();
       if (token) {
         state.token = token;
       }
@@ -27,7 +28,7 @@ const slice = createSlice({
     logout: (state) => {
       state.user = null;
       state.token = null;
-      localStorage.removeItem('token');
+      storage.clearToken();
     },
     rememberAuth: (state, { payload }: PayloadAction<boolean>) => {
       state.remember = payload;
@@ -39,7 +40,7 @@ const slice = createSlice({
       state.token = token;
       state.user = user;
       if (state.remember) {
-        localStorage.setItem('token', token);
+        storage.setToken(token);
       }
     });
     builder.addMatcher(api.endpoints.loginToken.matchFulfilled, (state, { payload }) => {
@@ -47,11 +48,11 @@ const slice = createSlice({
       state.token = token;
       state.user = user;
       if (state.remember) {
-        localStorage.setItem('token', token);
+        storage.setToken(token);
       }
     });
     builder.addMatcher(api.endpoints.loginToken.matchRejected, () => {
-      localStorage.removeItem('token');
+      storage.clearToken();
     });
   },
 });
