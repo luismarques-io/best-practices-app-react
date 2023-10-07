@@ -5,15 +5,16 @@ import storage from '../../../utils/storage';
 
 export const useInitAuthLoginToken = () => {
   const token = storage.getToken();
-  if (!token) {
-    return { loading: false };
-  }
-
   const [loginToken, { isLoading, isUninitialized }] = useLoginTokenMutation();
 
   useEffect(() => {
-    loginToken({ token });
+    if (token) {
+      loginToken({ token });
+    }
   }, []);
 
+  if (!token) {
+    return { loading: false };
+  }
   return { loading: isUninitialized ? true : isLoading };
 };
