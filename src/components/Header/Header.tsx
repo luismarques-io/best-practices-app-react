@@ -21,7 +21,10 @@ export function Header() {
 
         <ul className='navbar-nav ms-auto mb-2 mb-lg-0'>
           {auth.user ? (
-            <NavItem type='button' text='Logout' onClick={handleLogoutClick} />
+            <>
+              <NavItem text='Profile' href='/profile' />
+              <NavItem type='button' text='Logout' onClick={handleLogoutClick} />
+            </>
           ) : (
             <>
               <NavItem text='Login' href='/login' />
