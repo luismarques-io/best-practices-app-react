@@ -1,23 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-const defaultFormFields = {
-  email: '',
-  password: '',
-  passwordConfirmation: '',
-  firstName: '',
-  lastName: '',
-  terms: false,
-};
+import { useStoreWithInitializer } from '../../state_OLD/storeHooks_old';
+import { store, dispatchOnCall } from '../../state_OLD/store_old';
+import { initializeRegister, RegisterState, updateField, signUp } from './Register.slice';
 
 export function Register() {
-  const [wasValidated, setWasValidated] = useState(false);
-  const [formFields, setFormFields] = useState(defaultFormFields);
-  const { email, password, passwordConfirmation, firstName, lastName, terms } = formFields;
+  const { signingUp, user } = useStoreWithInitializer(({ register }) => register, dispatchOnCall(initializeRegister()));
 
-  const resetFormFields = () => {
-    setFormFields(defaultFormFields);
-  };
+  const [wasValidated, setWasValidated] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,8 +20,9 @@ export function Register() {
 
     try {
       // eslint-disable-next-line no-console
-      console.log('submit', formFields);
-      resetFormFields();
+      console.log('submit', user);
+
+      store.dispatch(signUp(user));
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('user sign in failed', error);
@@ -40,7 +31,13 @@ export function Register() {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = event.target;
-    setFormFields({ ...formFields, [name]: type === 'checkbox' ? event.target.checked : value });
+
+    store.dispatch(
+      updateField({
+        name: name as keyof RegisterState['user'],
+        value: type === 'checkbox' ? event.target.checked : value,
+      })
+    );
   };
 
   return (
@@ -51,11 +48,12 @@ export function Register() {
 
           <div className='form-floating mb-2'>
             <input
+              disabled={signingUp}
               type='email'
               className='form-control'
               placeholder='name@example.com'
               name='email'
-              value={email}
+              value={user.email || ''}
               onChange={handleChange}
               required
             />
@@ -67,11 +65,12 @@ export function Register() {
             <div className='col-sm-6'>
               <div className='form-floating mb-2'>
                 <input
+                  disabled={signingUp}
                   type='text'
                   className='form-control'
                   placeholder='First name'
                   name='firstName'
-                  value={firstName}
+                  value={user.firstName || ''}
                   onChange={handleChange}
                 />
                 <label>First name</label>
@@ -81,11 +80,12 @@ export function Register() {
             <div className='col-sm-6'>
               <div className='form-floating mb-2'>
                 <input
+                  disabled={signingUp}
                   type='text'
                   className='form-control'
                   placeholder='Last name'
                   name='lastName'
-                  value={lastName}
+                  value={user.lastName || ''}
                   onChange={handleChange}
                 />
                 <label>Last name</label>
@@ -97,11 +97,12 @@ export function Register() {
             <div className='col-sm-6'>
               <div className='form-floating mb-2'>
                 <input
+                  disabled={signingUp}
                   type='password'
                   className='form-control'
                   placeholder='Password'
                   name='password'
-                  value={password}
+                  value={user.password || ''}
                   onChange={handleChange}
                   required
                 />
@@ -112,11 +113,12 @@ export function Register() {
             <div className='col-sm-6'>
               <div className='form-floating mb-2'>
                 <input
+                  disabled={signingUp}
                   type='password'
                   className='form-control'
                   placeholder='Retype Password'
                   name='passwordConfirmation'
-                  value={passwordConfirmation}
+                  value={user.passwordConfirmation || ''}
                   onChange={handleChange}
                   required
                 />
@@ -128,11 +130,12 @@ export function Register() {
 
           <div className='form-check text-start my-3'>
             <input
+              disabled={signingUp}
               id='checkbox-terms'
               className='form-check-input'
               type='checkbox'
               name='terms'
-              defaultChecked={terms}
+              defaultChecked={user.terms}
               onChange={handleChange}
               required
             />
@@ -141,7 +144,7 @@ export function Register() {
             </label>
           </div>
 
-          <button className='btn btn-primary w-100 py-2 mt-2' type='submit'>
+          <button disabled={signingUp} className='btn btn-primary w-100 py-2 mt-2' type='submit'>
             Submit
           </button>
         </form>

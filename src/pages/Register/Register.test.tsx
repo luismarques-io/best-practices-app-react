@@ -1,17 +1,17 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
-
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import { store } from '../../app/store';
-import { Header } from './Header';
+
+import { Register } from './Register';
 
 it('Should render', () => {
   render(
     <React.StrictMode>
       <Provider store={store}>
         <BrowserRouter basename='/'>
-          <Header />
+          <Register />
         </BrowserRouter>
       </Provider>
     </React.StrictMode>
