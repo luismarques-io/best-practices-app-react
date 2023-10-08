@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { extendedApi as api, User } from '../services/authService';
+import { loginApi } from '../api/loginApi';
+import { registerApi } from '../api/registerApi';
+import { User } from '../types/auth';
 import type { RootState } from '../../../stores/store';
 import storage from '../../../utils/storage';
 
@@ -35,7 +37,7 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(api.endpoints.login.matchFulfilled, (state, { payload }) => {
+    builder.addMatcher(loginApi.endpoints.login.matchFulfilled, (state, { payload }) => {
       const { token, ...user } = payload;
       state.token = token;
       state.user = user;
@@ -43,7 +45,7 @@ const slice = createSlice({
         storage.setToken(token);
       }
     });
-    builder.addMatcher(api.endpoints.loginToken.matchFulfilled, (state, { payload }) => {
+    builder.addMatcher(loginApi.endpoints.loginToken.matchFulfilled, (state, { payload }) => {
       const { token, ...user } = payload;
       state.token = token;
       state.user = user;
@@ -51,8 +53,11 @@ const slice = createSlice({
         storage.setToken(token);
       }
     });
-    builder.addMatcher(api.endpoints.loginToken.matchRejected, () => {
+    builder.addMatcher(loginApi.endpoints.loginToken.matchRejected, () => {
       storage.clearToken();
+    });
+    builder.addMatcher(registerApi.endpoints.register.matchFulfilled, () => {
+      // TODO: Use a backend that supports login on registration by returning token, instead of logging in manually in the component
     });
   },
 });

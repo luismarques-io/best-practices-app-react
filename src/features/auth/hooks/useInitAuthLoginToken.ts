@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLoginTokenMutation } from '../services/authService';
+import { useLoginTokenMutation } from '../api/loginApi';
 
 import storage from '../../../utils/storage';
 

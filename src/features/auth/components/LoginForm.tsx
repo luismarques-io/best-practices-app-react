@@ -1,22 +1,22 @@
-import * as React from 'react';
+import React from 'react';
 
 import { useAppDispatch } from '../../../hooks/store';
 
 import { rememberAuth } from '../stores/authSlice';
-import { useLoginMutation } from '../services/authService';
-import type { LoginRequest } from '../services/authService';
+import { useLoginMutation } from '../api/loginApi';
+import { LoginCredentials } from '../types/auth';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 type LoginFormProps = {
-  onSuccess: () => void;
+  onSuccess?: () => void;
 };
 
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
   const dispatch = useAppDispatch();
 
   const [wasValidated, setWasValidated] = useState(false);
-  const [formState, setFormState] = React.useState<LoginRequest>({
+  const [formState, setFormState] = useState<LoginCredentials>({
     username: 'kminchelle',
     password: '0lelplR',
   });
@@ -31,18 +31,21 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
     dispatch(rememberAuth(checked));
   };
 
+  const isFormValid = (form: HTMLFormElement) => {
+    setWasValidated(true);
+    return form.checkValidity();
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setWasValidated(true);
 
-    const form = event.currentTarget;
-    if (!form.checkValidity()) {
+    if (!isFormValid(event.currentTarget)) {
       return;
     }
 
     try {
       await login(formState).unwrap();
-      onSuccess();
+      onSuccess?.();
     } catch (err) {
       alert(JSON.stringify(err));
     }
@@ -50,9 +53,8 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 
   return (
     <>
+      <h1 className='h3 mb-3 fw-normal'>Please sign in</h1>
       <form className={`needs-validation ${wasValidated ? 'was-validated' : ''}`} noValidate onSubmit={handleSubmit}>
-        <h1 className='h3 mb-3 fw-normal'>Please sign in</h1>
-
         <div className='form-floating mb-2'>
           <input
             disabled={isLoading}
