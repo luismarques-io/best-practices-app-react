@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
@@ -12,9 +13,11 @@ type AppProviderProps = {
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <Suspense fallback={<PageSpinner />}>
-      <Provider store={store}>
-        <BrowserRouter>{children}</BrowserRouter>
-      </Provider>
+      <HelmetProvider>
+        <Provider store={store}>
+          <BrowserRouter>{children}</BrowserRouter>
+        </Provider>
+      </HelmetProvider>
     </Suspense>
   );
 };

@@ -3,6 +3,7 @@ import { NavItem } from '../NavItem/NavItem';
 
 import { useAuth, logout } from '../../features/auth';
 import { useAppDispatch } from '../../hooks/store';
+import { APP_TITLE } from '../../config';
 
 export function Header() {
   const dispatch = useAppDispatch();
@@ -16,7 +17,7 @@ export function Header() {
     <nav className='navbar navbar-expand navbar-scroll bg-body-tertiary'>
       <div className='container'>
         <NavLink to='/' className='navbar-brand'>
-          General Purpose App
+          {APP_TITLE}
         </NavLink>
 
         <ul className='navbar-nav ms-auto mb-2 mb-lg-0'>

@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/store';
 
 import { rememberAuth } from '../stores/authSlice';
@@ -9,9 +8,12 @@ import type { LoginRequest } from '../services/authService';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-export const LoginForm = () => {
+type LoginFormProps = {
+  onSuccess: () => void;
+};
+
+export const LoginForm = ({ onSuccess }: LoginFormProps) => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const [wasValidated, setWasValidated] = useState(false);
   const [formState, setFormState] = React.useState<LoginRequest>({
@@ -40,10 +42,7 @@ export const LoginForm = () => {
 
     try {
       await login(formState).unwrap();
-      // Being that the result is handled in extraReducers in authSlice,
-      // we know that we're authenticated after this, so the user
-      // and token will be present in the store
-      navigate('/');
+      onSuccess();
     } catch (err) {
       alert(JSON.stringify(err));
     }

@@ -1,9 +1,13 @@
+import { Head } from '../../components/Head/Head';
+import { ContentLayout } from '../../layouts/ContentLayout';
+
 export function Home() {
   return (
-    <div className='container'>
-      <div className='row'>
-        <h1>Home</h1>
-      </div>
-    </div>
+    <>
+      <Head />
+      <ContentLayout title='Home'>
+        <p>Content in here</p>
+      </ContentLayout>
+    </>
   );
 }

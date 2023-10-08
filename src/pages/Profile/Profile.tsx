@@ -1,11 +1,13 @@
+import { Head } from '../../components/Head/Head';
+import { ContentLayout } from '../../layouts/ContentLayout';
+
 export function Profile() {
   return (
-    <div className='container'>
-      <div className='row'>
-        <div className='mt-5 mb-5'>
-          <h1 className='display-4'>Profile</h1>
-        </div>
-      </div>
-    </div>
+    <>
+      <Head title='Profile' />
+      <ContentLayout title='Profile'>
+        <p>Content in here</p>
+      </ContentLayout>
+    </>
   );
 }

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { APP_TITLE } from '../../config';
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -7,7 +8,7 @@ export function Footer() {
       <div className='container'>
         <span className='pe-2'>{year}</span>
         <Link to='/' className='link-secondary'>
-          General Purpose App
+          {APP_TITLE}
         </Link>
       </div>
     </footer>

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { UserForRegistration } from '../../types_OLD/user';
+import { UserForRegistration } from './types_OLD/user';
 
 export interface RegisterState {
   user: UserForRegistration;

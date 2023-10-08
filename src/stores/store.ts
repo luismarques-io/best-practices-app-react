@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { api } from '../services/api';
 import authReducer from '../features/auth';
+import { APP_TITLE } from '../config';
 
 export const store = configureStore({
   reducer: {
@@ -8,7 +9,7 @@ export const store = configureStore({
     auth: authReducer,
   },
   devTools: {
-    name: 'General Purpose App',
+    name: APP_TITLE,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
 });
