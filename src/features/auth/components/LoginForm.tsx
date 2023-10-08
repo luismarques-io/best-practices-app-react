@@ -7,6 +7,7 @@ import { useLoginMutation } from '../api/loginApi';
 import { LoginCredentials } from '../types/auth';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { InputField } from '../../../components/Form';
 
 type LoginFormProps = {
   onSuccess?: () => void;
@@ -55,34 +56,31 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
     <>
       <h1 className='h3 mb-3 fw-normal'>Please sign in</h1>
       <form className={`needs-validation ${wasValidated ? 'was-validated' : ''}`} noValidate onSubmit={handleSubmit}>
-        <div className='form-floating mb-2'>
-          <input
-            disabled={isLoading}
-            type='username'
-            className='form-control'
-            placeholder='name@example.com'
-            name='username'
-            onChange={handleChange}
-            required
-            value={formState.username || ''}
-          />
-          <label>Email *</label>
-          <div className='invalid-feedback'>E-mail address is required.</div>
-        </div>
-        <div className='form-floating mb-2'>
-          <input
-            disabled={isLoading}
-            type='password'
-            className='form-control'
-            placeholder='Password'
-            name='password'
-            onChange={handleChange}
-            required
-            value={formState.password || ''}
-          />
-          <label>Password *</label>
-          <div className='invalid-feedback'>Password is required.</div>
-        </div>
+        <InputField
+          disabled={isLoading}
+          type='text'
+          className='form-control'
+          placeholder=''
+          name='username'
+          onChange={handleChange}
+          required
+          value={formState.username || ''}
+          label='Username *'
+          invalidFeedback='Valid username is required.'
+        />
+
+        <InputField
+          disabled={isLoading}
+          type='password'
+          className='form-control'
+          placeholder='Password'
+          name='password'
+          onChange={handleChange}
+          required
+          value={formState.password || ''}
+          label='Password *'
+          invalidFeedback='Password is required.'
+        />
 
         <div className='form-check text-start my-3'>
           <input

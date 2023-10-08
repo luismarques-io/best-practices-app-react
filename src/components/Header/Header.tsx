@@ -24,6 +24,7 @@ export function Header() {
           {auth.user ? (
             <>
               <NavItem text='Profile' href='/profile' />
+              <NavItem text='Settings' href='/settings' />
               <NavItem type='button' text='Logout' onClick={handleLogoutClick} />
             </>
           ) : (

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { LoginCredentials, UserForRegistration } from '../types/auth';
 import { useLoginMutation } from '../api/loginApi';
 import { useRegisterMutation } from '../api/registerApi';
+import { InputField } from '../../../components/Form';
 
 type RegisterFormProps = {
   onSuccess?: () => void;
@@ -59,96 +60,84 @@ export const RegisterForm = ({ onSuccess, autoLoginOnSuccess = true }: RegisterF
     <>
       <h1 className='h3 mb-3 fw-normal'>Create an account</h1>
       <form className={`needs-validation ${wasValidated ? 'was-validated' : ''}`} noValidate onSubmit={handleSubmit}>
-        <div className='form-floating mb-2'>
-          <input
-            disabled={isLoading}
-            type='text'
-            className='form-control'
-            placeholder='name@example.com'
-            name='username'
-            onChange={handleChange}
-            required
-            value={formState.username || ''}
-          />
-          <label>Username *</label>
-          <div className='invalid-feedback'>Valid username is required.</div>
-        </div>
+        <InputField
+          disabled={isLoading}
+          type='text'
+          className='form-control'
+          placeholder=''
+          name='username'
+          onChange={handleChange}
+          required
+          value={formState.username || ''}
+          label='Username *'
+          invalidFeedback='Valid username is required.'
+        />
 
-        <div className='form-floating mb-2'>
-          <input
-            disabled={isLoading}
-            type='email'
-            className='form-control'
-            placeholder='name@example.com'
-            name='email'
-            onChange={handleChange}
-            required
-            value={formState.email || ''}
-          />
-          <label>Email *</label>
-          <div className='invalid-feedback'>Valid e-mail address is required.</div>
-        </div>
+        <InputField
+          disabled={isLoading}
+          type='email'
+          className='form-control'
+          placeholder='name@example.com'
+          name='email'
+          onChange={handleChange}
+          required
+          value={formState.email || ''}
+          label='Email *'
+          invalidFeedback='Valid e-mail address is required.'
+        />
 
-        <div className='form-floating mb-2'>
-          <input
-            disabled={isLoading}
-            type='url'
-            className='form-control'
-            placeholder=''
-            name='image'
-            onChange={handleChange}
-            value={formState.image || ''}
-          />
-          <label>Photo (URL)</label>
-          <div className='invalid-feedback'>Photo URL has to be valid.</div>
-        </div>
+        <InputField
+          disabled={isLoading}
+          type='url'
+          className='form-control'
+          placeholder=''
+          name='image'
+          onChange={handleChange}
+          value={formState.image || ''}
+          label='Photo (URL)'
+          invalidFeedback='Photo URL has to be valid.'
+        />
 
         <div className='row g-sm-2'>
           <div className='col-sm-6'>
-            <div className='form-floating mb-2'>
-              <input
-                disabled={isLoading}
-                type='text'
-                className='form-control'
-                placeholder='First name'
-                name='first_name'
-                onChange={handleChange}
-                value={formState.first_name || ''}
-              />
-              <label>First name</label>
-            </div>
+            <InputField
+              disabled={isLoading}
+              type='text'
+              className='form-control'
+              placeholder='First name'
+              name='first_name'
+              onChange={handleChange}
+              value={formState.first_name || ''}
+              label='First name'
+            />
           </div>
 
           <div className='col-sm-6'>
-            <div className='form-floating mb-2'>
-              <input
-                disabled={isLoading}
-                type='text'
-                className='form-control'
-                placeholder='Last name'
-                name='last_name'
-                onChange={handleChange}
-                value={formState.last_name || ''}
-              />
-              <label>Last name</label>
-            </div>
+            <InputField
+              disabled={isLoading}
+              type='text'
+              className='form-control'
+              placeholder='Last name'
+              name='last_name'
+              onChange={handleChange}
+              value={formState.last_name || ''}
+              label='Last name'
+            />
           </div>
         </div>
 
-        <div className='form-floating mb-2'>
-          <input
-            disabled={isLoading}
-            type='password'
-            className='form-control'
-            placeholder='Password'
-            name='password'
-            onChange={handleChange}
-            required
-            value={formState.password || ''}
-          />
-          <label>Password *</label>
-          <div className='invalid-feedback'>Password is required.</div>
-        </div>
+        <InputField
+          disabled={isLoading}
+          type='password'
+          className='form-control'
+          placeholder='Password'
+          name='password'
+          onChange={handleChange}
+          required
+          value={formState.password || ''}
+          label='Password *'
+          invalidFeedback='Password is required.'
+        />
 
         <div className='form-check text-start my-3'>
           <input
