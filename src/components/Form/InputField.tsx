@@ -8,11 +8,11 @@ type InputFieldProps = {
 };
 
 export const InputField = (props: InputFieldProps) => {
-  const { type = 'text', id, label, className, invalidFeedback, ...rest } = props;
+  const { type = 'text', id, label, className, invalidFeedback, ...otherProps } = props;
   return (
     <>
       <div className='form-floating mb-2'>
-        <input id={id} type={type} className={`form-control ${className}`} name='email' {...rest} />
+        <input id={id} type={type} className={`form-control ${className}`} name='email' {...otherProps} />
         {label && <label htmlFor={id}>{label}</label>}
         {invalidFeedback && <div className='invalid-feedback'>{invalidFeedback}</div>}
       </div>
