@@ -1,3 +1,5 @@
+import { FieldWrapper } from './FieldWrapper';
+
 type InputFieldProps = {
   type?: 'text' | 'email' | 'password' | 'url' | 'number' | 'date' | 'time' | 'datetime-local' | 'hidden';
   id?: string;
@@ -10,12 +12,8 @@ type InputFieldProps = {
 export const InputField = (props: InputFieldProps) => {
   const { type = 'text', id, label, className, invalidFeedback, ...otherProps } = props;
   return (
-    <>
-      <div className='form-floating mb-2'>
-        <input id={id} type={type} className={`form-control ${className}`} name='email' {...otherProps} />
-        {label && <label htmlFor={id}>{label}</label>}
-        {invalidFeedback && <div className='invalid-feedback'>{invalidFeedback}</div>}
-      </div>
-    </>
+    <FieldWrapper labelFor={id} label={label} invalidFeedback={invalidFeedback}>
+      <input id={id} type={type} className={`form-control ${className}`} name='email' {...otherProps} />
+    </FieldWrapper>
   );
 };
