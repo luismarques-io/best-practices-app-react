@@ -90,8 +90,8 @@ export const RegisterForm = ({ onSuccess, autoLoginOnSuccess = true }: RegisterF
           name='image'
           onChange={handleChange}
           value={formState.image || ''}
-          label='Photo (URL)'
-          invalidFeedback='Photo URL has to be valid.'
+          label='URL of profile picture'
+          invalidFeedback='URL of profile picture has to be valid.'
         />
 
         <div className='row g-sm-2'>

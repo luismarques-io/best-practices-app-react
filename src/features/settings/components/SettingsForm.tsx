@@ -54,19 +54,6 @@ export const SettingsForm = () => {
   return (
     <form className={`needs-validation ${wasValidated ? 'was-validated' : ''}`} noValidate onSubmit={handleSubmit}>
       <InputField
-        label='Email *'
-        invalidFeedback='Valid e-mail address is required.'
-        disabled={isLoading}
-        type='email'
-        className='form-control'
-        placeholder='name@example.com'
-        name='email'
-        onChange={handleChange}
-        required
-        value={formState.email || ''}
-      />
-
-      <InputField
         disabled={isLoading}
         type='url'
         className='form-control'
@@ -74,8 +61,8 @@ export const SettingsForm = () => {
         name='image'
         onChange={handleChange}
         value={formState.image || ''}
-        label='Photo (URL)'
-        invalidFeedback='Photo URL has to be valid.'
+        label='URL of profile picture'
+        invalidFeedback='URL of profile picture has to be valid.'
       />
 
       <div className='row g-sm-2'>
@@ -105,6 +92,19 @@ export const SettingsForm = () => {
           />
         </div>
       </div>
+
+      <InputField
+        label='Email *'
+        invalidFeedback='Valid e-mail address is required.'
+        disabled={isLoading}
+        type='email'
+        className='form-control'
+        placeholder='name@example.com'
+        name='email'
+        onChange={handleChange}
+        required
+        value={formState.email || ''}
+      />
 
       <InputField
         disabled={isLoading}
