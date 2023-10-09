@@ -2,19 +2,19 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../auth';
 import { InputField } from '../../../components/Form';
-import { setUserSettings, updateField } from '../stores/settingsSlice';
+import { setUserSettings, updateField, setUpdateStarted, setUpdateComplete } from '../stores/settingsSlice';
 import { SettingsState } from '../types/settings';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
-import { selectUserSettings } from '../stores/settingsSlice';
+import { selectUserSettings, selectIsLoading } from '../stores/settingsSlice';
 import { useUpdateProfileMutation } from '../api/updateProfile';
 
 export const SettingsForm = () => {
   const dispatch = useAppDispatch();
-  const { user, refetchUser, refetchUserResult } = useAuth();
   const formState = useAppSelector(selectUserSettings);
+  const isLoading = useAppSelector(selectIsLoading);
+  const { user, refetchUser } = useAuth();
   const [wasValidated, setWasValidated] = useState(false);
-  const [updateProfile, { isLoading: isLoadingUpdateProfile }] = useUpdateProfileMutation();
-  const isLoading = isLoadingUpdateProfile || refetchUserResult.isLoading;
+  const [updateProfile] = useUpdateProfileMutation();
 
   useEffect(() => {
     if (user) {
@@ -42,11 +42,14 @@ export const SettingsForm = () => {
     }
 
     try {
+      dispatch(setUpdateStarted());
       await updateProfile(formState).unwrap();
       await refetchUser();
       clearValidation();
+      dispatch(setUpdateComplete());
       alert('Settings updated!');
     } catch (err) {
+      dispatch(setUpdateComplete());
       alert(JSON.stringify(err));
     }
   };

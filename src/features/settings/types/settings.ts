@@ -9,6 +9,7 @@ export type UserSettings = {
 
 export type SettingsState = {
   user: UserSettings;
+  isLoading: boolean;
 };
 
 export type UserSettingsResponse = {

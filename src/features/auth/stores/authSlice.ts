@@ -10,18 +10,13 @@ const initialState: AuthState = {
   user: null,
   token: null,
   remember: null,
+  isLoading: false,
 };
 
 const slice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    // loadUser: (state) => {
-    //   const token = storage.getToken();
-    //   if (token) {
-    //     state.token = token;
-    //   }
-    // },
     logout: (state) => {
       state.user = null;
       state.token = null;
@@ -29,6 +24,12 @@ const slice = createSlice({
     },
     rememberAuth: (state, { payload }: PayloadAction<boolean>) => {
       state.remember = payload;
+    },
+    setUpdateStarted: (state) => {
+      state.isLoading = true;
+    },
+    setUpdateComplete: (state) => {
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {
@@ -66,3 +67,5 @@ export const { logout, rememberAuth } = slice.actions;
 export default slice.reducer;
 
 export const selectCurrentUser = (state: RootState) => state.auth.user;
+
+export const selectIsLoading = (state: RootState) => state.auth.isLoading;

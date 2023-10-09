@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import { LoginCredentials, UserForRegistration } from '../types/auth';
 import { useLoginMutation } from '../api/loginApi';
 import { useRegisterMutation } from '../api/registerApi';
+import { setUpdateStarted, setUpdateComplete, selectIsLoading } from '../../settings';
 import { InputField } from '../../../components/Form';
+import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 
 type RegisterFormProps = {
   onSuccess?: () => void;
@@ -11,6 +13,8 @@ type RegisterFormProps = {
 };
 
 export const RegisterForm = ({ onSuccess, autoLoginOnSuccess = true }: RegisterFormProps) => {
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectIsLoading);
   const [wasValidated, setWasValidated] = useState(false);
   const [formState, setFormState] = useState<UserForRegistration>({
     username: 'kminchelle',
@@ -21,9 +25,8 @@ export const RegisterForm = ({ onSuccess, autoLoginOnSuccess = true }: RegisterF
     image: 'https://robohash.org/autquiaut.png',
     terms: false,
   });
-  const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
-  const [login, { isLoading: isLoadingLogin }] = useLoginMutation();
-  const isLoading = isLoadingRegister || isLoadingLogin;
+  const [register] = useRegisterMutation();
+  const [login] = useLoginMutation();
 
   const handleChange = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
     setFormState((prev) => ({ ...prev, [name]: value }));
@@ -41,13 +44,16 @@ export const RegisterForm = ({ onSuccess, autoLoginOnSuccess = true }: RegisterF
     }
 
     try {
+      dispatch(setUpdateStarted());
       await register(formState).unwrap();
       if (autoLoginOnSuccess) {
         // TODO: Use a backend that supports login on registration by returning token, instead of logging in manually in the component
         await login({ username: formState.username, password: formState.password } as LoginCredentials).unwrap();
       }
       onSuccess?.();
+      dispatch(setUpdateComplete());
     } catch (err) {
+      dispatch(setUpdateComplete());
       alert(JSON.stringify(err));
     }
   };
