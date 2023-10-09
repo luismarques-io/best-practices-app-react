@@ -17,7 +17,7 @@ export function Profile() {
                   <img src={user.image} alt='avatar' className='rounded-circle img-fluid' style={{ width: '150px' }} />
                 )}
                 <h5 className='my-3'>
-                  {user?.first_name} {user?.last_name}
+                  {user?.firstName} {user?.lastName}
                 </h5>
                 <p className='text-muted mb-1'>{user?.username}</p>
                 <p className='text-muted mb-4'>{user?.email}</p>

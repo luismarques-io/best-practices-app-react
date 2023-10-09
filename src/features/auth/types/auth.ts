@@ -1,8 +1,9 @@
 export type User = {
+  id: string;
   username: string;
   email: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   gender: string;
   image: string;
 };
@@ -10,8 +11,8 @@ export type User = {
 export type UserForRegistration = {
   username: string;
   email: string;
-  first_name: string | null;
-  last_name: string | null;
+  firstName: string | null;
+  lastName: string | null;
   gender?: string;
   image: string | null;
   password: string;
@@ -28,11 +29,23 @@ export type LoginTokenCredentials = {
 };
 
 export type UserResponse = {
+  id: string;
   username: string;
   email: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   gender: string;
   image: string;
   token: string;
+  password?: string;
+};
+
+export type AuthState = {
+  user: User | null;
+  token: string | null;
+  remember: boolean | null;
+};
+
+export type GetUserDTO = {
+  userId: string;
 };

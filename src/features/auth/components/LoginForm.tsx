@@ -15,13 +15,11 @@ type LoginFormProps = {
 
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
   const dispatch = useAppDispatch();
-
   const [wasValidated, setWasValidated] = useState(false);
   const [formState, setFormState] = useState<LoginCredentials>({
     username: 'kminchelle',
     password: '0lelplR',
   });
-
   const [login, { isLoading }] = useLoginMutation();
 
   const handleChange = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +37,6 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     if (!isFormValid(event.currentTarget)) {
       return;
     }

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LoginCredentials, UserForRegistration } from '../types/auth';
 import { useLoginMutation } from '../api/loginApi';
@@ -16,15 +16,14 @@ export const RegisterForm = ({ onSuccess, autoLoginOnSuccess = true }: RegisterF
     username: 'kminchelle',
     email: 'kminchelle@qq.com',
     password: '0lelplR',
-    first_name: '',
-    last_name: '',
+    firstName: 'Jeanne',
+    lastName: 'Halvorson',
     image: 'https://robohash.org/autquiaut.png',
     terms: false,
   });
-
   const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
   const [login, { isLoading: isLoadingLogin }] = useLoginMutation();
-  const isLoading = useMemo(() => isLoadingRegister || isLoadingLogin, [isLoadingRegister, isLoadingLogin]);
+  const isLoading = isLoadingRegister || isLoadingLogin;
 
   const handleChange = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
     setFormState((prev) => ({ ...prev, [name]: value }));
@@ -32,15 +31,11 @@ export const RegisterForm = ({ onSuccess, autoLoginOnSuccess = true }: RegisterF
 
   const isFormValid = (form: HTMLFormElement) => {
     setWasValidated(true);
-
-    // TODO: Validate confirm_password
-
     return form.checkValidity();
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     if (!isFormValid(event.currentTarget)) {
       return;
     }
@@ -48,6 +43,7 @@ export const RegisterForm = ({ onSuccess, autoLoginOnSuccess = true }: RegisterF
     try {
       await register(formState).unwrap();
       if (autoLoginOnSuccess) {
+        // TODO: Use a backend that supports login on registration by returning token, instead of logging in manually in the component
         await login({ username: formState.username, password: formState.password } as LoginCredentials).unwrap();
       }
       onSuccess?.();
@@ -105,9 +101,9 @@ export const RegisterForm = ({ onSuccess, autoLoginOnSuccess = true }: RegisterF
               type='text'
               className='form-control'
               placeholder='First name'
-              name='first_name'
+              name='firstName'
               onChange={handleChange}
-              value={formState.first_name || ''}
+              value={formState.firstName || ''}
               label='First name'
             />
           </div>
@@ -118,9 +114,9 @@ export const RegisterForm = ({ onSuccess, autoLoginOnSuccess = true }: RegisterF
               type='text'
               className='form-control'
               placeholder='Last name'
-              name='last_name'
+              name='lastName'
               onChange={handleChange}
-              value={formState.last_name || ''}
+              value={formState.lastName || ''}
               label='Last name'
             />
           </div>
