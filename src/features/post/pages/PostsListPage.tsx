@@ -31,8 +31,8 @@ export const PostsListPage = () => {
 
   return (
     <>
-      <Head title={'Posts List'} />
-      <ContentLayout title={'Posts List'}>
+      <Head title={'Posts'} />
+      <ContentLayout title={'Posts'}>
         <div className='mt-3'>
           <PostsList posts={posts} />
         </div>
