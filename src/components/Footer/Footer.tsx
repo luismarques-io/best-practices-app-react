@@ -55,7 +55,7 @@ export function Footer() {
             <ul className='nav flex-column'>
               <li className='nav-item mb-2'>
                 <Link to='/posts' className='nav-link p-0 text-body-secondary'>
-                  Post List
+                  Posts List
                 </Link>
               </li>
               <li className='nav-item mb-2'>

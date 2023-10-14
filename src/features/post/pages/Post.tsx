@@ -9,6 +9,7 @@ import { getErrorMessage } from '../../../api/helpers';
 import { ErrorPageLayout } from '../../../layouts/ErrorPageLayout';
 import { InputField } from '../../../components/Form';
 import { Link } from 'react-router-dom';
+import { TagList } from '../components/TagList';
 
 type QueryParamTypes = Params & {
   postId: string;
@@ -41,11 +42,7 @@ export const Post = () => {
         <p className='mb-4'>{data.body}</p>
         <div className='d-flex d-flex justify-content-between mb-3'>
           <div>
-            {data.tags.map((tag) => (
-              <span key={tag} className='badge text-bg-secondary me-1'>
-                {tag}
-              </span>
-            ))}
+            <TagList tags={data.tags} />
           </div>
           {data.reactions ? (
             <div>

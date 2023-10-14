@@ -34,3 +34,15 @@ export type UpdatePostDTO = {
 export type GetPostDTO = {
   postId: string;
 };
+
+export type GetPostsDTO = {
+  limit?: number;
+  skip?: number;
+};
+
+export type PostsResponse = {
+  posts: Post[];
+  total: number;
+  limit: number;
+  skip: number;
+};
