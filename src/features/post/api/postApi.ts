@@ -11,9 +11,6 @@ export const postEditorApi = api.injectEndpoints({
     updatePost: builder.mutation<Post, UpdatePostDTO>({
       query: (post) => ({ url: `posts/${post.id}`, method: 'PUT', body: post }),
     }),
-    getPost_: builder.query<Post, GetPostDTO>({
-      query: ({ postId }: GetPostDTO) => ({ url: `posts/${postId}`, method: 'GET' }),
-    }),
     getPost: builder.query<Post, GetPostDTO>({
       async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {
         // Get post

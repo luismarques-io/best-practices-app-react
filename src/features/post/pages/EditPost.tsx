@@ -1,20 +1,55 @@
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../../hooks/store';
-import { PostEditor, initializeEditor } from '..';
-import { useParams } from 'react-router-dom';
+import { PostEditor, initializeEditor, loadPost, selectEditorPost, setUpdateComplete, setUpdateStarted } from '..';
+import { Params, useNavigate, useParams } from 'react-router-dom';
 import { ContentLayout } from '../../../layouts/ContentLayout';
 import { Head } from '../../../components/Head/Head';
+import { useGetPostQuery, useUpdatePostMutation } from '../api/postApi';
+import { ErrorPageLayout } from '../../../layouts/ErrorPageLayout';
+import { PageSpinner } from '../../../components/Elements/Spinner/PageSpinner';
+import { getErrorMessage } from '../../../api/helpers';
+import { useAppDispatch, useAppSelector } from '../../../hooks/store';
+
+type QueryParamTypes = Params & {
+  postId: string;
+};
 
 export const EditPost = () => {
+  const { postId } = useParams<{ postId: string }>() as QueryParamTypes;
+  const { data, isLoading, error } = useGetPostQuery({ postId });
+  const formState = useAppSelector(selectEditorPost);
+  const [updatePost] = useUpdatePostMutation();
   const dispatch = useAppDispatch();
-
-  const { postId } = useParams<{ postId: string }>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(initializeEditor());
-    // eslint-disable-next-line no-console
-    console.log(postId);
-  }, [postId]);
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(loadPost(data));
+    }
+  }, [data]);
+
+  if (error) {
+    return <ErrorPageLayout title='Post not found' message={getErrorMessage(error)} />;
+  }
+
+  if (isLoading || !data) {
+    return <PageSpinner />;
+  }
+
+  const onSubmit = async () => {
+    try {
+      dispatch(setUpdateStarted());
+      const post = await updatePost({ ...formState, id: postId }).unwrap();
+
+      navigate(`/posts/${post.id}`);
+    } catch (err) {
+      alert(JSON.stringify(err));
+    }
+    dispatch(setUpdateComplete());
+  };
 
   return (
     <>
@@ -24,9 +59,4 @@ export const EditPost = () => {
       </ContentLayout>
     </>
   );
-};
-
-const onSubmit = (event: React.FormEvent) => {
-  // eslint-disable-next-line no-console
-  console.log(event);
 };

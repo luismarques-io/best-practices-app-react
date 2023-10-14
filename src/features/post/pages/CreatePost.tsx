@@ -17,7 +17,7 @@ export const CreatePost = () => {
 
   useEffect(() => {
     dispatch(initializeEditor());
-  }, [null]);
+  }, []);
 
   if (!user) {
     return null;
@@ -29,7 +29,7 @@ export const CreatePost = () => {
       const post = await createPost({ ...formState, userId: user.id }).unwrap();
       // eslint-disable-next-line no-console
       console.log({ post });
-      // TODO: Implement a backend that can actually create posts
+      // TODO: Implement a backend that can actually creates posts
       // navigate(`/posts/${post.id}`);
       navigate(`/posts/1`);
     } catch (err) {

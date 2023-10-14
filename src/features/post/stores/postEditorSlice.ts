@@ -12,6 +12,9 @@ const slice = createSlice({
   initialState,
   reducers: {
     initializeEditor: () => initialState,
+    loadPost: (state, { payload: post }: PayloadAction<PostEditorState['post']>) => {
+      state.post = post;
+    },
     updateField: (
       state,
       { payload: { name, value } }: PayloadAction<{ name: keyof PostEditorState['post']; value: string }>
@@ -32,7 +35,7 @@ const slice = createSlice({
   },
 });
 
-export const { initializeEditor, updateField, setUpdateStarted, setUpdateComplete } = slice.actions;
+export const { initializeEditor, loadPost, updateField, setUpdateStarted, setUpdateComplete } = slice.actions;
 
 export default slice.reducer;
 
