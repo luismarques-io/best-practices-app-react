@@ -1,6 +1,6 @@
 // import { useEffect } from 'react';
 
-import { useParams } from 'react-router-dom';
+import { Params, useParams } from 'react-router-dom';
 import { ContentLayout } from '../../../layouts/ContentLayout';
 import { Head } from '../../../components/Head/Head';
 import { useGetPostQuery } from '../api/postApi';
@@ -10,10 +10,12 @@ import { ErrorPageLayout } from '../../../layouts/ErrorPageLayout';
 import { InputField } from '../../../components/Form';
 import { Link } from 'react-router-dom';
 
-export const Post = () => {
-  const { postId } = useParams<{ postId: string }>();
-  if (!postId) return <div>no post id</div>;
+type QueryParamTypes = Params & {
+  postId: string;
+};
 
+export const Post = () => {
+  const { postId } = useParams<{ postId: string }>() as QueryParamTypes;
   const { data, isLoading, error } = useGetPostQuery({ postId });
 
   if (error) {
