@@ -8,15 +8,15 @@ import { MainLayout } from './layouts/MainLayout';
 export function App() {
   const { loading } = useInitAuthLoginToken();
 
+  if (loading) {
+    return <PageSpinner />;
+  }
+
   return (
     <>
-      {loading ? (
-        <PageSpinner />
-      ) : (
-        <MainLayout>
-          <AppRoutes />
-        </MainLayout>
-      )}
+      <MainLayout>
+        <AppRoutes />
+      </MainLayout>
     </>
   );
 }

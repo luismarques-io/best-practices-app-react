@@ -55,7 +55,7 @@ const slice = createSlice({
     builder.addMatcher(registerApi.endpoints.register.matchFulfilled, () => {
       // TODO: Use a backend that supports login on registration by returning token, instead of logging in manually in the component
     });
-    builder.addMatcher(userApi.endpoints.refetchUser.matchFulfilled, (state, { payload }) => {
+    builder.addMatcher(userApi.endpoints.getUserById.matchFulfilled, (state, { payload }) => {
       const { password: _, ...user } = payload;
       state.user = user;
     });

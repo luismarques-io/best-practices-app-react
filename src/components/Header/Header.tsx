@@ -41,6 +41,7 @@ function UserLinks({ user: { firstName, email } }: { user: User }) {
   return (
     <>
       <NavItem text={`Hi, ${name}!`} href='/profile' />
+      <NavItem text='Create a new post' href='/posts/add' />
       <NavItem text='Settings' href='/settings' />
       <NavItem type='button' text='Logout' onClick={handleLogoutClick} />
     </>

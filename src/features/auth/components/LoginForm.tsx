@@ -9,9 +9,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { InputField } from '../../../components/Form';
 
-type LoginFormProps = {
-  onSuccess?: () => void;
-};
+type LoginFormProps = { onSuccess?: () => void };
 
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
   const dispatch = useAppDispatch();

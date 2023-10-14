@@ -47,6 +47,6 @@ export type AuthState = {
   isLoading: boolean;
 };
 
-export type GetUserDTO = {
+export type GetUserByIdDTO = {
   userId: string;
 };

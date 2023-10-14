@@ -2,16 +2,16 @@ import React from 'react';
 
 type ContentLayoutProps = {
   children: React.ReactNode;
-  title: string;
+  title?: string;
 };
 
 export const ContentLayout = ({ children, title }: ContentLayoutProps) => {
   return (
     <>
-      <div className='container mt-3 mb-3'>
-        <h1 className='display-4'>{title}</h1>
+      <div className='container mt-3'>
+        <h1 className='display-5 mb-1'>{title}</h1>
+        <div className='mb-5'>{children}</div>
       </div>
-      <div className='container mb-5'>{children}</div>
     </>
   );
 };

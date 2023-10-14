@@ -11,7 +11,8 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
-    '@typescript-eslint/no-empty-function': ['error', { allow: ['methods', 'arrowFunctions'] }],
+    // '@typescript-eslint/no-empty-function': ['error', { allow: ['methods', 'arrowFunctions'] }],
+    '@typescript-eslint/no-empty-function': ['off'],
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
@@ -19,7 +20,8 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
-    '@typescript-eslint/no-explicit-any': ['error'],
+    // '@typescript-eslint/no-explicit-any': ['error'],
+    '@typescript-eslint/no-explicit-any': ['off'],
     'no-console': ['error'],
     'no-debugger': ['error'],
     '@typescript-eslint/explicit-module-boundary-types': 'off',

@@ -1,12 +1,12 @@
-import { api } from '../../../services/api';
-import { UserResponse, GetUserDTO } from '../types/auth';
+import { api } from '../../../api/api';
+import { UserResponse, GetUserByIdDTO } from '../types/auth';
 
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    refetchUser: builder.query<UserResponse, GetUserDTO>({
-      query: ({ userId }: GetUserDTO) => ({ url: `users/${userId}`, method: 'GET' }),
+    getUserById: builder.query<UserResponse, GetUserByIdDTO>({
+      query: ({ userId }: GetUserByIdDTO) => ({ url: `users/${userId}`, method: 'GET' }),
     }),
   }),
 });
 
-export const { useLazyRefetchUserQuery } = userApi;
+export const { useLazyGetUserByIdQuery, useGetUserByIdQuery } = userApi;

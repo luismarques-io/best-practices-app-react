@@ -1,4 +1,4 @@
-import { api } from '../../../services/api';
+import { api } from '../../../api/api';
 import { UserSettings, UserSettingsResponse } from '../types/settings';
 
 export const updateProfileApi = api.injectEndpoints({
