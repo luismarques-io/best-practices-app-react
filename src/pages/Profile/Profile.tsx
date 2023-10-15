@@ -65,9 +65,9 @@ export function Profile() {
                     </Link>
                   </div>
                   <div className='ms-3' style={{ marginTop: '130px' }}>
-                    <h5>
+                    <h1 className='h5'>
                       {user.firstName} {user.lastName}
-                    </h5>
+                    </h1>
                     <p>{user.username}</p>
                   </div>
                 </div>
