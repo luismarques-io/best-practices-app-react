@@ -1,6 +1,14 @@
 import { api } from '../../../api/api';
 import { User } from '../../auth';
-import { Post, CreatePostDTO, UpdatePostDTO, GetPostDTO, GetPostsDTO, PostsResponse } from '../types/post';
+import {
+  Post,
+  CreatePostDTO,
+  UpdatePostDTO,
+  GetPostDTO,
+  GetPostsDTO,
+  PostsResponse,
+  GetUserPostsDTO,
+} from '../types/post';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 export const postEditorApi = api.injectEndpoints({
@@ -29,7 +37,14 @@ export const postEditorApi = api.injectEndpoints({
     getPosts: builder.query<PostsResponse, GetPostsDTO>({
       query: ({ limit = 10, skip = 0 }) => ({ url: `posts?limit=${limit}&skip=${skip}`, method: 'GET' }),
     }),
+    getUserPosts: builder.query<PostsResponse, GetUserPostsDTO>({
+      query: ({ userId, limit = 10, skip = 0 }) => ({
+        url: `users/${userId}/posts?limit=${limit}&skip=${skip}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useCreatePostMutation, useUpdatePostMutation, useGetPostQuery, useGetPostsQuery } = postEditorApi;
+export const { useCreatePostMutation, useUpdatePostMutation, useGetPostQuery, useGetPostsQuery, useGetUserPostsQuery } =
+  postEditorApi;

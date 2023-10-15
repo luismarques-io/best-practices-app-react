@@ -10,6 +10,10 @@ export type Post = {
   user?: User;
 };
 
+export type PostForPreview = Post & {
+  url?: string;
+};
+
 export type PostForEditor = {
   title: string;
   body: string;
@@ -38,6 +42,10 @@ export type GetPostDTO = {
 export type GetPostsDTO = {
   limit?: number;
   skip?: number;
+};
+
+export type GetUserPostsDTO = GetPostsDTO & {
+  userId: string;
 };
 
 export type PostsResponse = {

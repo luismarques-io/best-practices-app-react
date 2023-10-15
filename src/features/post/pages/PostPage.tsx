@@ -15,7 +15,7 @@ type QueryParamTypes = Params & {
   postId: string;
 };
 
-export const Post = () => {
+export const PostPage = () => {
   const { postId } = useParams<{ postId: string }>() as QueryParamTypes;
   const { data, isLoading, error } = useGetPostQuery({ postId });
 
