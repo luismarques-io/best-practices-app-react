@@ -22,7 +22,7 @@ export function Profile() {
     isFetching,
     isLoading,
     error,
-  } = useGetUserPostsQuery({ skip, limit, userId: user?.id || '' }, { skip: !user?.id });
+  } = useGetUserPostsQuery({ skip, limit, userId: user?.id as string }, { skip: !user?.id });
 
   if (error) {
     return <ErrorPageLayout title='Error loading posts' message={getErrorMessage(error)} />;
