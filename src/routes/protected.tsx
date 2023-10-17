@@ -1,12 +1,15 @@
 import { lazily } from 'react-lazily';
 import { Navigate } from 'react-router-dom';
+import { User } from '../features/auth';
 
-const { Profile } = lazily(() => import('../pages/Profile/Profile'));
 const { Settings } = lazily(() => import('../pages/Settings/Settings'));
 const { Posts } = lazily(() => import('../pages/Posts/Posts'));
 
-export const protectedRoutes = (isLoggedIn: boolean) => [
-  { path: '/profile', element: isLoggedIn ? <Profile /> : <Navigate to='/login' replace /> },
-  { path: '/settings', element: isLoggedIn ? <Settings /> : <Navigate to='/login' replace /> },
-  { path: '/posts/*', element: isLoggedIn ? <Posts /> : <Navigate to='/login' replace /> },
+export const protectedRoutes = ({ user }: { user: User | null }) => [
+  {
+    path: '/profile',
+    element: user ? <Navigate to={`/profile/${user.id}`} replace /> : <Navigate to='/login' replace />,
+  },
+  { path: '/settings', element: user ? <Settings /> : <Navigate to='/login' replace /> },
+  { path: '/posts/*', element: user ? <Posts /> : <Navigate to='/login' replace /> },
 ];

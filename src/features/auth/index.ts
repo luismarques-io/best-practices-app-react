@@ -4,7 +4,7 @@ export * from './hooks/useAuth';
 export * from './hooks/useInitAuthLoginToken';
 export * from './api/loginApi';
 export * from './api/registerApi';
-export * from './api/userApi';
+export * from './api/getUserApi';
 export * from './types/auth';
 export * from './stores/authSlice';
 import reducer from './stores/authSlice';

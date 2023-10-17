@@ -1,5 +1,5 @@
 import { api } from '../../../api/api';
-import { UserResponse, GetUserByIdDTO } from '../types/auth';
+import { UserResponse, GetUserByIdDTO } from '../types/user';
 
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,4 +9,4 @@ export const userApi = api.injectEndpoints({
   }),
 });
 
-export const { useLazyGetUserByIdQuery, useGetUserByIdQuery } = userApi;
+export const { useGetUserByIdQuery } = userApi;

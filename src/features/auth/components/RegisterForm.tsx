@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { LoginCredentials, UserForRegistration } from '../types/auth';
 import { useLoginMutation } from '../api/loginApi';
 import { useRegisterMutation } from '../api/registerApi';
-import { setUpdateStarted, setUpdateComplete, selectIsLoading } from '../../settings';
+import { setUpdateStarted, setUpdateComplete, selectIsLoading } from '../../users';
 import { InputField } from '../../../components/Form';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 

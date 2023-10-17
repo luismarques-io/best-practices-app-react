@@ -1,17 +1,23 @@
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, Params, useParams, useSearchParams } from 'react-router-dom';
 import { PageSpinner } from '../../components/Elements/Spinner/PageSpinner';
 import { Head } from '../../components/Head/Head';
 import { useAuth } from '../../features/auth';
+import { useGetUserByIdQuery } from '../../features/users';
 import { ContentLayout } from '../../layouts/ContentLayout';
 import { PostsList, PostsResponse, useGetUserPostsQuery } from '../../features/post';
 import { ErrorPageLayout } from '../../layouts/ErrorPageLayout';
 import { getErrorMessage } from '../../api/helpers';
 import { Pagination } from '../../components/Pagination/Pagination';
 
-export function Profile() {
-  const { user } = useAuth();
+type QueryParamTypes = Params & {
+  userId: string;
+};
 
-  // TODO: Show profile of other users than the logged in user
+export function Profile() {
+  const { userId } = useParams<{ userId: string }>() as QueryParamTypes;
+  const { user: currentUser } = useAuth();
+  const isCurrentUser = currentUser?.id.toString() === userId;
+  const { data: user, error: userError } = useGetUserByIdQuery({ userId }, { skip: !userId });
 
   const [searchParams] = useSearchParams();
   const limit = parseInt(searchParams.get('limit') || '10');
@@ -19,20 +25,20 @@ export function Profile() {
 
   const {
     data: { posts, total } = {} as PostsResponse,
-    isFetching,
-    isLoading,
-    error,
+    error: postsError,
+    isLoading: isLoadingPosts,
+    isFetching: isFetchingPosts,
   } = useGetUserPostsQuery({ skip, limit, userId: user?.id as string }, { skip: !user?.id });
 
-  if (error) {
-    return <ErrorPageLayout title='Error loading posts' message={getErrorMessage(error)} />;
+  if (userError) {
+    return <ErrorPageLayout title='Error loading user' message={getErrorMessage(userError)} />;
   }
 
-  if (isFetching || isLoading || !posts || !user) {
+  if (!user || isLoadingPosts || isFetchingPosts) {
     return <PageSpinner />;
   }
 
-  const postsPreview = posts.map((post) => ({ url: `/posts/${post.id}`, ...post }));
+  const postsPreview = posts?.map((post) => ({ url: `/posts/${post.id}`, ...post }));
 
   return (
     <>
@@ -55,14 +61,16 @@ export function Profile() {
                       style={{ width: '150px', zIndex: '1' }}
                     />
 
-                    <Link
-                      to='/settings'
-                      className='btn btn-primary py-2 mt-2'
-                      data-mdb-ripple-color='dark'
-                      style={{ zIndex: '1' }}
-                    >
-                      Edit Profile
-                    </Link>
+                    {isCurrentUser ? (
+                      <Link
+                        to='/settings'
+                        className='btn btn-primary py-2 mt-2'
+                        data-mdb-ripple-color='dark'
+                        style={{ zIndex: '1' }}
+                      >
+                        Edit Profile
+                      </Link>
+                    ) : null}
                   </div>
                   <div className='ms-3' style={{ marginTop: '130px' }}>
                     <h1 className='h5'>
@@ -73,21 +81,30 @@ export function Profile() {
                 </div>
                 <div className='p-4 bg-body-tertiary'>
                   <div className='d-flex justify-content-end text-center py-1'>
-                    <div>
-                      <p className='mb-1 h5'>{total}</p>
-                      <p className='small text-muted mb-0'>Posts</p>
-                    </div>
+                    {posts ? (
+                      <div className='ps-3'>
+                        <p className='mb-1 h5'>{total}</p>
+                        <p className='small text-muted mb-0'>Posts</p>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        <h2 className='mt-3'>User Posts</h2>
-        <div className='mt-3'>
-          <PostsList posts={postsPreview} />
-        </div>
-        <Pagination limit={limit} skip={skip} total={total} />
+
+        {postsError ? (
+          <ErrorPageLayout title='Error loading posts' message={getErrorMessage(postsError)} />
+        ) : (
+          <>
+            <h2 className='mt-3'>User Posts</h2>
+            <div className='mt-3'>
+              <PostsList posts={postsPreview} />
+            </div>
+            <Pagination limit={limit} skip={skip} total={total} />
+          </>
+        )}
       </ContentLayout>
     </>
   );

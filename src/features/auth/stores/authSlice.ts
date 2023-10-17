@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loginApi } from '../api/loginApi';
 import { registerApi } from '../api/registerApi';
-import { userApi } from '../api/userApi';
+import { userApi } from '../api/getUserApi';
 import { AuthState } from '../types/auth';
 import type { RootState } from '../../../stores/store';
 import storage from '../../../utils/storage';
@@ -55,7 +55,7 @@ const slice = createSlice({
     builder.addMatcher(registerApi.endpoints.register.matchFulfilled, () => {
       // TODO: Use a backend that supports login on registration by returning token, instead of logging in manually in the component
     });
-    builder.addMatcher(userApi.endpoints.getUserById.matchFulfilled, (state, { payload }) => {
+    builder.addMatcher(userApi.endpoints.getUser.matchFulfilled, (state, { payload }) => {
       const { password: _, ...user } = payload;
       state.user = user;
     });

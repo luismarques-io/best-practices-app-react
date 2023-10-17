@@ -6,10 +6,9 @@ import { publicRoutes } from './public';
 import { protectedRoutes } from './protected';
 
 export const AppRoutes = () => {
-  const auth = useAuth();
-  const isLoggedIn = !!auth.user;
+  const { user } = useAuth();
 
-  const routes = [...protectedRoutes(isLoggedIn), ...publicRoutes(isLoggedIn), ...commonRoutes()];
+  const routes = [...protectedRoutes({ user }), ...publicRoutes({ user }), ...commonRoutes()];
 
   const element = useRoutes(routes);
 

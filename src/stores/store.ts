@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { APP_TITLE } from '../config';
 import { api } from '../api/api';
 import authReducer from '../features/auth';
-import settingsReducer from '../features/settings';
+import settingsReducer from '../features/users';
 import postEditorReducer from '../features/post';
 
 export const store = configureStore({
