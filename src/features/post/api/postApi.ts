@@ -8,6 +8,8 @@ import {
   GetPostsDTO,
   PostsResponse,
   GetUserPostsDTO,
+  DeletePostDTO,
+  DeletePostResponse,
 } from '../types/post';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
@@ -18,6 +20,9 @@ export const postEditorApi = api.injectEndpoints({
     }),
     updatePost: builder.mutation<Post, UpdatePostDTO>({
       query: (post) => ({ url: `posts/${post.id}`, method: 'PUT', body: post }),
+    }),
+    deletePost: builder.mutation<DeletePostResponse, DeletePostDTO>({
+      query: ({ id }) => ({ url: `posts/${id}`, method: 'DELETE' }),
     }),
     getPost: builder.query<Post, GetPostDTO>({
       async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {
@@ -46,5 +51,11 @@ export const postEditorApi = api.injectEndpoints({
   }),
 });
 
-export const { useCreatePostMutation, useUpdatePostMutation, useGetPostQuery, useGetPostsQuery, useGetUserPostsQuery } =
-  postEditorApi;
+export const {
+  useCreatePostMutation,
+  useUpdatePostMutation,
+  useGetPostQuery,
+  useGetPostsQuery,
+  useGetUserPostsQuery,
+  useDeletePostMutation,
+} = postEditorApi;

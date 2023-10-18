@@ -39,6 +39,10 @@ export type GetPostDTO = {
   postId: string;
 };
 
+export type DeletePostDTO = {
+  id: string;
+};
+
 export type GetPostsDTO = {
   limit?: number;
   skip?: number;
@@ -53,4 +57,9 @@ export type PostsResponse = {
   total: number;
   limit: number;
   skip: number;
+};
+
+export type DeletePostResponse = Post & {
+  isDeleted: boolean;
+  deletedOn: Date;
 };
