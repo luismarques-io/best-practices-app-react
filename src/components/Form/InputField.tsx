@@ -11,21 +11,20 @@ type InputFieldProps = React.InputHTMLAttributes<HTMLInputElement | HTMLTextArea
 };
 
 export const InputField = (props: InputFieldProps) => {
-  const { type = 'text', label, className, invalidFeedback, value, ...otherProps } = props;
-  const uniqueId = useId();
-  const id = props.id ? props.id : uniqueId;
+  const { type = 'text', label, className, invalidFeedback, value, ...restProps } = props;
+  const id = props.id ? props.id : useId();
 
   if (type === 'textarea') {
     return (
       <FieldWrapper labelFor={id} label={label} invalidFeedback={invalidFeedback}>
-        <textarea id={id} className={`form-control ${className}`} {...otherProps} value={value}></textarea>
+        <textarea id={id} className={`form-control ${className}`} {...restProps} value={value}></textarea>
       </FieldWrapper>
     );
   }
 
   return (
     <FieldWrapper labelFor={id} label={label} invalidFeedback={invalidFeedback}>
-      <input id={id} type={type} className={`form-control ${className}`} value={value} {...otherProps} />
+      <input id={id} type={type} className={`form-control ${className}`} value={value} {...restProps} />
     </FieldWrapper>
   );
 };
