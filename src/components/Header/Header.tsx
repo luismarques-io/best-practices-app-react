@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { NavItem } from '../NavItem/NavItem';
 
 import { useAuth, logout, User } from '../../features/auth';
@@ -32,10 +32,12 @@ function GuestLinks() {
 
 function UserLinks({ user: { firstName, email } }: { user: User }) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const name = firstName || email;
 
   const handleLogoutClick = () => {
     dispatch(logout());
+    navigate('/login');
   };
 
   return (

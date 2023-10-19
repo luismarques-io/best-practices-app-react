@@ -1,5 +1,6 @@
 import { lazily } from 'react-lazily';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { useAuth } from '../../auth';
 
 const { PostsListPage } = lazily(() => import('../pages/PostsListPage'));
 const { EditPost } = lazily(() => import('../pages/EditPost'));
@@ -8,11 +9,23 @@ const { PostPage } = lazily(() => import('../pages/PostPage'));
 const { NotFound } = lazily(() => import('../../../pages/NotFound/NotFound'));
 
 export const PostRoutes = () => {
+  const { user } = useAuth();
+  const location = useLocation();
+
   return (
     <Routes>
       <Route path='' element={<PostsListPage />} />
-      <Route path='/add' element={<CreatePost />} />
-      <Route path=':postId/edit' element={<EditPost />} />
+      {user ? (
+        <>
+          <Route path='/add' element={<CreatePost />} />
+          <Route path=':postId/edit' element={<EditPost />} />
+        </>
+      ) : (
+        <>
+          <Route path='/add' element={<Navigate to={`/login?redirect=${location.pathname}`} replace />} />
+          <Route path=':postId/edit' element={<Navigate to={`/login?redirect=${location.pathname}`} replace />} />
+        </>
+      )}
       <Route path=':postId' element={<PostPage />} />
       <Route path='*' element={<NotFound />} />
     </Routes>

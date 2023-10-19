@@ -24,6 +24,11 @@ export function Footer() {
                 </Link>
               </li>
               <li className='nav-item mb-2'>
+                <Link to='/login?redirect=/posts/add' className='nav-link p-0 text-body-secondary'>
+                  Login w/ redirect to protected route
+                </Link>
+              </li>
+              <li className='nav-item mb-2'>
                 <Link to='/register' className='nav-link p-0 text-body-secondary'>
                   Register
                 </Link>
