@@ -1,14 +1,13 @@
 import { useId } from 'react';
 import { FieldWrapper } from './FieldWrapper';
 
-type InputFieldProps = {
+type InputFieldProps = React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> & {
   value?: string;
   type?: 'text' | 'email' | 'password' | 'url' | 'number' | 'date' | 'time' | 'datetime-local' | 'hidden' | 'textarea';
   id?: string;
   label?: string;
   className?: string;
   invalidFeedback?: string;
-  [x: string]: unknown;
 };
 
 export const InputField = (props: InputFieldProps) => {
