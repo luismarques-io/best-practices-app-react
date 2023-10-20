@@ -6,7 +6,7 @@ import { useGetUserByIdQuery } from '../../features/users';
 import { ContentLayout } from '../../layouts/ContentLayout';
 import { PostsList, PostsResponse, useGetUserPostsQuery } from '../../features/post';
 import { ErrorPageLayout } from '../../layouts/ErrorPageLayout';
-import { getErrorMessage } from '../../api/helpers';
+import { getErrorMessage } from '../../api/utils';
 import { Pagination } from '../../components/Pagination/Pagination';
 
 type QueryParamTypes = Params & {

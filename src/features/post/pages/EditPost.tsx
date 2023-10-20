@@ -6,7 +6,7 @@ import { Head } from '../../../components/Head/Head';
 import { useGetPostQuery, useUpdatePostMutation } from '../api/postApi';
 import { ErrorPageLayout } from '../../../layouts/ErrorPageLayout';
 import { PageSpinner } from '../../../components/Elements/Spinner/PageSpinner';
-import { getErrorMessage } from '../../../api/helpers';
+import { getErrorMessage } from '../../../api/utils';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 
 type QueryParamTypes = Params & {

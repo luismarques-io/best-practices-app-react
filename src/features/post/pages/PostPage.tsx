@@ -1,16 +1,13 @@
-// import { useEffect } from 'react';
-
-import { Params, useParams } from 'react-router-dom';
+import { Params, useParams, Link } from 'react-router-dom';
 import { ContentLayout } from '../../../layouts/ContentLayout';
 import { Head } from '../../../components/Head/Head';
 import { useDeletePostMutation, useGetPostQuery } from '../api/postApi';
 import { PageSpinner } from '../../../components/Elements/Spinner/PageSpinner';
-import { getErrorMessage } from '../../../api/helpers';
+import { getErrorMessage } from '../../../api/utils';
 import { ErrorPageLayout } from '../../../layouts/ErrorPageLayout';
-import { InputField } from '../../../components/Form';
-import { Link } from 'react-router-dom';
 import { TagList } from '../components/TagList';
 import { useAuth } from '../../auth';
+import { Comments } from '../../comments/components/Comments';
 
 type QueryParamTypes = Params & {
   postId: string;
@@ -76,36 +73,11 @@ export const PostPage = () => {
             </div>
           ) : null}
         </div>
+
         <hr />
-        {/* {isCurrentUser ? (
-          <div className='text-center'>
-            <Link to={`/posts/${data.id}/edit`} className='btn btn-primary btn-sm ms-2'>
-              Edit Post
-            </Link>
-            <button className='btn btn-danger btn-sm ms-2'>Delete Post</button>
-          </div>
-        ) : null} */}
-        <div>
-          <div className='row d-flex justify-content-center mt-4'>
-            {/* TODO: Add user info on top of textarea */}
-            <div className='col-md-10 col-lg-8 col-xl-6'>
-              <InputField
-                type='textarea'
-                className='form-control'
-                placeholder='Write a comment...'
-                name='comment'
-                style={{ height: '100px' }}
-                label='Write a comment...'
-                invalidFeedback='Valid comment is required.'
-                required
-              />
-              <div className='float-end mt-2'>
-                <button className='btn btn-primary py-2' type='submit'>
-                  Post comment
-                </button>
-              </div>
-            </div>
-          </div>
+
+        <div className='mt-5'>
+          <Comments postId={postId} />
         </div>
       </ContentLayout>
     </>
