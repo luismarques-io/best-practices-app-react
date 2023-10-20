@@ -7,7 +7,7 @@ import { getErrorMessage } from '../../../api/utils';
 import { ErrorPageLayout } from '../../../layouts/ErrorPageLayout';
 import { TagList } from '../components/TagList';
 import { useAuth } from '../../auth';
-import { Comments } from '../../comments/components/Comments';
+import { Comments } from '../../comments';
 
 type QueryParamTypes = Params & {
   postId: string;
