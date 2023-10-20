@@ -20,8 +20,8 @@ export function Profile() {
   const { data: user, error: userError } = useGetUserByIdQuery({ userId }, { skip: !userId });
 
   const [searchParams] = useSearchParams();
-  const limit = parseInt(searchParams.get('limit') || '10');
-  const skip = parseInt(searchParams.get('skip') || '0');
+  const limit = parseInt(searchParams.get('limit') ?? '10');
+  const skip = parseInt(searchParams.get('skip') ?? '0');
 
   const {
     data: { posts, total } = {} as PostsResponse,
