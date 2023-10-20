@@ -98,11 +98,15 @@ export function Profile() {
           <ErrorPageLayout title='Error loading posts' message={getErrorMessage(postsError)} />
         ) : (
           <>
-            <h2 className='mt-3'>User Posts</h2>
-            <div className='mt-3'>
-              <PostsList posts={postsPreview} />
-            </div>
-            <Pagination limit={limit} skip={skip} total={total} />
+            {postsPreview.length ? (
+              <>
+                <h2 className='mt-3'>User Posts</h2>
+                <div className='mt-3'>
+                  <PostsList posts={postsPreview} />
+                </div>
+                <Pagination limit={limit} skip={skip} total={total} />
+              </>
+            ) : null}
           </>
         )}
       </ContentLayout>
