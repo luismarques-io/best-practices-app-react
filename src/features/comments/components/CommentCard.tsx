@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Comment, CommentEditorState } from '../types';
+import { Comment } from '../types';
 import { useAuth } from '../../auth';
 import { getErrorMessage } from '../../../api/utils';
-import { useDeleteCommentMutation, useUpdateCommentMutation } from '../api/commentsApi';
+import { useDeleteCommentMutation } from '../api/commentsApi';
 import { useState } from 'react';
 import { EditCommentForm } from './EditCommentForm';
 
@@ -17,15 +17,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
   // const isCurrentUser = true ?? currentUser; // Used to test update and delete of multiple comments
 
   const [enableEditComment, setEnableEditComment] = useState(false);
-
   const [deleteComment, { isLoading: isDeleteLoading, error: deleteError }] = useDeleteCommentMutation();
-  const [updateComment] = useUpdateCommentMutation();
-
-  const handleUpdateComment = async ({ body }: CommentEditorState) => {
-    await updateComment({ id, body }).unwrap();
-    alert('Saved (not actually, just a demo)');
-    setEnableEditComment(false);
-  };
 
   const handleDeleteComment = async () => {
     try {
@@ -49,7 +41,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
             <EditCommentForm
               comment={comment}
               onCancel={() => setEnableEditComment(false)}
-              onSubmit={handleUpdateComment}
+              onSuccess={() => setEnableEditComment(false)}
             />
           </div>
         </div>

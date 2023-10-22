@@ -2,24 +2,22 @@ import { useState } from 'react';
 import { InputField } from '../../../components/Form';
 import { Comment, CommentEditorState } from '../types';
 import { getErrorMessage } from '../../../api/utils';
+import { useUpdateCommentMutation } from '../api/commentsApi';
 
 type EditCommentFormProps = {
   comment: Comment;
   onCancel: () => void;
-  onSubmit: (formState: CommentEditorState) => void;
+  onSuccess: () => void;
 };
 
 const initialFormState: CommentEditorState = {
   body: '',
 };
 
-const initialErrorState: string | undefined = undefined;
-
-export const EditCommentForm = ({ comment, onCancel, onSubmit }: EditCommentFormProps) => {
-  const [isLoading, setIsLoading] = useState(false);
+export const EditCommentForm = ({ comment, onCancel, onSuccess }: EditCommentFormProps) => {
+  const [updateComment, { isLoading, error }] = useUpdateCommentMutation();
   const [wasValidated, setWasValidated] = useState(false);
   const [formState, setFormState] = useState<CommentEditorState>({ body: comment.body });
-  const [error, setError] = useState<string | undefined>(initialErrorState);
 
   const handleChange = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
     setFormState((prev) => ({ ...prev, [name]: value }));
@@ -27,9 +25,7 @@ export const EditCommentForm = ({ comment, onCancel, onSubmit }: EditCommentForm
 
   const resetForm = () => {
     setFormState(initialFormState);
-    setError(initialErrorState);
     setWasValidated(false);
-    setIsLoading(false);
   };
 
   const isFormValid = (form: HTMLFormElement) => {
@@ -43,13 +39,13 @@ export const EditCommentForm = ({ comment, onCancel, onSubmit }: EditCommentForm
       return;
     }
 
-    setIsLoading(true);
     try {
-      await onSubmit(formState);
+      await updateComment({ id: comment.id, body: formState.body }).unwrap();
       resetForm();
+      alert('Saved (not actually, just a demo)');
+      onSuccess();
     } catch (err) {
-      setError(getErrorMessage(err));
-      setIsLoading(false);
+      alert(JSON.stringify(err));
     }
   };
 
@@ -70,14 +66,14 @@ export const EditCommentForm = ({ comment, onCancel, onSubmit }: EditCommentForm
           disabled={isLoading}
         />
         <div className='float-end mt-2'>
-          <button className='btn btn-light btn-sm ms-2' type='submit' disabled={isLoading} onClick={onCancel}>
+          <button className='btn btn-light btn-sm ms-2' type='button' disabled={isLoading} onClick={onCancel}>
             Cancel
           </button>
           <button className='btn btn-primary btn-sm ms-2' type='submit' disabled={isLoading}>
             Save
           </button>
         </div>
-        {error ? <div className='text-danger'>{error}</div> : null}
+        {error ? <div className='text-danger'>{getErrorMessage(error)}</div> : null}
       </form>
     </div>
   );
