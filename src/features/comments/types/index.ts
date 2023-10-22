@@ -30,3 +30,17 @@ export type CreateCommentDTO = {
   body: string;
   userId: string;
 };
+
+export type UpdateCommentDTO = {
+  id: string;
+  body: string;
+};
+
+export type DeleteCommentDTO = {
+  id: string;
+};
+
+export type DeleteCommentResponse = Comment & {
+  isDeleted: boolean;
+  deletedOn: Date;
+};

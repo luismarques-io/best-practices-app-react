@@ -69,6 +69,11 @@ export function Footer() {
                 </Link>
               </li>
               <li className='nav-item mb-2'>
+                <Link to='posts/17' className='nav-link p-0 text-body-secondary'>
+                  Post with my comment (id: 17)
+                </Link>
+              </li>
+              <li className='nav-item mb-2'>
                 <Link to='posts/add' className='nav-link p-0 text-body-secondary'>
                   Create Post
                 </Link>
