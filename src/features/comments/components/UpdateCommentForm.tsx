@@ -1,16 +1,16 @@
 import { TextareaField } from '../../../components/Form';
 import { Comment } from '../types';
 import { getErrorMessage } from '../../../api/utils';
-import { useEditCommentForm } from '../hooks/useEditCommentForm';
+import { useUpdateComment } from '../hooks/useUpdateComment';
 
-type EditCommentFormProps = {
+type UpdateCommentFormProps = {
   comment: Comment;
   onCancel: () => void;
   onSuccess: () => void;
 };
 
-export const EditCommentForm = ({ comment, onCancel, onSuccess }: EditCommentFormProps) => {
-  const { onSubmitHandler, useFormApi, mutationState } = useEditCommentForm({ comment, onSuccess });
+export const UpdateCommentForm = ({ comment, onCancel, onSuccess }: UpdateCommentFormProps) => {
+  const { onSubmitHandler, useFormApi, mutationState } = useUpdateComment({ comment, onSuccess });
   const { register, formState } = useFormApi;
   const { isLoading, error } = mutationState;
 

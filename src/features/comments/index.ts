@@ -4,8 +4,8 @@ export * from './components/CommentCard';
 export * from './components/Comments';
 export * from './components/CommentsList';
 export * from './components/CreateComment';
-export * from './components/EditCommentForm';
+export * from './components/UpdateCommentForm';
 
-export * from './hooks/useEditCommentForm';
+export * from './hooks/useUpdateComment';
 
 export * from './types';

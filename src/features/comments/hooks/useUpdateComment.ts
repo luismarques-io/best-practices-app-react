@@ -2,13 +2,13 @@ import { useForm } from '../../../lib/useForm';
 import { Comment, CommentEditorState } from '../types';
 import { useUpdateCommentMutation } from '../api/commentsApi';
 
-type useEditCommentFormProps = {
+type useUpdateCommentProps = {
   comment: Comment;
   onSuccess?: (payload: Comment) => void;
   onFail?: (error: unknown) => void;
 };
 
-export const useEditCommentForm = ({ comment, onSuccess, onFail }: useEditCommentFormProps) => {
+export const useUpdateComment = ({ comment, onSuccess, onFail }: useUpdateCommentProps) => {
   const useFormApi = useForm<CommentEditorState>({ defaultValues: { body: comment.body } });
   const { handleSubmit } = useFormApi;
 

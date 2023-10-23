@@ -3,7 +3,7 @@ import { Comment } from '../types';
 import { useAuth } from '../../auth';
 import { getErrorMessage } from '../../../api/utils';
 import { useState } from 'react';
-import { EditCommentForm } from './EditCommentForm';
+import { UpdateCommentForm } from './UpdateCommentForm';
 import { useDeleteComment } from '../hooks/useDeleteComment';
 
 type CommentCardProps = {
@@ -16,7 +16,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
   const isCurrentUser = currentUser?.id === user.id;
   // const isCurrentUser = true ?? currentUser; // Used to test update and delete of multiple comments
 
-  const [enableEditComment, setEnableEditComment] = useState(false);
+  const [enableUpdateComment, setEnableUpdateComment] = useState(false);
 
   const { deleteCommentHandler, mutationState: deleteMutationState } = useDeleteComment({
     id,
@@ -27,11 +27,11 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
   const { isLoading: isDeleteLoading, error: deleteError } = deleteMutationState;
 
   const onUpdateSuccess = () => {
-    setEnableEditComment(false);
+    setEnableUpdateComment(false);
     alert('Saved! (not actually, just a demo)');
   };
 
-  if (enableEditComment) {
+  if (enableUpdateComment) {
     return (
       <div className='card mb-3 bg-body-tertiary'>
         <div className='card-body'>
@@ -41,9 +41,9 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
             </h6>
           </div>
           <div>
-            <EditCommentForm
+            <UpdateCommentForm
               comment={comment}
-              onCancel={() => setEnableEditComment(false)}
+              onCancel={() => setEnableUpdateComment(false)}
               onSuccess={onUpdateSuccess}
             />
           </div>
@@ -64,7 +64,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
               <button
                 className='btn btn-outline-primary btn-sm ms-2'
                 disabled={isDeleteLoading}
-                onClick={() => setEnableEditComment(true)}
+                onClick={() => setEnableUpdateComment(true)}
               >
                 Edit
               </button>
