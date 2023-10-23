@@ -6,4 +6,6 @@ export * from './components/CommentsList';
 export * from './components/CreateComment';
 export * from './components/EditCommentForm';
 
+export * from './hooks/useEditCommentForm';
+
 export * from './types';

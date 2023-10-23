@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import { Comment } from '../types';
 import { useAuth } from '../../auth';
 import { getErrorMessage } from '../../../api/utils';
-import { useDeleteCommentMutation } from '../api/commentsApi';
 import { useState } from 'react';
 import { EditCommentForm } from './EditCommentForm';
+import { useDeleteComment } from '../hooks/useDeleteComment';
 
 type CommentCardProps = {
   comment: Comment;
@@ -17,15 +17,18 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
   // const isCurrentUser = true ?? currentUser; // Used to test update and delete of multiple comments
 
   const [enableEditComment, setEnableEditComment] = useState(false);
-  const [deleteComment, { isLoading: isDeleteLoading, error: deleteError }] = useDeleteCommentMutation();
 
-  const handleDeleteComment = async () => {
-    try {
-      await deleteComment({ id }).unwrap();
-      alert('Deleted (not actually, just a demo)');
-    } catch (err) {
-      alert(JSON.stringify(err));
-    }
+  const { deleteCommentHandler, mutationState: deleteMutationState } = useDeleteComment({
+    id,
+    onSuccess: () => {
+      alert('Deleted! (not actually, just a demo)');
+    },
+  });
+  const { isLoading: isDeleteLoading, error: deleteError } = deleteMutationState;
+
+  const onUpdateSuccess = () => {
+    setEnableEditComment(false);
+    alert('Saved! (not actually, just a demo)');
   };
 
   if (enableEditComment) {
@@ -41,7 +44,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
             <EditCommentForm
               comment={comment}
               onCancel={() => setEnableEditComment(false)}
-              onSuccess={() => setEnableEditComment(false)}
+              onSuccess={onUpdateSuccess}
             />
           </div>
         </div>
@@ -67,15 +70,15 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
               </button>
               <button
                 className='btn btn-outline-danger btn-sm ms-2'
-                onClick={handleDeleteComment}
+                onClick={deleteCommentHandler}
                 disabled={isDeleteLoading}
               >
                 Delete
               </button>
-              {deleteError ? <div className='text-danger'>{getErrorMessage(deleteError)}</div> : null}
             </div>
           ) : null}
         </div>
+        {deleteError ? <div className='text-danger'>{getErrorMessage(deleteError)}</div> : null}
         <div>{body}</div>
       </div>
     </div>

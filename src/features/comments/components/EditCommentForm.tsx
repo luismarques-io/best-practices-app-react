@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { InputField } from '../../../components/Form';
-import { Comment, CommentEditorState } from '../types';
+import { TextareaField } from '../../../components/Form';
+import { Comment } from '../types';
 import { getErrorMessage } from '../../../api/utils';
-import { useUpdateCommentMutation } from '../api/commentsApi';
+import { useEditCommentForm } from '../hooks/useEditCommentForm';
 
 type EditCommentFormProps = {
   comment: Comment;
@@ -10,59 +9,21 @@ type EditCommentFormProps = {
   onSuccess: () => void;
 };
 
-const initialFormState: CommentEditorState = {
-  body: '',
-};
-
 export const EditCommentForm = ({ comment, onCancel, onSuccess }: EditCommentFormProps) => {
-  const [updateComment, { isLoading, error }] = useUpdateCommentMutation();
-  const [wasValidated, setWasValidated] = useState(false);
-  const [formState, setFormState] = useState<CommentEditorState>({ body: comment.body });
-
-  const handleChange = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const resetForm = () => {
-    setFormState(initialFormState);
-    setWasValidated(false);
-  };
-
-  const isFormValid = (form: HTMLFormElement) => {
-    setWasValidated(true);
-    return form.checkValidity();
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!isFormValid(event.currentTarget)) {
-      return;
-    }
-
-    try {
-      await updateComment({ id: comment.id, body: formState.body }).unwrap();
-      resetForm();
-      alert('Saved (not actually, just a demo)');
-      onSuccess();
-    } catch (err) {
-      alert(JSON.stringify(err));
-    }
-  };
+  const { onSubmitHandler, useFormApi, mutationState } = useEditCommentForm({ comment, onSuccess });
+  const { register, formState } = useFormApi;
+  const { isLoading, error } = mutationState;
 
   return (
     <div className='w-100'>
-      <form className={`needs-validation ${wasValidated ? 'was-validated' : ''}`} noValidate onSubmit={handleSubmit}>
-        <InputField
-          type='textarea'
-          className='form-control'
+      <form onSubmit={onSubmitHandler}>
+        <TextareaField
+          className={`form-control${formState.errors.body ? ' is-invalid' : formState.isSubmitted && ' is-valid'}`}
           placeholder='Write a comment...'
-          name='body'
           style={{ height: '100px' }}
           label='Write a comment...'
-          invalidFeedback='Valid comment is required.'
-          required
-          value={formState.body || ''}
-          onChange={handleChange}
+          {...register('body', { required: true })}
+          invalidFeedback={'Valid comment is required.'}
           disabled={isLoading}
         />
         <div className='float-end mt-2'>

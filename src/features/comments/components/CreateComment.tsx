@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { InputField } from '../../../components/Form';
+import { TextareaField } from '../../../components/Form';
 import { useAuth } from '../../auth';
 import { CommentEditorState } from '../types';
 import { useCreateCommentMutation } from '../api/commentsApi';
@@ -18,7 +18,7 @@ export const CreateComment = ({ postId }: CreateCommentProps) => {
   const [formState, setFormState] = useState<CommentEditorState>(initialFormState);
   const [createComment, { isLoading }] = useCreateCommentMutation();
 
-  const handleChange = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormState((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -58,8 +58,7 @@ export const CreateComment = ({ postId }: CreateCommentProps) => {
             <div className='w-100'>
               <h5 className='mb-0'>{`${user.firstName} ${user.lastName}`}</h5>
               <p className='text-muted'>{`${user.username}`}</p>
-              <InputField
-                type='textarea'
+              <TextareaField
                 className='form-control'
                 placeholder='Write a comment...'
                 name='body'

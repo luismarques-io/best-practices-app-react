@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
-import { InputField } from '../../../components/Form';
+import { InputField, TextareaField } from '../../../components/Form';
 import { PostEditorState } from '../types/postEditor';
 import { selectEditorPost, updateField, selectIsLoading } from '../stores/postEditorSlice';
 
@@ -46,9 +46,8 @@ export const PostEditor = ({ onSubmit }: PostEditorProps) => {
         invalidFeedback='Title has to be valid.'
         required
       />
-      <InputField
+      <TextareaField
         disabled={isLoading}
-        type='textarea'
         className='form-control'
         placeholder='Write your post *'
         name='body'
