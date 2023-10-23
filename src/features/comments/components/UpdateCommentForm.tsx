@@ -10,21 +10,25 @@ type UpdateCommentFormProps = {
 };
 
 export const UpdateCommentForm = ({ comment, onCancel, onSuccess }: UpdateCommentFormProps) => {
-  const { onSubmitHandler, useFormApi, mutationState } = useUpdateComment({ comment, onSuccess });
-  const { register, formState } = useFormApi;
+  const { onSubmitHandler, useFormApi, getValidationClass, mutationState } = useUpdateComment({
+    commentId: comment.id,
+    defaultValues: { body: comment.body },
+    onSuccess,
+  });
+  const { register } = useFormApi;
   const { isLoading, error } = mutationState;
 
   return (
     <div className='w-100'>
       <form onSubmit={onSubmitHandler}>
         <TextareaField
-          className={`form-control${formState.errors.body ? ' is-invalid' : formState.isSubmitted && ' is-valid'}`}
+          className={`form-control${getValidationClass('body')}`}
           placeholder='Write a comment...'
-          style={{ height: '100px' }}
           label='Write a comment...'
           {...register('body', { required: true })}
           invalidFeedback={'Valid comment is required.'}
           disabled={isLoading}
+          style={{ height: '100px' }}
         />
         <div className='float-end mt-2'>
           <button className='btn btn-light btn-sm ms-2' type='button' disabled={isLoading} onClick={onCancel}>

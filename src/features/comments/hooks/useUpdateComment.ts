@@ -1,27 +1,33 @@
-import { useForm } from '../../../lib/useForm';
+import { useForm, useValidationClass } from '../../../lib/useForm';
 import { Comment, CommentEditorState } from '../types';
 import { useUpdateCommentMutation } from '../api/commentsApi';
+import { useCallback } from 'react';
 
 type useUpdateCommentProps = {
-  comment: Comment;
+  commentId: string;
+  defaultValues?: CommentEditorState;
   onSuccess?: (payload: Comment) => void;
   onFail?: (error: unknown) => void;
 };
 
-export const useUpdateComment = ({ comment, onSuccess, onFail }: useUpdateCommentProps) => {
-  const useFormApi = useForm<CommentEditorState>({ defaultValues: { body: comment.body } });
-  const { handleSubmit } = useFormApi;
+export const useUpdateComment = ({ commentId, defaultValues, onSuccess, onFail }: useUpdateCommentProps) => {
+  const useFormApi = useForm<CommentEditorState>({ defaultValues });
+  const { handleSubmit, formState } = useFormApi;
+  const getValidationClass = useValidationClass(formState);
 
   const [updateComment, mutationState] = useUpdateCommentMutation();
 
-  const onSubmitHandler = handleSubmit(async (data) => {
-    try {
-      const payload = await updateComment({ id: comment.id, body: data.body }).unwrap();
-      onSuccess?.(payload);
-    } catch (err) {
-      onFail?.(err);
-    }
-  });
+  const onSubmitHandler = useCallback(
+    handleSubmit(async (data) => {
+      try {
+        const payload = await updateComment({ id: commentId, body: data.body }).unwrap();
+        onSuccess?.(payload);
+      } catch (err) {
+        onFail?.(err);
+      }
+    }),
+    [handleSubmit, updateComment, commentId, onSuccess, onFail]
+  );
 
-  return { useFormApi, onSubmitHandler, mutationState };
+  return { onSubmitHandler, getValidationClass, useFormApi, mutationState };
 };

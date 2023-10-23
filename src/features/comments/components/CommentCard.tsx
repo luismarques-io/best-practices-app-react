@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import { Comment } from '../types';
 import { useAuth } from '../../auth';
 import { getErrorMessage } from '../../../api/utils';
-import { useState } from 'react';
 import { UpdateCommentForm } from './UpdateCommentForm';
 import { useDeleteComment } from '../hooks/useDeleteComment';
+import { useUpdateFormVisibility } from '../hooks/useUpdateFormVisibility';
 
 type CommentCardProps = {
   comment: Comment;
@@ -16,22 +16,20 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
   const isCurrentUser = currentUser?.id === user.id;
   // const isCurrentUser = true ?? currentUser; // Used to test update and delete of multiple comments
 
-  const [enableUpdateComment, setEnableUpdateComment] = useState(false);
+  const { isUpdateFormVisible, showUpdateForm, hideUpdateForm } = useUpdateFormVisibility(false);
 
   const { deleteCommentHandler, mutationState: deleteMutationState } = useDeleteComment({
     id,
-    onSuccess: () => {
-      alert('Deleted! (not actually, just a demo)');
-    },
+    onSuccess: () => alert('Deleted! (not actually, just a demo)'),
   });
   const { isLoading: isDeleteLoading, error: deleteError } = deleteMutationState;
 
   const onUpdateSuccess = () => {
-    setEnableUpdateComment(false);
+    hideUpdateForm();
     alert('Saved! (not actually, just a demo)');
   };
 
-  if (enableUpdateComment) {
+  if (isUpdateFormVisible) {
     return (
       <div className='card mb-3 bg-body-tertiary'>
         <div className='card-body'>
@@ -41,11 +39,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
             </h6>
           </div>
           <div>
-            <UpdateCommentForm
-              comment={comment}
-              onCancel={() => setEnableUpdateComment(false)}
-              onSuccess={onUpdateSuccess}
-            />
+            <UpdateCommentForm comment={comment} onCancel={hideUpdateForm} onSuccess={onUpdateSuccess} />
           </div>
         </div>
       </div>
@@ -64,7 +58,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
               <button
                 className='btn btn-outline-primary btn-sm ms-2'
                 disabled={isDeleteLoading}
-                onClick={() => setEnableUpdateComment(true)}
+                onClick={showUpdateForm}
               >
                 Edit
               </button>
