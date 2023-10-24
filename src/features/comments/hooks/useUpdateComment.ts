@@ -1,33 +1,43 @@
-import { useForm, useValidationClass } from '../../../lib/useForm';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from '../../../lib/useForm';
 import { Comment, CommentEditorState } from '../types';
 import { useUpdateCommentMutation } from '../api/commentsApi';
 import { useCallback } from 'react';
+import { getErrorMessage } from '../../../api/utils';
 
 type useUpdateCommentProps = {
   commentId: string;
-  defaultValues?: CommentEditorState;
+  schema: yup.ObjectSchema<CommentEditorState>;
+  defaultValues: CommentEditorState;
   onSuccess?: (payload: Comment) => void;
-  onFail?: (error: unknown) => void;
 };
 
-export const useUpdateComment = ({ commentId, defaultValues, onSuccess, onFail }: useUpdateCommentProps) => {
-  const useFormApi = useForm<CommentEditorState>({ defaultValues });
+export const useUpdateComment = ({ commentId, schema, defaultValues, onSuccess }: useUpdateCommentProps) => {
+  const useFormApi = useForm<CommentEditorState>({ resolver: yupResolver(schema), defaultValues });
   const { handleSubmit, formState } = useFormApi;
-  const getValidationClass = useValidationClass(formState);
 
   const [updateComment, mutationState] = useUpdateCommentMutation();
 
-  const onSubmitHandler = useCallback(
-    handleSubmit(async (data) => {
+  const onSubmit = useCallback(
+    handleSubmit(async ({ body }) => {
       try {
-        const payload = await updateComment({ id: commentId, body: data.body }).unwrap();
+        const payload = await updateComment({ id: commentId, body }).unwrap();
         onSuccess?.(payload);
       } catch (err) {
-        onFail?.(err);
+        useFormApi.setError('root.serverError', { message: getErrorMessage(err) });
       }
     }),
-    [handleSubmit, updateComment, commentId, onSuccess, onFail]
+    [handleSubmit, useFormApi.setError, getErrorMessage, updateComment, commentId, onSuccess]
   );
 
-  return { onSubmitHandler, getValidationClass, useFormApi, mutationState };
+  return {
+    useFormApi,
+    mutationState,
+    onSubmit,
+    register: useFormApi.register,
+    errors: formState.errors,
+    isSubmitting: formState.isSubmitting,
+    isSuccess: mutationState.isSuccess,
+  };
 };

@@ -7,5 +7,8 @@ export * from './components/CreateComment';
 export * from './components/UpdateCommentForm';
 
 export * from './hooks/useUpdateComment';
+export * from './hooks/useDeleteComment';
+export * from './hooks/useUpdateComment';
+export * from './hooks/useUpdateFormVisibility';
 
 export * from './types';

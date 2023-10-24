@@ -1,39 +1,36 @@
+import * as yup from 'yup';
 import { TextareaField } from '../../../components/Form';
 import { useAuth } from '../../auth';
 import { useCreateComment } from '../hooks/useCreateComponent';
+import { CommentEditorState } from '../types';
+
+const schema: yup.ObjectSchema<CommentEditorState> = yup.object({
+  body: yup.string().required('Valid comment is required').min(5, 'Should have more than ${min} characters'),
+});
 
 type CreateCommentProps = {
   postId: string;
 };
 
 export const CreateComment = ({ postId }: CreateCommentProps) => {
-  const { user } = useAuth();
-  const onSuccess = () => alert('Comment added successfully! (not actually, just a demo)');
-  const { onSubmitHandler, useFormApi } = useCreateComment({ postId, userId: user?.id ?? '', onSuccess });
-  const { register, formState } = useFormApi;
-  const { errors, isSubmitting } = formState;
+  const { user, userId = '' } = useAuth();
+  const { onSubmit, register, errors, isSubmitting, isSuccess } = useCreateComment({ postId, userId, schema });
 
   return (
     <>
       {user ? (
-        <form onSubmit={onSubmitHandler}>
+        <form onSubmit={onSubmit}>
           <div className='d-flex flex-start w-100'>
-            <img
-              className='rounded-circle me-3'
-              src={user.image ? user.image : `https://image.dummyjson.com/300x300/008080/ffffff?text=${user.firstName}`}
-              width='50'
-              height='50'
-            />
+            <img className='rounded-circle me-3' src={user.image} width='50' height='50' />
             <div className='w-100'>
               <h5 className='mb-0'>{`${user.firstName} ${user.lastName}`}</h5>
               <p className='text-muted'>{`${user.username}`}</p>
               <TextareaField
-                className={`form-control${errors.body ? ' is-invalid' : null}`}
+                {...register('body')}
+                invalidFeedback={errors.body?.message}
+                className={`form-control ${errors.body ? 'is-invalid' : ''}`}
                 placeholder='Write a comment...'
                 label='Write a comment...'
-                {...(errors.body?.type === 'required' && { invalidFeedback: 'Valid comment is required' })}
-                {...(errors.body?.type === 'minLength' && { invalidFeedback: 'Should have more than 5 characters' })}
-                {...register('body', { required: true, minLength: 5 })}
                 disabled={isSubmitting}
                 style={{ height: '100px' }}
               />
@@ -44,8 +41,12 @@ export const CreateComment = ({ postId }: CreateCommentProps) => {
               </div>
             </div>
           </div>
-
-          {errors.root?.serverError && <div className='text-danger'>{errors.root.serverError.message}</div>}
+          {errors.root?.serverError ? (
+            <div className='alert alert-danger mt-2'>{errors.root.serverError.message}</div>
+          ) : null}
+          {isSuccess ? (
+            <div className='alert alert-success mt-2'>Comment added successfully! (not actually, just a demo)</div>
+          ) : null}
         </form>
       ) : null}
     </>

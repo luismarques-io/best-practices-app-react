@@ -1,43 +1,56 @@
-import { useForm } from '../../../lib/useForm';
-import { Comment, CommentEditorState } from '../types';
-import { useCreateCommentMutation } from '../api/commentsApi';
 import { useCallback, useEffect } from 'react';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from '../../../lib/useForm';
+import { useCreateCommentMutation } from '../api/commentsApi';
 import { getErrorMessage } from '../../../api/utils';
+import { CommentEditorState } from '../types';
 
 type useCreateCommentProps = {
   postId: string;
   userId: string;
-  onSuccess?: (payload: Comment) => void;
-  onFail?: (error: unknown) => void;
+  schema: yup.ObjectSchema<CommentEditorState>;
 };
 
-export const useCreateComment = ({ postId, userId, onSuccess, onFail }: useCreateCommentProps) => {
-  const useFormApi = useForm<CommentEditorState>();
-  const { handleSubmit, setError, reset, formState } = useFormApi;
-  const { isSubmitSuccessful } = formState;
+export const useCreateComment = ({ postId, userId, schema }: useCreateCommentProps) => {
+  const useFormApi = useForm<CommentEditorState>({ resolver: yupResolver(schema) });
+  const { handleSubmit, formState } = useFormApi;
 
-  const [createComment] = useCreateCommentMutation();
+  const [createComment, mutationState] = useCreateCommentMutation();
 
-  const onSubmitHandler = useCallback(
+  const onSubmit = useCallback(
     handleSubmit(async ({ body }) => {
       try {
-        const payload = await createComment({ postId, userId, body }).unwrap();
-        onSuccess?.(payload);
+        await createComment({ postId, userId, body }).unwrap();
       } catch (err) {
-        setError('root.serverError', {
-          message: getErrorMessage(err),
-        });
-        onFail?.(err);
+        useFormApi.setError('root.serverError', { message: getErrorMessage(err) });
       }
     }),
-    [handleSubmit, setError, createComment, postId, userId, onSuccess, onFail]
+    [handleSubmit, useFormApi.setError, getErrorMessage, createComment, postId, userId]
   );
 
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset();
+  const handleSuccessfulSubmit = () => {
+    if (formState.isSubmitSuccessful) {
+      useFormApi.reset();
     }
-  }, [isSubmitSuccessful]);
+  };
 
-  return { onSubmitHandler, useFormApi };
+  const handleTypingAfterSuccess = () => {
+    if (formState.isDirty && !mutationState.isUninitialized) {
+      mutationState.reset();
+    }
+  };
+
+  useEffect(handleSuccessfulSubmit, [formState.isSubmitSuccessful]);
+  useEffect(handleTypingAfterSuccess, [formState.isDirty]);
+
+  return {
+    useFormApi,
+    mutationState,
+    onSubmit,
+    register: useFormApi.register,
+    errors: formState.errors,
+    isSubmitting: formState.isSubmitting,
+    isSuccess: mutationState.isSuccess,
+  };
 };

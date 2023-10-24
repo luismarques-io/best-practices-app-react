@@ -37,6 +37,7 @@ const slice = createSlice({
       const { token, ...user } = payload;
       state.token = token;
       state.user = user;
+      state.user.image = user.image || `https://image.dummyjson.com/300x300/008080/ffffff?text=${user.username}`;
       if (state.remember) {
         storage.setToken(token);
       }
@@ -45,6 +46,7 @@ const slice = createSlice({
       const { token, ...user } = payload;
       state.token = token;
       state.user = user;
+      state.user.image = user.image || `https://image.dummyjson.com/300x300/008080/ffffff?text=${user.username}`;
       if (state.remember) {
         storage.setToken(token);
       }
@@ -58,6 +60,7 @@ const slice = createSlice({
     builder.addMatcher(userApi.endpoints.getUser.matchFulfilled, (state, { payload }) => {
       const { password: _, ...user } = payload;
       state.user = user;
+      state.user.image = user.image || `https://image.dummyjson.com/300x300/008080/ffffff?text=${user.username}`;
     });
   },
 });

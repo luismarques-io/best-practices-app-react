@@ -1,7 +1,11 @@
+import * as yup from 'yup';
 import { TextareaField } from '../../../components/Form';
-import { Comment } from '../types';
-import { getErrorMessage } from '../../../api/utils';
+import { Comment, CommentEditorState } from '../types';
 import { useUpdateComment } from '../hooks/useUpdateComment';
+
+const schema: yup.ObjectSchema<CommentEditorState> = yup.object({
+  body: yup.string().required('Valid comment is required').min(5, 'Should have more than ${min} characters'),
+});
 
 type UpdateCommentFormProps = {
   comment: Comment;
@@ -10,35 +14,39 @@ type UpdateCommentFormProps = {
 };
 
 export const UpdateCommentForm = ({ comment, onCancel, onSuccess }: UpdateCommentFormProps) => {
-  const { onSubmitHandler, useFormApi, getValidationClass, mutationState } = useUpdateComment({
+  const { onSubmit, register, errors, isSubmitting, isSuccess } = useUpdateComment({
     commentId: comment.id,
+    schema,
     defaultValues: { body: comment.body },
     onSuccess,
   });
-  const { register } = useFormApi;
-  const { isLoading, error } = mutationState;
 
   return (
     <div className='w-100'>
-      <form onSubmit={onSubmitHandler}>
+      <form onSubmit={onSubmit}>
         <TextareaField
-          className={`form-control${getValidationClass('body')}`}
+          {...register('body')}
+          invalidFeedback={errors.body?.message}
+          className={`form-control ${errors.body ? 'is-invalid' : ''}`}
           placeholder='Write a comment...'
           label='Write a comment...'
-          {...register('body', { required: true })}
-          invalidFeedback={'Valid comment is required.'}
-          disabled={isLoading}
+          disabled={isSubmitting}
           style={{ height: '100px' }}
         />
-        <div className='float-end mt-2'>
-          <button className='btn btn-light btn-sm ms-2' type='button' disabled={isLoading} onClick={onCancel}>
+        <div className='text-end mt-2'>
+          <button className='btn btn-light btn-sm ms-2' type='button' disabled={isSubmitting} onClick={onCancel}>
             Cancel
           </button>
-          <button className='btn btn-primary btn-sm ms-2' type='submit' disabled={isLoading}>
+          <button className='btn btn-primary btn-sm ms-2' type='submit' disabled={isSubmitting}>
             Save
           </button>
         </div>
-        {error ? <div className='text-danger'>{getErrorMessage(error)}</div> : null}
+        {errors.root?.serverError ? (
+          <div className='alert alert-danger mt-2'>{errors.root.serverError.message}</div>
+        ) : null}
+        {isSuccess ? (
+          <div className='alert alert-success mt-2'>Comment added successfully! (not actually, just a demo)</div>
+        ) : null}
       </form>
     </div>
   );

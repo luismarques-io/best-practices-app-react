@@ -5,6 +5,7 @@ import { useLazyGetUserQuery } from '../api/getUserApi';
 
 export const useAuth = () => {
   const user = useAppSelector(selectCurrentUser);
+  const userId = user?.id;
 
   const [getUser, refetchUserResult] = useLazyGetUserQuery();
   const refetchUser = () =>
@@ -12,5 +13,8 @@ export const useAuth = () => {
       ? getUser({ userId: user.id })
       : { isUninitialized: false, isLoading: false, isFetching: false, isSuccess: false, isError: false };
 
-  return useMemo(() => ({ user, refetchUser, refetchUserResult }), [user, refetchUser, refetchUserResult]);
+  return useMemo(
+    () => ({ user, userId, refetchUser, refetchUserResult }),
+    [user, userId, refetchUser, refetchUserResult]
+  );
 };
