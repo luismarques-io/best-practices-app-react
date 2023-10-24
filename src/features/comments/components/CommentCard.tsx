@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Comment } from '../types';
-import { useAuth } from '../../auth';
-import { getErrorMessage } from '../../../api/utils';
+import { useIsCurrentUser } from '../../auth';
 import { UpdateCommentForm } from './UpdateCommentForm';
 import { useDeleteComment } from '../hooks/useDeleteComment';
 import { useUpdateFormVisibility } from '../hooks/useUpdateFormVisibility';
@@ -11,23 +10,17 @@ type CommentCardProps = {
 };
 
 export const CommentCard = ({ comment }: CommentCardProps) => {
-  const { id, body, user } = comment;
-  const { user: currentUser } = useAuth();
-  const isCurrentUser = currentUser?.id === user.id;
-  // const isCurrentUser = true ?? currentUser; // Used to test update and delete of multiple comments
-
+  const { id: commentId, body, user } = comment;
+  const isCurrentUser = useIsCurrentUser(user.id);
   const { isUpdateFormVisible, showUpdateForm, hideUpdateForm } = useUpdateFormVisibility(false);
-
-  const { deleteCommentHandler, mutationState: deleteMutationState } = useDeleteComment({
-    id,
+  const {
+    handleDeleteComment,
+    isLoading: isDeleteLoading,
+    error: deleteError,
+  } = useDeleteComment({
+    commentId,
     onSuccess: () => alert('Deleted! (not actually, just a demo)'),
   });
-  const { isLoading: isDeleteLoading, error: deleteError } = deleteMutationState;
-
-  const onUpdateSuccess = () => {
-    hideUpdateForm();
-    alert('Saved! (not actually, just a demo)');
-  };
 
   if (isUpdateFormVisible) {
     return (
@@ -39,7 +32,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
             </h6>
           </div>
           <div>
-            <UpdateCommentForm comment={comment} onCancel={hideUpdateForm} onSuccess={onUpdateSuccess} />
+            <UpdateCommentForm comment={comment} onCancel={hideUpdateForm} onSuccess={hideUpdateForm} />
           </div>
         </div>
       </div>
@@ -64,7 +57,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
               </button>
               <button
                 className='btn btn-outline-danger btn-sm ms-2'
-                onClick={deleteCommentHandler}
+                onClick={handleDeleteComment}
                 disabled={isDeleteLoading}
               >
                 Delete
@@ -72,7 +65,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
             </div>
           ) : null}
         </div>
-        {deleteError ? <div className='text-danger'>{getErrorMessage(deleteError)}</div> : null}
+        {deleteError ? <div className='alert alert-danger mt-2'>{deleteError}</div> : null}
         <div>{body}</div>
       </div>
     </div>

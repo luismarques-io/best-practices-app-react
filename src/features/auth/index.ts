@@ -2,6 +2,7 @@ export * from './components/LoginForm';
 export * from './components/RegisterForm';
 export * from './hooks/useAuth';
 export * from './hooks/useInitAuthLoginToken';
+export * from './hooks/useIsCurrentUser';
 export * from './api/loginApi';
 export * from './api/registerApi';
 export * from './api/getUserApi';

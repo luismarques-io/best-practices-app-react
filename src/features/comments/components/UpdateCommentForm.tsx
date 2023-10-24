@@ -14,11 +14,14 @@ type UpdateCommentFormProps = {
 };
 
 export const UpdateCommentForm = ({ comment, onCancel, onSuccess }: UpdateCommentFormProps) => {
-  const { onSubmit, register, errors, isSubmitting, isSuccess } = useUpdateComment({
+  const { onSubmit, register, errors, isSubmitting } = useUpdateComment({
     commentId: comment.id,
     schema,
     defaultValues: { body: comment.body },
-    onSuccess,
+    onSuccess: () => {
+      alert('Saved! (not actually, just a demo)');
+      onSuccess();
+    },
   });
 
   return (
@@ -43,9 +46,6 @@ export const UpdateCommentForm = ({ comment, onCancel, onSuccess }: UpdateCommen
         </div>
         {errors.root?.serverError ? (
           <div className='alert alert-danger mt-2'>{errors.root.serverError.message}</div>
-        ) : null}
-        {isSuccess ? (
-          <div className='alert alert-success mt-2'>Comment added successfully! (not actually, just a demo)</div>
         ) : null}
       </form>
     </div>

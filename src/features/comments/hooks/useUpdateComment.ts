@@ -38,6 +38,5 @@ export const useUpdateComment = ({ commentId, schema, defaultValues, onSuccess }
     register: useFormApi.register,
     errors: formState.errors,
     isSubmitting: formState.isSubmitting,
-    isSuccess: mutationState.isSuccess,
   };
 };
