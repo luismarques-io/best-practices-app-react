@@ -15,19 +15,23 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 export const postEditorApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    createPost: builder.mutation<Post, CreatePostDTO>({
-      query: (post) => ({ url: 'posts/add', method: 'POST', body: post }),
+    getPosts: builder.query<PostsResponse, GetPostsDTO>({
+      query: ({ limit = 10, skip = 0 }) => ({ url: `posts?limit=${limit}&skip=${skip}`, method: 'GET' }),
+      providesTags: (result, _error, _arg) =>
+        result ? [...result.posts.map(({ id }) => ({ type: 'Post' as const, id })), 'Post'] : ['Post'],
     }),
-    updatePost: builder.mutation<Post, UpdatePostDTO>({
-      query: (post) => ({ url: `posts/${post.id}`, method: 'PUT', body: post }),
-    }),
-    deletePost: builder.mutation<DeletePostResponse, DeletePostDTO>({
-      query: ({ id }) => ({ url: `posts/${id}`, method: 'DELETE' }),
+    getUserPosts: builder.query<PostsResponse, GetUserPostsDTO>({
+      query: ({ userId, limit = 10, skip = 0 }) => ({
+        url: `users/${userId}/posts?limit=${limit}&skip=${skip}`,
+        method: 'GET',
+      }),
+      providesTags: (result, _error, _arg) =>
+        result ? [...result.posts.map(({ id }) => ({ type: 'Post' as const, id })), 'Post'] : ['Post'],
     }),
     getPost: builder.query<Post, GetPostDTO>({
-      async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {
+      async queryFn(arg, _queryApi, _extraOptions, fetchWithBQ) {
         // Get post
-        const postResult = await fetchWithBQ({ url: `posts/${_arg.postId}`, method: 'GET' });
+        const postResult = await fetchWithBQ({ url: `posts/${arg.postId}`, method: 'GET' });
         if (postResult.error) throw postResult.error;
         const post = postResult.data as Post;
 
@@ -38,15 +42,19 @@ export const postEditorApi = api.injectEndpoints({
           ? { data: { ...post, user: userResult.data as User } as Post }
           : { error: userResult.error as FetchBaseQueryError };
       },
+      providesTags: (_result, _error, arg) => [{ type: 'Post', id: arg.postId }],
     }),
-    getPosts: builder.query<PostsResponse, GetPostsDTO>({
-      query: ({ limit = 10, skip = 0 }) => ({ url: `posts?limit=${limit}&skip=${skip}`, method: 'GET' }),
+    createPost: builder.mutation<Post, CreatePostDTO>({
+      query: (post) => ({ url: 'posts/add', method: 'POST', body: post }),
+      invalidatesTags: ['Post'],
     }),
-    getUserPosts: builder.query<PostsResponse, GetUserPostsDTO>({
-      query: ({ userId, limit = 10, skip = 0 }) => ({
-        url: `users/${userId}/posts?limit=${limit}&skip=${skip}`,
-        method: 'GET',
-      }),
+    updatePost: builder.mutation<Post, UpdatePostDTO>({
+      query: (post) => ({ url: `posts/${post.id}`, method: 'PUT', body: post }),
+      invalidatesTags: (_result, _error, arg) => [{ type: 'Post', id: arg.id }],
+    }),
+    deletePost: builder.mutation<DeletePostResponse, DeletePostDTO>({
+      query: ({ id }) => ({ url: `posts/${id}`, method: 'DELETE' }),
+      invalidatesTags: (_result, _error, arg) => [{ type: 'Post', id: arg.id }],
     }),
   }),
 });
