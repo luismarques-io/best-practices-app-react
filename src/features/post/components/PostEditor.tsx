@@ -1,79 +1,68 @@
-import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks/store';
+import * as yup from 'yup';
 import { InputField, TextareaField } from '../../../components/Form';
-import { PostEditorState } from '../types/postEditor';
-import { selectEditorPost, updateField, selectIsLoading } from '../stores/postEditorSlice';
+import { PostForEditor } from '../types/post';
+import { useUpdatePostEditor } from '../hooks/usePostEditor';
+
+const schema: yup.ObjectSchema<PostForEditor> = yup.object({
+  title: yup.string().required('Valid title is required'),
+  body: yup.string().required('Valid article body is required'),
+  tags: yup
+    .array()
+    .transform(function (value, originalValue) {
+      if (this.isType(value) && value !== null) {
+        return value;
+      }
+      return originalValue ? originalValue.split(',') : [];
+    })
+    .required()
+    .of(yup.string().required()),
+});
 
 type PostEditorProps = {
-  onSubmit: (ev: React.FormEvent) => void;
+  onSubmit: (payload: PostForEditor) => void;
+  defaultValues?: PostForEditor;
 };
 
-export const PostEditor = ({ onSubmit }: PostEditorProps) => {
-  const dispatch = useAppDispatch();
-  const formState = useAppSelector(selectEditorPost);
-  const isLoading = useAppSelector(selectIsLoading);
-  const [wasValidated, setWasValidated] = useState(false);
-
-  const handleChange = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    dispatch(updateField({ name: name as keyof PostEditorState['post'], value }));
-  };
-
-  const isFormValid = (form: HTMLFormElement) => {
-    setWasValidated(true);
-    return form.checkValidity();
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!isFormValid(event.currentTarget)) {
-      return;
-    }
-
-    onSubmit(event);
-  };
+export const PostEditor = ({ onSubmit, defaultValues }: PostEditorProps) => {
+  const { handleSubmit, register, errors, isSubmitting } = useUpdatePostEditor({ schema, defaultValues, onSubmit });
 
   return (
-    <form className={`needs-validation ${wasValidated ? 'was-validated' : ''}`} noValidate onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <InputField
-        disabled={isLoading}
+        {...register('title')}
+        invalidFeedback={errors.title?.message}
+        className={`form-control ${errors.title ? 'is-invalid' : ''}`}
         type='text'
-        className='form-control'
         placeholder='Title *'
-        name='title'
-        onChange={handleChange}
-        value={formState.title || ''}
         label='Title *'
-        invalidFeedback='Title has to be valid.'
-        required
+        disabled={isSubmitting}
       />
       <TextareaField
-        disabled={isLoading}
-        className='form-control'
+        {...register('body')}
+        invalidFeedback={errors.body?.message}
+        className={`form-control ${errors.body ? 'is-invalid' : ''}`}
         placeholder='Write your post *'
-        name='body'
-        onChange={handleChange}
-        value={formState.body || ''}
-        style={{ height: '200px' }}
         label='Write your post *'
-        invalidFeedback='Valid article body is required.'
-        required
+        disabled={isSubmitting}
+        style={{ height: '200px' }}
       />
 
       <InputField
-        disabled={isLoading}
+        {...register('tags')}
+        invalidFeedback={errors.tags?.message}
+        className={`form-control ${errors.tags ? 'is-invalid' : ''}`}
         type='text'
-        className='form-control'
         placeholder='Tags (comma separated)'
-        name='tags'
-        onChange={handleChange}
-        value={formState.tags.toString() || ''}
         label='Tags (comma separated)'
-        invalidFeedback='Tags has to be valid.'
+        disabled={isSubmitting}
       />
 
-      <button disabled={isLoading} className='btn btn-primary py-2 mt-2' type='submit'>
+      <button disabled={isSubmitting} className='btn btn-primary py-2 mt-2' type='submit'>
         Publish Article
       </button>
+      {errors.root?.serverError ? (
+        <div className='alert alert-danger mt-3'>{errors.root.serverError.message}</div>
+      ) : null}
     </form>
   );
 };
