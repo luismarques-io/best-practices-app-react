@@ -10,4 +10,5 @@ export type UserResponse = {
   lastName: string;
   gender: string;
   image: string;
+  password?: string;
 };

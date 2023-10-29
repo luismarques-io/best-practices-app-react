@@ -7,9 +7,12 @@ export type UserSettings = {
   password?: string;
 };
 
-export type SettingsState = {
-  user: UserSettings;
-  isLoading: boolean;
+export type UserSettingsEditor = {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  image?: string;
+  password?: string;
 };
 
 export type UserSettingsResponse = {

@@ -11,17 +11,19 @@ export type User = {
 export type UserForRegistration = {
   username: string;
   email: string;
-  firstName: string | null;
-  lastName: string | null;
+  firstName?: string;
+  lastName?: string;
   gender?: string;
-  image: string | null;
+  image?: string;
   password: string;
+  passwordConfirmation: string;
   terms: boolean;
 };
 
 export type LoginCredentials = {
   username: string;
   password: string;
+  remember?: boolean;
 };
 
 export type LoginTokenCredentials = {
@@ -44,7 +46,6 @@ export type AuthState = {
   user: User | null;
   token: string | null;
   remember: boolean | null;
-  isLoading: boolean;
 };
 
 export type GetUserByIdDTO = {

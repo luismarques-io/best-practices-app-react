@@ -1,127 +1,100 @@
-import { useEffect, useState } from 'react';
+import * as yup from 'yup';
 import { useAuth } from '../../auth';
 import { InputField } from '../../../components/Form';
-import { setUserSettings, updateField, setUpdateStarted, setUpdateComplete } from '../stores/settingsSlice';
-import { SettingsState } from '../types/settings';
-import { useAppDispatch, useAppSelector } from '../../../hooks/store';
-import { selectUserSettings, selectIsLoading } from '../stores/settingsSlice';
-import { useUpdateProfileMutation } from '../api/updateProfile';
+import { UserSettingsEditor } from '../types/settings';
+
+import { useUpdateSettings } from '../hooks/useUpdateSettings';
+import { PageSpinner } from '../../../components/Elements/Spinner/PageSpinner';
+
+const schema: yup.ObjectSchema<UserSettingsEditor> = yup.object({
+  email: yup.string().email('E-mail address has to be valid').required('Valid e-mail address is required'),
+  firstName: yup.string(),
+  lastName: yup.string(),
+  image: yup.string().url('URL of profile picture has to be valid'),
+  password: yup.string(),
+});
 
 export const SettingsForm = () => {
-  const dispatch = useAppDispatch();
-  const formState = useAppSelector(selectUserSettings);
-  const isLoading = useAppSelector(selectIsLoading);
-  const { user, refetchUser } = useAuth();
-  const [wasValidated, setWasValidated] = useState(false);
-  const [updateProfile] = useUpdateProfileMutation();
+  const { userId = '' } = useAuth();
+  const { onSubmit, register, errors, isSubmitting, isSuccess, isQueryLoading, queryError } = useUpdateSettings({
+    userId,
+    schema,
+  });
 
-  useEffect(() => {
-    if (user) {
-      dispatch(setUserSettings(user));
-    }
-  }, [user]);
+  if (queryError) {
+    return <div className='alert alert-danger mt-3'>{queryError}</div>;
+  }
 
-  const handleChange = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateField({ name: name as keyof SettingsState['user'], value }));
-  };
-
-  const isFormValid = (form: HTMLFormElement) => {
-    setWasValidated(true);
-    return form.checkValidity();
-  };
-
-  const clearValidation = () => {
-    setWasValidated(false);
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!isFormValid(event.currentTarget)) {
-      return;
-    }
-
-    try {
-      dispatch(setUpdateStarted());
-      await updateProfile(formState).unwrap();
-      await refetchUser();
-      clearValidation();
-      dispatch(setUpdateComplete());
-      alert('Settings updated!');
-    } catch (err) {
-      dispatch(setUpdateComplete());
-      alert(JSON.stringify(err));
-    }
-  };
+  if (isQueryLoading) {
+    return <PageSpinner />;
+  }
 
   return (
-    <form className={`needs-validation ${wasValidated ? 'was-validated' : ''}`} noValidate onSubmit={handleSubmit}>
+    <form onSubmit={onSubmit}>
       <InputField
-        disabled={isLoading}
+        {...register('image')}
+        invalidFeedback={errors.image?.message}
+        className={`form-control ${errors.image ? 'is-invalid' : ''}`}
+        disabled={isSubmitting}
         type='url'
-        className='form-control'
-        placeholder=''
-        name='image'
-        onChange={handleChange}
-        value={formState.image || ''}
+        placeholder='URL of profile picture'
         label='URL of profile picture'
-        invalidFeedback='URL of profile picture has to be valid.'
       />
 
       <div className='row g-sm-2'>
         <div className='col-sm-6'>
           <InputField
-            disabled={isLoading}
+            {...register('firstName')}
+            invalidFeedback={errors.firstName?.message}
+            className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
+            disabled={isSubmitting}
             type='text'
-            className='form-control'
             placeholder='First name'
-            name='firstName'
-            onChange={handleChange}
-            value={formState.firstName || ''}
             label='First name'
           />
         </div>
 
         <div className='col-sm-6'>
           <InputField
-            disabled={isLoading}
+            {...register('lastName')}
+            invalidFeedback={errors.lastName?.message}
+            className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
+            disabled={isSubmitting}
             type='text'
-            className='form-control'
             placeholder='Last name'
-            name='lastName'
-            onChange={handleChange}
-            value={formState.lastName || ''}
             label='Last name'
           />
         </div>
       </div>
 
       <InputField
-        label='Email *'
-        invalidFeedback='Valid e-mail address is required.'
-        disabled={isLoading}
+        {...register('email')}
+        invalidFeedback={errors.email?.message}
+        className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+        disabled={isSubmitting}
         type='email'
-        className='form-control'
         placeholder='name@example.com'
-        name='email'
-        onChange={handleChange}
-        required
-        value={formState.email || ''}
+        label='Email *'
       />
 
       <InputField
-        disabled={isLoading}
+        {...register('password')}
+        invalidFeedback={errors.password?.message}
+        className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+        disabled={isSubmitting}
         type='password'
-        className='form-control'
         placeholder='Password'
-        name='password'
-        onChange={handleChange}
-        value={formState.password || ''}
         label='Password'
       />
 
-      <button disabled={isLoading} className='btn btn-primary py-2 mt-2' type='submit'>
+      <button disabled={isSubmitting} className='btn btn-primary py-2 mt-2' type='submit'>
         Update Settings
       </button>
+
+      {errors.root?.serverError ? (
+        <div className='alert alert-danger mt-3'>{errors.root.serverError.message}</div>
+      ) : null}
+      {isSuccess ? <div className='alert alert-success mt-3'>Saved! (not actually, just a demo)</div> : null}
     </form>
   );
 };

@@ -1,100 +1,75 @@
-import React from 'react';
-
-import { useAppDispatch } from '../../../hooks/store';
-
-import { rememberAuth } from '../stores/authSlice';
-import { useLoginMutation } from '../api/loginApi';
-import { LoginCredentials } from '../types/auth';
+import * as yup from 'yup';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { LoginCredentials } from '../types/auth';
 import { InputField } from '../../../components/Form';
+import { useLoginUser } from '../hooks/useLoginUser';
+
+const schema: yup.ObjectSchema<LoginCredentials> = yup.object({
+  username: yup.string().required('Valid username is required'),
+  password: yup.string().required('Password is required'),
+  remember: yup.boolean(),
+});
 
 type LoginFormProps = { onSuccess?: () => void };
 
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
-  const dispatch = useAppDispatch();
-  const [wasValidated, setWasValidated] = useState(false);
-  const [formState, setFormState] = useState<LoginCredentials>({
+  // Demo data
+  const defaultValues = {
     username: 'kminchelle',
     password: '0lelplR',
+  };
+
+  const { onSubmit, register, errors, isSubmitting } = useLoginUser({
+    schema,
+    defaultValues,
+    onSuccess,
   });
-  const [login, { isLoading }] = useLoginMutation();
-
-  const handleChange = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleRememberChange = ({ target: { checked } }: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(rememberAuth(checked));
-  };
-
-  const isFormValid = (form: HTMLFormElement) => {
-    setWasValidated(true);
-    return form.checkValidity();
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!isFormValid(event.currentTarget)) {
-      return;
-    }
-
-    try {
-      await login(formState).unwrap();
-      onSuccess?.();
-    } catch (err) {
-      alert(JSON.stringify(err));
-    }
-  };
 
   return (
     <>
       <h1 className='h3 mb-3 fw-normal'>Please sign in</h1>
-      <form className={`needs-validation ${wasValidated ? 'was-validated' : ''}`} noValidate onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         <InputField
-          disabled={isLoading}
+          {...register('username')}
+          invalidFeedback={errors.username?.message}
+          className={`form-control ${errors.username ? 'is-invalid' : ''}`}
+          disabled={isSubmitting}
           type='text'
-          className='form-control'
-          placeholder=''
-          name='username'
-          onChange={handleChange}
-          required
-          value={formState.username || ''}
+          placeholder='Username *'
           label='Username *'
-          invalidFeedback='Valid username is required.'
         />
 
         <InputField
-          disabled={isLoading}
+          {...register('password')}
+          invalidFeedback={errors.password?.message}
+          className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+          disabled={isSubmitting}
           type='password'
-          className='form-control'
           placeholder='Password'
-          name='password'
-          onChange={handleChange}
-          required
-          value={formState.password || ''}
           label='Password *'
-          invalidFeedback='Password is required.'
         />
 
         <div className='form-check text-start my-3'>
           <input
-            disabled={isLoading}
+            {...register('remember')}
+            className={`form-check-input ${errors.remember ? 'is-invalid' : ''}`}
+            disabled={isSubmitting}
             id='checkbox-remember'
-            className='form-check-input'
             type='checkbox'
             name='remember'
-            // defaultChecked={formState.remember}
-            onChange={handleRememberChange}
           />
           <label className='form-check-label' htmlFor='checkbox-remember'>
             Keep me logged-in
           </label>
         </div>
 
-        <button disabled={isLoading} className='btn btn-primary w-100 py-2' type='submit'>
+        <button className='btn btn-primary w-100 py-2 mt-2' type='submit' disabled={isSubmitting}>
           Submit
         </button>
+
+        {errors.root?.serverError ? (
+          <div className='alert alert-danger mt-2'>{errors.root.serverError.message}</div>
+        ) : null}
       </form>
 
       <p className='mt-5 text-center'>
