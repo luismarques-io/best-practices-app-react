@@ -6,7 +6,7 @@ export * from './components/PostsList';
 export * from './components/TagList';
 
 export * from './pages/CreatePost';
-export * from './pages/EditPost';
+export * from './pages/UpdatePost';
 export * from './pages/PostPage';
 export * from './pages/PostsListPage';
 

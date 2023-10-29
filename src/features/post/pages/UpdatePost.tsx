@@ -11,7 +11,7 @@ type QueryParamTypes = Params & {
   postId: string;
 };
 
-export const EditPost = () => {
+export const UpdatePost = () => {
   const { postId } = useParams<{ postId: string }>() as QueryParamTypes;
   const { data, isLoading, isFetching, error } = useGetPostQuery({ postId });
   const [updatePost] = useUpdatePostMutation();

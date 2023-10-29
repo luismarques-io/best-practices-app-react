@@ -3,7 +3,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useAuth } from '../../auth';
 
 const { PostsListPage } = lazily(() => import('../pages/PostsListPage'));
-const { EditPost } = lazily(() => import('../pages/EditPost'));
+const { UpdatePost } = lazily(() => import('../pages/UpdatePost'));
 const { CreatePost } = lazily(() => import('../pages/CreatePost'));
 const { PostPage } = lazily(() => import('../pages/PostPage'));
 const { NotFound } = lazily(() => import('../../../pages/NotFound/NotFound'));
@@ -18,7 +18,7 @@ export const PostRoutes = () => {
       {user ? (
         <>
           <Route path='/add' element={<CreatePost />} />
-          <Route path=':postId/edit' element={<EditPost />} />
+          <Route path=':postId/edit' element={<UpdatePost />} />
         </>
       ) : (
         <>
