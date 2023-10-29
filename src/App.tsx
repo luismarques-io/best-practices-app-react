@@ -6,9 +6,9 @@ import { useInitAuthLoginToken } from './features/auth';
 import { MainLayout } from './layouts/MainLayout';
 
 export function App() {
-  const { loading } = useInitAuthLoginToken();
+  const { isLoading } = useInitAuthLoginToken();
 
-  if (loading) {
+  if (isLoading) {
     return <PageSpinner />;
   }
 
