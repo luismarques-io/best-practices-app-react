@@ -4,7 +4,7 @@ import { PostsList } from '../components/PostsList';
 import { PageSpinner } from '../../../components/Elements/Spinner/PageSpinner';
 import { ErrorPageLayout } from '../../../layouts/ErrorPageLayout';
 import { Pagination } from '../../../components/Pagination/Pagination';
-import { DebouncedInputField } from '../../../components/Form/DebouncedInputField';
+import { DebouncedInputField } from '../../../components/Form';
 import { useSearchPostsWithPagination } from '../hooks/useSearchPostsWithPagination';
 
 export const PostsListPage = () => {
