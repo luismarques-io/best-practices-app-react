@@ -1,7 +1,7 @@
 import { forwardRef, useId } from 'react';
 import { FieldWrapper } from './FieldWrapper';
 
-type InputFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
+export type InputFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   value?: string;
   type?: 'text' | 'email' | 'password' | 'url' | 'number' | 'date' | 'time' | 'datetime-local' | 'hidden';
   id?: string;

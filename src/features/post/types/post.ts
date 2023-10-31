@@ -46,6 +46,7 @@ export type DeletePostDTO = {
 export type GetPostsDTO = {
   limit?: number;
   skip?: number;
+  query?: string;
 };
 
 export type GetUserPostsDTO = GetPostsDTO & {

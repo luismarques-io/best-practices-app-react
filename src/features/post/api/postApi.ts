@@ -16,7 +16,10 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 export const postEditorApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getPosts: builder.query<PostsResponse, GetPostsDTO>({
-      query: ({ limit = 10, skip = 0 }) => ({ url: `posts?limit=${limit}&skip=${skip}`, method: 'GET' }),
+      query: ({ limit = 10, skip = 0, query = '' }) => ({
+        url: `posts/search?q=${query}&limit=${limit}&skip=${skip}`,
+        method: 'GET',
+      }),
       providesTags: (result, _error, _arg) =>
         result ? [...result.posts.map(({ id }) => ({ type: 'Post' as const, id })), 'Post'] : ['Post'],
     }),

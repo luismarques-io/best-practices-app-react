@@ -5,6 +5,9 @@ export * from './components/PostPreview';
 export * from './components/PostsList';
 export * from './components/TagList';
 
+export * from './hooks/usePostEditor';
+export * from './hooks/useSearchPostsWithPagination';
+
 export * from './pages/CreatePost';
 export * from './pages/UpdatePost';
 export * from './pages/PostPage';
