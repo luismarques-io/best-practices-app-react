@@ -1,10 +1,17 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useAppSelector } from '../../../hooks/store';
-import { selectCurrentUser } from '../stores/authSlice';
+import { selectCurrentUser, logout as _logout } from '../stores/authSlice';
+import { useAppDispatch } from '../../../hooks/store';
 
 export const useAuth = () => {
   const user = useAppSelector(selectCurrentUser);
   const userId = user?.id;
 
-  return useMemo(() => ({ user, userId }), [user, userId]);
+  const dispatch = useAppDispatch();
+
+  const logout = useCallback(() => {
+    dispatch(_logout());
+  }, [dispatch]);
+
+  return useMemo(() => ({ user, userId, logout }), [user, userId, logout]);
 };

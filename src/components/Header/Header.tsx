@@ -1,8 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { NavItem } from '../NavItem/NavItem';
 
-import { useAuth, logout, User } from '../../features/auth';
-import { useAppDispatch } from '../../hooks/store';
+import { useAuth, User } from '../../features/auth';
 import { APP_TITLE } from '../../config';
 
 export function Header() {
@@ -31,19 +30,15 @@ function GuestLinks() {
 }
 
 function UserLinks({ user: { firstName, email } }: { user: User }) {
-  const dispatch = useAppDispatch();
+  const { logout } = useAuth();
   const name = firstName || email;
-
-  const handleLogoutClick = () => {
-    dispatch(logout());
-  };
 
   return (
     <>
       <NavItem text={`Hi, ${name}!`} href='/profile' />
       <NavItem text='Create a new post' href='/posts/add' />
       <NavItem text='Settings' href='/settings' />
-      <NavItem type='button' text='Logout' onClick={handleLogoutClick} />
+      <NavItem type='button' text='Logout' onClick={logout} />
     </>
   );
 }
