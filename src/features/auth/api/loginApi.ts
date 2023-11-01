@@ -8,8 +8,6 @@ export const loginApi = api.injectEndpoints({
     }),
     loginToken: builder.mutation<UserResponse, LoginTokenCredentials>({
       query: ({ token }) => ({
-        // TODO: just get user info?
-
         url: 'auth/login',
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
