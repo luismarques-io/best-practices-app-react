@@ -22,10 +22,12 @@ export function Header() {
 
 function GuestLinks() {
   const location = useLocation();
-  const generateLink = (path: string) => {
-    const shouldRedirect = location.pathname !== '/login' && location.pathname !== '/register';
-    return shouldRedirect ? `${path}?redirect=${location.pathname}` : path;
-  };
+  const generateLink = (path: string) =>
+    `${path}${
+      location.pathname !== '/login' && location.pathname !== '/register'
+        ? `?redirect=${location.pathname}`
+        : location.search
+    }`;
 
   return (
     <>
