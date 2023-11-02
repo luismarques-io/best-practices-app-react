@@ -21,7 +21,9 @@ export const DebouncedInputField = forwardRef<HTMLInputElement, DebouncedInputFi
     };
 
     useEffect(() => {
-      onDebouncedChange?.(debouncedValue);
+      if (debouncedValue !== defaultValue) {
+        onDebouncedChange?.(debouncedValue);
+      }
     }, [debouncedValue]);
 
     return <InputField ref={ref} value={value} onChange={handleChange} {...restProps} />;

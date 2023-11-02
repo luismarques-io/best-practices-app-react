@@ -31,7 +31,7 @@ export const useSearchPostsWithPagination = (props: useSearchPostsWithPagination
     } else {
       searchParams.delete('query');
     }
-    setSearchParams(searchParams);
+    setSearchParams(searchParams, { replace: true });
   };
 
   const generatePaginationLink = ({ index, limit }: PaginationLinkData) => {
