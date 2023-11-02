@@ -1,10 +1,13 @@
 export * from './api/postApi';
 
+export * from './components/PostDetails';
+export * from './components/PostEditor';
 export * from './components/PostEditor';
 export * from './components/PostPreview';
 export * from './components/PostsList';
 export * from './components/TagList';
 
+export * from './hooks/useDeletePost';
 export * from './hooks/usePostEditor';
 export * from './hooks/useSearchPostsWithPagination';
 
