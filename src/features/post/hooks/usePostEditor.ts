@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { PostForEditor } from '../types/post';
+import { PostForEditor } from '../types';
 import { useForm } from '../../../lib/useForm';
 import { getErrorMessage } from '../../../api/utils';
 

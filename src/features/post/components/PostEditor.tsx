@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 import { InputField, TextareaField } from '../../../components/Form';
-import { PostForEditor } from '../types/post';
+import { PostForEditor } from '../types';
 import { useUpdatePostEditor } from '../hooks/usePostEditor';
 
 const schema: yup.ObjectSchema<PostForEditor> = yup.object({

@@ -15,4 +15,4 @@ export * from './pages/PostsListPage';
 
 export * from './routes/PostRoutes';
 
-export * from './types/post';
+export * from './types';

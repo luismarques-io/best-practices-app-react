@@ -1,4 +1,4 @@
-import { PostForPreview } from '../types/post';
+import { PostForPreview } from '../types';
 import { PostPreview } from './PostPreview';
 
 type PostsListProps = {

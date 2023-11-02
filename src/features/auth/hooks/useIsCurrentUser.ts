@@ -1,6 +1,6 @@
 import { useAuth } from './useAuth';
 
-export const useIsCurrentUser = (userId: string) => {
-  const { user: currentUser } = useAuth();
-  return currentUser?.id === userId;
+export const useIsCurrentUser = (userId: string | undefined) => {
+  const { user } = useAuth();
+  return Boolean(userId && user && user.id === userId);
 };

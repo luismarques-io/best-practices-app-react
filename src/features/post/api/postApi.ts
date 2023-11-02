@@ -10,7 +10,7 @@ import {
   GetUserPostsDTO,
   DeletePostDTO,
   DeletePostResponse,
-} from '../types/post';
+} from '../types';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 export const postEditorApi = api.injectEndpoints({

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { PostForPreview } from '../types/post';
+import { PostForPreview } from '../types';
 
 type PostPreviewProps = {
   post: PostForPreview;
