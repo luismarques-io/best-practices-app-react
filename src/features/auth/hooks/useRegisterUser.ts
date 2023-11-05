@@ -4,14 +4,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from '../../../lib/useForm';
 import { getErrorMessage } from '../../../api/utils';
 import { useRegisterMutation } from '../api/registerApi';
-import { LoginCredentials, UserForRegistration } from '../types/auth';
+import { LoginCredentials, User, UserForRegistration } from '../types/auth';
 import { useLoginMutation } from '../api/loginApi';
 
 type useRegisterUserProps = {
   autoLoginOnSuccess: boolean;
   schema: yup.ObjectSchema<UserForRegistration>;
   defaultValues: UserForRegistration;
-  onSuccess?: () => void;
+  onSuccess?: (user: User) => void;
 };
 
 export const useRegisterUser = ({ autoLoginOnSuccess, schema, defaultValues, onSuccess }: useRegisterUserProps) => {
@@ -23,12 +23,16 @@ export const useRegisterUser = ({ autoLoginOnSuccess, schema, defaultValues, onS
   const onSubmit = useCallback(
     handleSubmit(async (formState) => {
       try {
-        await userRegister(formState).unwrap();
+        const user = await userRegister(formState).unwrap();
         if (autoLoginOnSuccess) {
-          // TODO: Use a backend that supports login on registration (by returning a token), instead of logging in manually after registration
-          await userLogin({ username: formState.username, password: formState.password } as LoginCredentials).unwrap();
+          const loggedInUser = await userLogin({
+            username: formState.username,
+            password: formState.password,
+          } as LoginCredentials).unwrap();
+          onSuccess?.(loggedInUser);
+        } else {
+          onSuccess?.(user);
         }
-        onSuccess?.();
       } catch (err) {
         useFormApi.setError('root.serverError', { message: getErrorMessage(err) });
       }

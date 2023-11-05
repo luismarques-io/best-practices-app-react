@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from '../../../lib/useForm';
 import { getErrorMessage } from '../../../api/utils';
-import { LoginCredentials } from '../types/auth';
+import { LoginCredentials, User } from '../types/auth';
 import { useLoginMutation } from '../api/loginApi';
 import { rememberAuth } from '../stores/authSlice';
 import { useAppDispatch } from '../../../hooks/store';
@@ -11,7 +11,7 @@ import { useAppDispatch } from '../../../hooks/store';
 type useLoginUserProps = {
   schema: yup.ObjectSchema<LoginCredentials>;
   defaultValues: LoginCredentials;
-  onSuccess?: () => void;
+  onSuccess?: (user: User) => void;
 };
 
 export const useLoginUser = ({ schema, defaultValues, onSuccess }: useLoginUserProps) => {
@@ -24,8 +24,8 @@ export const useLoginUser = ({ schema, defaultValues, onSuccess }: useLoginUserP
     handleSubmit(async ({ remember, ...formState }) => {
       try {
         dispatch(rememberAuth(remember || false));
-        await userLogin(formState).unwrap();
-        onSuccess?.();
+        const user = await userLogin(formState).unwrap();
+        onSuccess?.(user);
       } catch (err) {
         useFormApi.setError('root.serverError', { message: getErrorMessage(err) });
       }

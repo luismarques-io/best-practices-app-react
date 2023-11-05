@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
-import { UserForRegistration } from '../types/auth';
+import { User, UserForRegistration } from '../types/auth';
 import { InputField } from '../../../components/Form';
 import { useRegisterUser } from '../hooks/useRegisterUser';
 
@@ -20,7 +20,7 @@ const schema: yup.ObjectSchema<UserForRegistration> = yup.object({
 });
 
 type RegisterFormProps = {
-  onSuccess?: () => void;
+  onSuccess?: (user: User) => void;
   autoLoginOnSuccess?: boolean;
 };
 
