@@ -31,7 +31,7 @@ describe('SettingsForm', () => {
       expect(screen.getByText(/saved/i)).toBeInTheDocument();
     });
 
-    const { image, email, firstName, lastName } = auth?.user || {};
+    const { image, email, firstName, lastName } = auth?.user ?? {};
 
     expect(screen.getByLabelText(/profile picture/i)).toHaveValue(`${image}${updatedValue}`);
     expect(screen.getByLabelText(/email/i)).toHaveValue(`${email}${updatedValue}`);
