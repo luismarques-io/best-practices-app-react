@@ -4,7 +4,7 @@ import { useForm } from '../../../lib/useForm';
 import { UserSettingsEditor } from '../types/settings';
 import { useCallback, useEffect } from 'react';
 import { getErrorMessage } from '../../../api/utils';
-import { useLazyGetUserByIdQuery, useUpdateProfileMutation } from '../api/userApi';
+import { useLazyGetAuthUserByIdQuery, useUpdateProfileMutation } from '../api/userApi';
 
 type useUpdateSettingsProps = {
   userId: string;
@@ -12,7 +12,7 @@ type useUpdateSettingsProps = {
 };
 
 export const useUpdateSettings = ({ userId, schema }: useUpdateSettingsProps) => {
-  const [GetUserById, queryResult] = useLazyGetUserByIdQuery();
+  const [GetUserById, queryResult] = useLazyGetAuthUserByIdQuery();
   const getDefaultValues = async () => {
     try {
       const { password: _password, ...user } = await GetUserById({ userId }).unwrap();

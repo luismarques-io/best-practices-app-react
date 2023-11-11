@@ -8,11 +8,15 @@ export const userApi = api.injectEndpoints({
       query: ({ userId }: GetUserByIdDTO) => ({ url: `users/${userId}`, method: 'GET' }),
       providesTags: (_result, _error, arg) => [{ type: 'User', id: arg.userId }],
     }),
+    getAuthUserById: builder.query<UserResponse, GetUserByIdDTO>({
+      query: ({ userId }: GetUserByIdDTO) => ({ url: `auth/users/${userId}`, method: 'GET' }),
+      providesTags: (_result, _error, arg) => [{ type: 'User', id: arg.userId }],
+    }),
     updateProfile: builder.mutation<UserSettingsResponse, UserSettings>({
-      query: (user) => ({ url: `users/${user.id}`, method: 'PUT', body: user }),
+      query: (user) => ({ url: `auth/users/${user.id}`, method: 'PUT', body: user }),
       invalidatesTags: (_result, _error, arg) => [{ type: 'User', id: arg.id }],
     }),
   }),
 });
 
-export const { useGetUserByIdQuery, useLazyGetUserByIdQuery, useUpdateProfileMutation } = userApi;
+export const { useGetUserByIdQuery, useLazyGetAuthUserByIdQuery, useUpdateProfileMutation } = userApi;

@@ -12,7 +12,8 @@ export const loginApi = api.injectEndpoints({
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         // TODO: Use a backend that supports refresh tokens, instead of hardcoding the credentials
-        body: { username: 'kminchelle', password: '0lelplR' },
+        // (using loginToken to simulate refresh token in tests)
+        body: { username: 'kminchelle', password: '0lelplR', loginToken: true },
       }),
     }),
   }),
