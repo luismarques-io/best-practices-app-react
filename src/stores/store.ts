@@ -1,18 +1,26 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { PreloadedState, combineReducers, configureStore } from '@reduxjs/toolkit';
 import { APP_TITLE } from '../config';
 import { api } from '../api/api';
-import authReducer from '../features/auth';
+// Importing reducers with the full path because reexporting from src/features/{featureName} causes issues using preloadedState in tests
+import authReducer from '../features/auth/stores/authSlice';
 
-export const store = configureStore({
-  reducer: {
-    [api.reducerPath]: api.reducer,
-    auth: authReducer,
-  },
-  devTools: {
-    name: APP_TITLE,
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
+const rootReducer = combineReducers({
+  [api.reducerPath]: api.reducer,
+  auth: authReducer,
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export const setupStore = (preloadedState?: PreloadedState<RootState>) =>
+  configureStore({
+    reducer: rootReducer,
+    preloadedState,
+    devTools: {
+      name: APP_TITLE,
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
+  });
+
+export const store = setupStore();
+
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof setupStore>;
+export type AppDispatch = AppStore['dispatch'];

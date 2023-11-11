@@ -12,8 +12,9 @@ export * from './hooks/useLoginUser';
 export * from './hooks/useRedirectAfterLogin';
 export * from './hooks/useRegisterUser';
 
+export * from './providers/AuthProvider';
+
 export * from './types/auth';
 
 export * from './stores/authSlice';
-import reducer from './stores/authSlice';
-export default reducer;
+export { default } from './stores/authSlice';
