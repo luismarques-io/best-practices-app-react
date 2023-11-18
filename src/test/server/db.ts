@@ -25,7 +25,12 @@ const models = {
   comment: {
     id: primaryKey(String),
     body: String,
+    postId: String,
     createdAt: Number,
+    user: {
+      id: String,
+      username: String,
+    },
   },
 };
 
