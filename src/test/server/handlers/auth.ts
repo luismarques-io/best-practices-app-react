@@ -65,11 +65,11 @@ export const authHandlers = [
       // TODO: Use /auth/me instead (credentials.loginToken is a boolean to indicate the temporary workaround)
       if (credentials.loginToken) {
         const user = requireAuth(req);
-        return delayedResponse(ctx.json({ user, token: req.headers.get('authorization') }));
+        return delayedResponse(ctx.json({ ...user, token: req.headers.get('authorization') }));
       }
 
       const { user, jwt: token } = authenticate(credentials);
-      return delayedResponse(ctx.json({ user, token }));
+      return delayedResponse(ctx.json({ ...user, token }));
     } catch (error: any) {
       return delayedResponse(ctx.status(400), ctx.json({ message: error?.message || 'Server Error' }));
     }

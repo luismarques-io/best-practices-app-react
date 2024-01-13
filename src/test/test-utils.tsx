@@ -7,13 +7,13 @@ import { setupStore } from '../stores/store';
 import type { AppStore, RootState } from '../stores/store';
 import { AppProvider } from '../providers/AppProvider';
 
-import { userGenerator } from './data-generators';
+import { commentGenerator, postGenerator, userGenerator } from './data-generators';
 import { db } from './server/db';
 import { authenticate, hash } from './server/utils';
 import storage from '../utils/storage';
 
-export const createUser = async (userProperties?: any) => {
-  const user = userGenerator(userProperties);
+export const createUser = async (properties?: any) => {
+  const user = userGenerator(properties);
   db.user.create({ ...user, password: hash(user.password) });
   return user;
 };
@@ -22,6 +22,18 @@ export const loginAsUser = async (credentials: any) => {
   const { user, jwt: token } = authenticate(credentials);
   storage.setToken(token);
   return { user, token };
+};
+
+export const createPost = async (properties?: any) => {
+  const post = postGenerator(properties);
+  const res = await db.post.create(post);
+  return res;
+};
+
+export const createComment = async (properties?: any) => {
+  const comment = commentGenerator(properties);
+  const res = await db.comment.create(comment);
+  return res;
 };
 
 export const waitForLoadingToFinish = async () => {

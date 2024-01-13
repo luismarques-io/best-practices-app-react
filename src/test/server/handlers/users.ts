@@ -34,4 +34,20 @@ export const usersHandlers = [
       return delayedResponse(ctx.status(400), ctx.json({ message: error?.message || 'Server Error' }));
     }
   }),
+
+  rest.get(path.join(API_URL, '/users/:userId'), (req, res, ctx) => {
+    try {
+      const { userId } = req.params;
+      const user = db.user.findFirst({
+        where: {
+          id: {
+            equals: userId as string,
+          },
+        },
+      });
+      return delayedResponse(ctx.json(user));
+    } catch (error: any) {
+      return delayedResponse(ctx.status(400), ctx.json({ message: error?.message || 'Server Error' }));
+    }
+  }),
 ];

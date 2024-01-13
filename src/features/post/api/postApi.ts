@@ -35,12 +35,13 @@ export const postEditorApi = api.injectEndpoints({
       async queryFn(arg, _queryApi, _extraOptions, fetchWithBQ) {
         // Get post
         const postResult = await fetchWithBQ({ url: `posts/${arg.postId}`, method: 'GET' });
-        if (postResult.error) throw postResult.error;
+        if (postResult.error) {
+          return { error: postResult.error };
+        }
         const post = postResult.data as Post;
 
         // Get user
         const userResult = await fetchWithBQ({ url: `users/${post.userId}`, method: 'GET' });
-
         return userResult.data
           ? { data: { ...post, user: userResult.data as User } as Post }
           : { error: userResult.error as FetchBaseQueryError };

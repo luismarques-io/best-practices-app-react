@@ -27,6 +27,7 @@ export const postsHandlers = [
           },
         },
       });
+
       return delayedResponse(ctx.json(result));
     } catch (error: any) {
       return delayedResponse(ctx.status(400), ctx.json({ message: error?.message || 'Server Error' }));
@@ -61,6 +62,9 @@ export const postsHandlers = [
           },
         },
       });
+      if (!result) {
+        return delayedResponse(ctx.status(404), ctx.json({ message: `Post with id '${postId}' not found` }));
+      }
       return delayedResponse(ctx.json(result));
     } catch (error: any) {
       return delayedResponse(ctx.status(400), ctx.json({ message: error?.message || 'Server Error' }));

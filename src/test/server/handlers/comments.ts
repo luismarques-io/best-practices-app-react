@@ -17,18 +17,26 @@ type CreateCommentBody = {
 };
 
 export const commentsHandlers = [
-  rest.get(path.join(API_URL, '/comments/:postId'), async (req, res, ctx) => {
+  rest.get(path.join(API_URL, '/comments/post/:postId'), async (req, res, ctx) => {
     try {
       const { postId } = req.params;
       // const limit = req.url.searchParams.get('limit') || '';
       // const skip = req.url.searchParams.get('skip') || '';
-      const result = db.comment.findMany({
+      const comments = db.comment.findMany({
         where: {
           postId: {
             equals: postId as string,
           },
         },
       });
+
+      const result = {
+        comments,
+        total: comments.length,
+        skip: 0,
+        limit: comments.length,
+      };
+
       return delayedResponse(ctx.json(result));
     } catch (error: any) {
       return delayedResponse(ctx.status(400), ctx.json({ message: error?.message || 'Server Error' }));
