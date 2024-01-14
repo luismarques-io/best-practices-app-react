@@ -16,7 +16,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>((props: 
 
   return (
     <FieldWrapper labelFor={id} label={label} invalidFeedback={invalidFeedback}>
-      <input ref={ref} id={id} type={type} className={`form-control ${className}`} value={value} {...restProps} />
+      <input ref={ref} id={id} type={type} className={`form-control ${className || ''}`} value={value} {...restProps} />
     </FieldWrapper>
   );
 });

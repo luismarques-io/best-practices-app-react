@@ -16,14 +16,10 @@ type CreatePostBody = {
 export const postsHandlers = [
   rest.get(path.join(API_URL, 'posts/search'), async (req, res, ctx) => {
     try {
-      const { userId } = req.params;
       const query = req.url.searchParams.get('q') || '';
       const limit = Number(req.url.searchParams.get('limit') || 0);
       const skip = Number(req.url.searchParams.get('skip') || 0);
       const where = {
-        userId: {
-          equals: userId as string,
-        },
         body: {
           contains: query,
         },
