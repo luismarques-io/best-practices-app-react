@@ -3,6 +3,7 @@ import { postGenerator } from '@/test/data-generators';
 import { renderWithProviders, screen, userEvent, waitFor } from '@/test/test-utils';
 
 import { CreatePost } from '../CreatePost';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -27,14 +28,15 @@ describe('CreatePost', () => {
     const newPost = postGenerator();
     await renderWithProviders(<CreatePost />);
 
-    userEvent.type(screen.getByLabelText(/title/i), newPost.title);
-    userEvent.type(screen.getByLabelText(/write your post/i), newPost.body);
-    userEvent.type(screen.getByLabelText(/tags/i), newPost.tags.join(','));
-    userEvent.click(screen.getByRole('button', { name: /publish/i }));
+    act(() => {
+      userEvent.type(screen.getByLabelText(/title/i), newPost.title);
+      userEvent.type(screen.getByLabelText(/write your post/i), newPost.body);
+      userEvent.type(screen.getByLabelText(/tags/i), newPost.tags.join(','));
+      userEvent.click(screen.getByRole('button', { name: /publish/i }));
+    });
 
     await waitFor(() => {
       expect(navigateMock).toHaveBeenCalledTimes(1);
-      // expect(navigateMock).toHaveBeenCalledWith(`/posts/${newPost.id}`);
     });
   });
 });

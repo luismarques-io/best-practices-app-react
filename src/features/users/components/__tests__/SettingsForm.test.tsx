@@ -17,13 +17,12 @@ describe('SettingsForm', () => {
     const { auth } = await renderWithProviders(<SettingsForm />);
     const updatedValue = '-Updated';
 
-    userEvent.type(screen.getByLabelText(/profile picture/i), updatedValue);
-    userEvent.type(screen.getByLabelText(/email/i), updatedValue);
-    userEvent.type(screen.getByLabelText(/password/i), updatedValue);
-    userEvent.type(screen.getByLabelText(/first name/i), updatedValue);
-    userEvent.type(screen.getByLabelText(/last name/i), updatedValue);
-
-    await act(async () => {
+    act(() => {
+      userEvent.type(screen.getByLabelText(/profile picture/i), updatedValue);
+      userEvent.type(screen.getByLabelText(/email/i), updatedValue);
+      userEvent.type(screen.getByLabelText(/password/i), updatedValue);
+      userEvent.type(screen.getByLabelText(/first name/i), updatedValue);
+      userEvent.type(screen.getByLabelText(/last name/i), updatedValue);
       userEvent.click(screen.getByRole('button', { name: /update settings/i }));
     });
 

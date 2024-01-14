@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { createPost, createUser, renderWithProviders, screen, userEvent, waitFor } from '@/test/test-utils';
+import { act, createPost, createUser, renderWithProviders, screen, userEvent, waitFor } from '@/test/test-utils';
 
 import { PostRoutes } from '../../routes/PostRoutes';
 
@@ -37,10 +37,12 @@ describe('UpdatePost', () => {
     const newPost = await createPost({ userId: newUser.id });
     await renderWithProviders(<PostRoutes />, { route: `/${newPost.id}/edit`, user: newUser });
 
-    userEvent.type(screen.getByLabelText(/title/i), newPost.title);
-    userEvent.type(screen.getByLabelText(/write your post/i), newPost.body);
-    userEvent.type(screen.getByLabelText(/tags/i), newPost.tags.join(','));
-    userEvent.click(screen.getByRole('button', { name: /publish/i }));
+    act(() => {
+      userEvent.type(screen.getByLabelText(/title/i), newPost.title);
+      userEvent.type(screen.getByLabelText(/write your post/i), newPost.body);
+      userEvent.type(screen.getByLabelText(/tags/i), newPost.tags.join(','));
+      userEvent.click(screen.getByRole('button', { name: /publish/i }));
+    });
 
     await waitFor(() => {
       expect(navigateMock).toHaveBeenCalledWith(`/posts/${newPost.id}`);
