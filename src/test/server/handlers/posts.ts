@@ -17,16 +17,26 @@ export const postsHandlers = [
   rest.get(path.join(API_URL, 'posts/search'), async (req, res, ctx) => {
     try {
       const { userId } = req.params;
-      // const query = req.url.searchParams.get('q') || '';
-      // const limit = req.url.searchParams.get('limit') || '';
-      // const skip = req.url.searchParams.get('skip') || '';
-      const result = db.post.findMany({
-        where: {
-          userId: {
-            equals: userId as string,
-          },
+      const query = req.url.searchParams.get('q') || '';
+      const limit = Number(req.url.searchParams.get('limit') || 0);
+      const skip = Number(req.url.searchParams.get('skip') || 0);
+      const where = {
+        userId: {
+          equals: userId as string,
         },
-      });
+        body: {
+          contains: query,
+        },
+      };
+      const posts = db.post.findMany({ where, take: limit, skip });
+      const total = db.post.count({ where });
+
+      const result = {
+        posts,
+        total,
+        skip,
+        limit,
+      };
 
       return delayedResponse(ctx.json(result));
     } catch (error: any) {
@@ -37,15 +47,23 @@ export const postsHandlers = [
   rest.get(path.join(API_URL, 'users/:userId/posts/'), async (req, res, ctx) => {
     try {
       const { userId } = req.params;
-      // const limit = req.url.searchParams.get('limit') || '';
-      // const skip = req.url.searchParams.get('skip') || '';
-      const result = db.post.findMany({
-        where: {
-          userId: {
-            equals: userId as string,
-          },
+      const limit = Number(req.url.searchParams.get('limit') || 0);
+      const skip = Number(req.url.searchParams.get('skip') || 0);
+      const where = {
+        userId: {
+          equals: userId as string,
         },
-      });
+      };
+      const posts = db.post.findMany({ where, take: limit, skip });
+      const total = db.post.count({ where });
+
+      const result = {
+        posts,
+        total,
+        skip,
+        limit,
+      };
+
       return delayedResponse(ctx.json(result));
     } catch (error: any) {
       return delayedResponse(ctx.status(400), ctx.json({ message: error?.message || 'Server Error' }));

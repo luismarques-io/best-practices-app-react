@@ -20,21 +20,21 @@ export const commentsHandlers = [
   rest.get(path.join(API_URL, '/comments/post/:postId'), async (req, res, ctx) => {
     try {
       const { postId } = req.params;
-      // const limit = req.url.searchParams.get('limit') || '';
-      // const skip = req.url.searchParams.get('skip') || '';
-      const comments = db.comment.findMany({
-        where: {
-          postId: {
-            equals: postId as string,
-          },
+      const limit = Number(req.url.searchParams.get('limit') || 0);
+      const skip = Number(req.url.searchParams.get('skip') || 0);
+      const where = {
+        postId: {
+          equals: postId as string,
         },
-      });
+      };
+      const comments = db.comment.findMany({ where, take: limit, skip });
+      const total = db.comment.count({ where });
 
       const result = {
         comments,
-        total: comments.length,
-        skip: 0,
-        limit: comments.length,
+        total,
+        skip,
+        limit,
       };
 
       return delayedResponse(ctx.json(result));

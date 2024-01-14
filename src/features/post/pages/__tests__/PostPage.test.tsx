@@ -56,24 +56,23 @@ describe('PostPage', () => {
     expect(editButton).toBeInTheDocument();
     expect(deleteButton).toBeInTheDocument();
 
-    await act(async () => {
+    act(() => {
       userEvent.click(editButton);
     });
 
-    await waitFor(async () => {
+    waitFor(() => {
       expect(navigate).toHaveBeenCalledWith(`/posts/${newPost.id}/edit`, expect.anything());
       navigate.mockRestore();
     });
 
-    await act(async () => {
+    act(() => {
       userEvent.click(deleteButton);
     });
 
-    await waitFor(async () => {
+    waitFor(() => {
       expect(window.alert).toHaveBeenCalledTimes(1);
       expect(navigate).toHaveBeenCalledWith(`/posts`);
       navigate.mockRestore();
     });
   });
-  // TODO: create separate file for comments in comments feature???
 });

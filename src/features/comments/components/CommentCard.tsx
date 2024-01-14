@@ -40,7 +40,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
   }
 
   return (
-    <div className='card mb-3 bg-body-tertiary'>
+    <div className='card mb-3 bg-body-tertiary comment'>
       <div className='card-body'>
         <div className='d-flex'>
           <h6 className='mb-2 mt-1 flex-grow-1'>
