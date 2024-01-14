@@ -14,8 +14,8 @@ export const NavItem = (props: NavItemProps) => {
 
   return (
     <li className='nav-item'>
-      <Element className='nav-link' to={to ? to : ''} {...restProps}>
-        {children || text}
+      <Element className='nav-link' to={to ?? ''} {...restProps}>
+        {children ?? text}
       </Element>
     </li>
   );

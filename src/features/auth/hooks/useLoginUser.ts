@@ -23,7 +23,7 @@ export const useLoginUser = ({ schema, defaultValues, onSuccess }: useLoginUserP
   const onSubmit = useCallback(
     handleSubmit(async ({ remember, ...formState }) => {
       try {
-        dispatch(rememberAuth(remember || false));
+        dispatch(rememberAuth(remember ?? false));
         const user = await userLogin(formState).unwrap();
         onSuccess?.(user);
       } catch (err) {

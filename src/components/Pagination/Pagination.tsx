@@ -24,7 +24,7 @@ export function Pagination({
   total,
   onPageChange,
   generateLink = generatePaginationLink,
-}: PaginationProps) {
+}: Readonly<PaginationProps>) {
   const pages = Math.ceil(total / limit);
   const currentPage = Math.ceil(skip / limit) + 1;
 

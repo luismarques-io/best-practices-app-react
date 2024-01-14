@@ -12,11 +12,12 @@ export type InputFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>((props: InputFieldProps, ref) => {
   const { type = 'text', label, className, invalidFeedback, value, ...restProps } = props;
-  const id = props.id ? props.id : useId();
+  const uniqueId = useId();
+  const id = props.id ? props.id : uniqueId;
 
   return (
     <FieldWrapper labelFor={id} label={label} invalidFeedback={invalidFeedback}>
-      <input ref={ref} id={id} type={type} className={`form-control ${className || ''}`} value={value} {...restProps} />
+      <input ref={ref} id={id} type={type} className={`form-control ${className ?? ''}`} value={value} {...restProps} />
     </FieldWrapper>
   );
 });

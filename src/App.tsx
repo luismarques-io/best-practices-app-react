@@ -3,10 +3,8 @@ import { MainLayout } from '@/layouts/MainLayout';
 
 export function App() {
   return (
-    <>
-      <MainLayout>
-        <AppRoutes />
-      </MainLayout>
-    </>
+    <MainLayout>
+      <AppRoutes />
+    </MainLayout>
   );
 }

@@ -38,12 +38,9 @@ describe('PostsListPage', () => {
   });
 
   it('should search posts', async () => {
-    const postsPerPage = 10;
     const totalPosts = 20;
-    const totalPages = Math.ceil(totalPosts / postsPerPage);
     const newUser = await createUser();
-    const posts = await Promise.all(Array.from({ length: totalPosts }).map(() => createPost({ userId: newUser.id })));
-    Array.from({ length: totalPages }).map((_, i) => posts.slice(i * postsPerPage, i * postsPerPage + postsPerPage));
+    await Promise.all(Array.from({ length: totalPosts }).map(() => createPost({ userId: newUser.id })));
     const newPost = await createPost({ userId: newUser.id, title: 'My post', body: 'My post body' });
 
     const ui = await renderWithProviders(<PostsListPage />);

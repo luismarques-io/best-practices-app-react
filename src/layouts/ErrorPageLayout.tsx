@@ -18,9 +18,7 @@ export const ErrorPageLayout = ({ children, headTitle, title, message, button }:
       <ContentLayout title={title}>
         <h2 className='lead'>{message}</h2>
         {children}
-        {button ? (
-          button
-        ) : (
+        {button ?? (
           <Link to='/' className='btn btn-link p-0 mb-2 mt-3'>
             Go back to home
           </Link>

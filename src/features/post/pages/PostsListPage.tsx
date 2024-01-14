@@ -11,6 +11,26 @@ export const PostsListPage = () => {
   const { handleSearchChange, posts, query, skip, limit, total, isFetching, isLoading, error, generatePaginationLink } =
     useSearchPostsWithPagination();
 
+  const renderContent = () => {
+    switch (true) {
+      case isFetching || isLoading:
+        return <PageSpinner />;
+      case !!error:
+        return <ErrorPageLayout title='Error loading posts' message={error} />;
+      case !posts.length:
+        return <p className='mt-5 text-center text-body-secondary'>No posts found</p>;
+      default:
+        return (
+          <>
+            <div className='mt-3'>
+              <PostsList posts={posts} />
+            </div>
+            <Pagination limit={limit} skip={skip} total={total} generateLink={generatePaginationLink} />
+          </>
+        );
+    }
+  };
+
   return (
     <>
       <Head title={'Posts'} />
@@ -23,20 +43,7 @@ export const PostsListPage = () => {
             onDebouncedChange={handleSearchChange}
           />
         </div>
-        {isFetching || isLoading ? (
-          <PageSpinner />
-        ) : error ? (
-          <ErrorPageLayout title='Error loading posts' message={error} />
-        ) : !posts?.length ? (
-          <p className='mt-5 text-center text-body-secondary'>No posts found</p>
-        ) : (
-          <>
-            <div className='mt-3'>
-              <PostsList posts={posts} />
-            </div>
-            <Pagination limit={limit} skip={skip} total={total} generateLink={generatePaginationLink} />
-          </>
-        )}
+        {renderContent()}
       </ContentLayout>
     </>
   );

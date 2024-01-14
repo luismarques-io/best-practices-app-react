@@ -1,4 +1,4 @@
-export function TagList({ tags }: { tags: string[] }) {
+export function TagList({ tags }: Readonly<{ tags: string[] }>) {
   return (
     <>
       {tags.map((tag) => (

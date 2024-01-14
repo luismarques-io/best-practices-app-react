@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook } from '@/test/test-utils';
 import { Provider, useDispatch } from 'react-redux';
 import { AppDispatch, setupStore } from '@/stores/store';
 import { userGenerator } from '@/test/data-generators';

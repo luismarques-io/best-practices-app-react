@@ -17,7 +17,7 @@ export const useUpdatePostEditor = ({ schema, defaultValues, onSubmit }: useUpda
   const handleSubmit = useCallback(
     useFormApi.handleSubmit(async (payload) => {
       try {
-        await onSubmit(payload);
+        onSubmit(payload);
       } catch (err) {
         useFormApi.setError('root.serverError', { message: getErrorMessage(err) });
       }

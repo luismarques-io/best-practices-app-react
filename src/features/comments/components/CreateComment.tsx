@@ -21,7 +21,7 @@ export const CreateComment = ({ postId }: CreateCommentProps) => {
       {user ? (
         <form onSubmit={onSubmit}>
           <div className='d-flex flex-start w-100'>
-            <img className='rounded-circle me-3' src={user.image} width='50' height='50' />
+            <img className='rounded-circle me-3' src={user.image} width='50' height='50' alt={user.username} />
             <div className='w-100'>
               <h5 className='mb-0'>{`${user.firstName} ${user.lastName}`}</h5>
               <p className='text-muted'>{`${user.username}`}</p>

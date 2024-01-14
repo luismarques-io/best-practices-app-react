@@ -12,7 +12,7 @@ export const PostPreview = ({ post: { id, title, body, url } }: PostPreviewProps
         <h3 className='mb-0'>{title}</h3>
         <div className='mb-1 text-muted'></div>
         <p className='card-text mb-auto text-truncate'>{body}</p>
-        <Link to={url ? url : `${id}`} className='stretched-link'>
+        <Link to={url ?? `${id}`} className='stretched-link'>
           Continue reading
         </Link>
       </div>

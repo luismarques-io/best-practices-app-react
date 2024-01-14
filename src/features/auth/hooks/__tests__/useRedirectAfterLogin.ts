@@ -1,7 +1,5 @@
-import { renderHook } from '@testing-library/react';
-import { act } from '@testing-library/react';
-import { useNavigate } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
+import { renderHook, act } from '@/test/test-utils';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useRedirectAfterLogin } from '../useRedirectAfterLogin';
 
 jest.mock('react-router-dom', () => ({

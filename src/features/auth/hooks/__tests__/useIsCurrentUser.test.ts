@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from '@/test/test-utils';
 import { useAuth } from '../useAuth';
 import { useIsCurrentUser } from '../useIsCurrentUser';
 
