@@ -4,35 +4,17 @@ import { act } from 'react-dom/test-utils';
 
 window.alert = jest.fn();
 
-const renderPost = async ({ authenticateUser } = { authenticateUser: false }) => {
-  const otherUser = await createUser();
-  const currentUser = await createUser();
-  const newPost = await createPost({ userId: currentUser.id });
-  const newComment = await createComment({
-    postId: newPost.id,
-    user: { id: currentUser.id, username: currentUser.username },
-  });
-  const numberOfOtherUserComments = 3;
-  const otherUserComments = await Promise.all(
-    Array.from({ length: numberOfOtherUserComments }).map(() =>
-      createComment({ postId: newPost.id, user: { id: otherUser.id, username: otherUser.username } })
-    )
-  );
-  const comments = [newComment, ...otherUserComments];
-
-  const utils = await renderWithProviders(<AppRoutes />, {
-    route: `/posts/${newPost.id}`,
-    user: authenticateUser ? currentUser : null,
-  });
-
-  return { ...utils, otherUser, currentUser, newPost, comments, newComment, otherUserComments };
-};
-
 describe('PostPage Comments', () => {
   it('should render public comment list with working pagination (2 items p/ page)', async () => {
-    const { comments, ...ui } = await renderPost({
-      authenticateUser: false,
-    });
+    const newUser = await createUser();
+    const newPost = await createPost({ userId: newUser.id });
+    const comments = await Promise.all(
+      Array.from({ length: 4 }).map(() =>
+        createComment({ postId: newPost.id, user: { id: newUser.id, username: newUser.username } })
+      )
+    );
+
+    const ui = await renderWithProviders(<AppRoutes />, { route: `/posts/${newPost.id}`, user: null });
 
     expect(ui.queryAllByText(/post comment/i).length).toBe(0);
     expect(ui.getByText(comments[0].body)).toBeInTheDocument();
