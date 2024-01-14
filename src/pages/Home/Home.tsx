@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
-import { Head } from '../../components/Head/Head';
-import { ContentLayout } from '../../layouts/ContentLayout';
+import { Head } from '@/components/Head/Head';
+import { ContentLayout } from '@/layouts/ContentLayout';
 
 export function Home() {
   return (

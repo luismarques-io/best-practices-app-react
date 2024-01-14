@@ -1,4 +1,4 @@
-import { User } from '../../auth';
+import { User } from '@/features/auth';
 
 export type Post = {
   id: string;

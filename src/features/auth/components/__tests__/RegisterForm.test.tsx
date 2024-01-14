@@ -1,5 +1,5 @@
-import { userGenerator } from '../../../../test/data-generators';
-import { renderWithProviders, screen, userEvent, waitFor } from '../../../../test/test-utils';
+import { userGenerator } from '@/test/data-generators';
+import { renderWithProviders, screen, userEvent, waitFor } from '@/test/test-utils';
 
 import { RegisterForm } from '../RegisterForm';
 

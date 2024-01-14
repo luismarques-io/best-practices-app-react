@@ -1,5 +1,5 @@
 import { SettingsForm } from '../SettingsForm';
-import { renderWithProviders, screen, userEvent, waitFor, act } from '../../../../test/test-utils';
+import { renderWithProviders, screen, userEvent, waitFor, act } from '@/test/test-utils';
 
 describe('SettingsForm', () => {
   it('should render settings', async () => {

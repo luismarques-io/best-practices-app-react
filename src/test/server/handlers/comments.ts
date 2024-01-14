@@ -2,7 +2,7 @@ import { rest } from 'msw';
 import path from 'path';
 import { nanoid } from 'nanoid';
 
-import { API_URL } from '../../../config';
+import { API_URL } from '@/config';
 
 import { db, persistDb } from '../db';
 import { requireAuth, delayedResponse } from '../utils';

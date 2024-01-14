@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Comment } from '../types';
-import { useIsCurrentUser } from '../../auth';
+import { useIsCurrentUser } from '@/features/auth';
 import { UpdateCommentForm } from './UpdateCommentForm';
 import { useDeleteComment } from '../hooks/useDeleteComment';
 import { useUpdateFormVisibility } from '../hooks/useUpdateFormVisibility';

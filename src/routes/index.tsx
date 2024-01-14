@@ -1,5 +1,5 @@
 import { useRoutes } from 'react-router-dom';
-import { useAuth } from '../features/auth';
+import { useAuth } from '@/features/auth';
 
 import { commonRoutes } from './common';
 import { publicRoutes } from './public';

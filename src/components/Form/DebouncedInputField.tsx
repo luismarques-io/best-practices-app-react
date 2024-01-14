@@ -1,6 +1,6 @@
 import { ChangeEvent, forwardRef, useEffect, useState } from 'react';
 import { InputField, InputFieldProps } from '.';
-import { useDebounce } from '../../hooks/useDebounce';
+import { useDebounce } from '@/hooks/useDebounce';
 
 type DebouncedInputFieldProps = InputFieldProps & {
   defaultValue?: string;

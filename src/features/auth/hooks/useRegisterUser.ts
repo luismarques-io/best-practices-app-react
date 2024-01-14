@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from '../../../lib/useForm';
-import { getErrorMessage } from '../../../api/utils';
+import { useForm } from '@/lib/useForm';
+import { getErrorMessage } from '@/api/utils';
 import { useRegisterMutation } from '../api/registerApi';
 import { LoginCredentials, User, UserForRegistration } from '../types/auth';
 import { useLoginMutation } from '../api/loginApi';

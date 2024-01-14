@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import omit from 'lodash/omit';
 import { RestRequest, createResponseComposition, context } from 'msw';
 
-import { JWT_SECRET } from '../../config';
+import { JWT_SECRET } from '@/config';
 
 import { db } from './db';
 

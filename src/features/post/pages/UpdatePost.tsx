@@ -1,11 +1,11 @@
 import { PostEditor, PostForEditor } from '..';
 import { Params, useNavigate, useParams } from 'react-router-dom';
-import { ContentLayout } from '../../../layouts/ContentLayout';
-import { Head } from '../../../components/Head/Head';
+import { ContentLayout } from '@/layouts/ContentLayout';
+import { ErrorPageLayout } from '@/layouts/ErrorPageLayout';
+import { Head } from '@/components/Head/Head';
 import { useGetPostQuery, useUpdatePostMutation } from '../api/postApi';
-import { ErrorPageLayout } from '../../../layouts/ErrorPageLayout';
-import { PageSpinner } from '../../../components/Elements/Spinner/PageSpinner';
-import { getErrorMessage } from '../../../api/utils';
+import { PageSpinner } from '@/components/Elements/Spinner/PageSpinner';
+import { getErrorMessage } from '@/api/utils';
 
 type QueryParamTypes = Params & {
   postId: string;

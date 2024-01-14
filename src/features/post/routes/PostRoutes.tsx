@@ -1,12 +1,12 @@
 import { lazily } from 'react-lazily';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { useAuth } from '../../auth';
+import { useAuth } from '@/features/auth';
 
 const { PostsListPage } = lazily(() => import('../pages/PostsListPage'));
 const { UpdatePost } = lazily(() => import('../pages/UpdatePost'));
 const { CreatePost } = lazily(() => import('../pages/CreatePost'));
 const { PostPage } = lazily(() => import('../pages/PostPage'));
-const { NotFound } = lazily(() => import('../../../pages/NotFound/NotFound'));
+const { NotFound } = lazily(() => import('@/pages/NotFound/NotFound'));
 
 export const PostRoutes = () => {
   const { user } = useAuth();

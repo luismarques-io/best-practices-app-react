@@ -1,8 +1,8 @@
 import { lazily } from 'react-lazily';
 import { Navigate } from 'react-router-dom';
-import { User } from '../features/auth';
+import { User } from '@/features/auth';
 
-const { Settings } = lazily(() => import('../pages/Settings/Settings'));
+const { Settings } = lazily(() => import('@/pages/Settings/Settings'));
 
 export const protectedRoutes = ({ user }: { user: User | null }) => [
   {

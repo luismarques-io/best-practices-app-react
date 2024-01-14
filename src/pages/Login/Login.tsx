@@ -1,5 +1,5 @@
-import { LoginForm, useRedirectAfterLogin } from '../../features/auth';
-import { Head } from '../../components/Head/Head';
+import { LoginForm, useRedirectAfterLogin } from '@/features/auth';
+import { Head } from '@/components/Head/Head';
 
 export function Login() {
   const redirectAfterLogin = useRedirectAfterLogin();

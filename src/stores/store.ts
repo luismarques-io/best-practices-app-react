@@ -1,8 +1,8 @@
 import { PreloadedState, combineReducers, configureStore } from '@reduxjs/toolkit';
-import { APP_TITLE } from '../config';
-import { api } from '../api/api';
+import { APP_TITLE } from '@/config';
+import { api } from '@/api/api';
 // Importing reducers with the full path because reexporting from src/features/{featureName} causes issues using preloadedState in tests
-import authReducer from '../features/auth/stores/authSlice';
+import authReducer from '@/features/auth/stores/authSlice';
 
 const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,

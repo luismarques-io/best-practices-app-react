@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { createPost, createUser, renderWithProviders, screen, userEvent, waitFor } from '../../../../test/test-utils';
+import { createPost, createUser, renderWithProviders, screen, userEvent, waitFor } from '@/test/test-utils';
 
 import { PostRoutes } from '../../routes/PostRoutes';
 

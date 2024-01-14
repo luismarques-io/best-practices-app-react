@@ -1,11 +1,11 @@
 import { useSearchParams } from 'react-router-dom';
-import { getErrorMessage } from '../../../api/utils';
-import { PageSpinner } from '../../../components/Elements/Spinner/PageSpinner';
-import { ErrorPageLayout } from '../../../layouts/ErrorPageLayout';
+import { getErrorMessage } from '@/api/utils';
+import { PageSpinner } from '@/components/Elements/Spinner/PageSpinner';
+import { ErrorPageLayout } from '@/layouts/ErrorPageLayout';
 import { useGetCommentsQuery } from '../api/commentsApi';
 import { CommentsResponse } from '../types';
 import { CommentCard } from './CommentCard';
-import { Pagination } from '../../../components/Pagination/Pagination';
+import { Pagination } from '@/components/Pagination/Pagination';
 
 type CommentsListProps = {
   postId: string;

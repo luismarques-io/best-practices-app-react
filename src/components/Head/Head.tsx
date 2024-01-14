@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { APP_TITLE } from '../../config';
+import { APP_TITLE } from '@/config';
 
 type HeadProps = {
   title?: string;

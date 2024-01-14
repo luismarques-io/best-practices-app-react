@@ -1,9 +1,9 @@
 import { PostEditor, PostForEditor } from '..';
 import { useCreatePostMutation } from '../api/postApi';
-import { useAuth } from '../../auth';
+import { useAuth } from '@/features/auth';
 import { useNavigate } from 'react-router-dom';
-import { ContentLayout } from '../../../layouts/ContentLayout';
-import { Head } from '../../../components/Head/Head';
+import { ContentLayout } from '@/layouts/ContentLayout';
+import { Head } from '@/components/Head/Head';
 
 export const CreatePost = () => {
   const [createPost] = useCreatePostMutation();

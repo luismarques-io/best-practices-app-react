@@ -4,8 +4,8 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 
-import { resetDb } from './test/server/db';
-import { server } from './test/server/server';
+import { resetDb } from '@/test/server/db';
+import { server } from '@/test/server/server';
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 afterAll(() => server.close());

@@ -1,8 +1,8 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { NavItem } from '../NavItem/NavItem';
 
-import { useAuth } from '../../features/auth';
-import { APP_TITLE } from '../../config';
+import { useAuth } from '@/features/auth';
+import { APP_TITLE } from '@/config';
 
 export function Header() {
   const { user } = useAuth();

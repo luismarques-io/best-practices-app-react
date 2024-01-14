@@ -1,4 +1,4 @@
-import { STORAGE_PREFIX } from '../config';
+import { STORAGE_PREFIX } from '@/config';
 
 const storage = {
   getToken: () => {

@@ -1,10 +1,9 @@
 import * as yup from 'yup';
-import { useAuth } from '../../auth';
-import { InputField } from '../../../components/Form';
+import { useAuth } from '@/features/auth';
+import { InputField } from '@/components/Form';
+import { PageSpinner } from '@/components/Elements/Spinner/PageSpinner';
 import { UserSettingsEditor } from '../types/settings';
-
 import { useUpdateSettings } from '../hooks/useUpdateSettings';
-import { PageSpinner } from '../../../components/Elements/Spinner/PageSpinner';
 
 const schema: yup.ObjectSchema<UserSettingsEditor> = yup.object({
   email: yup.string().email('E-mail address has to be valid').required('Valid e-mail address is required'),

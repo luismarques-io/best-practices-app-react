@@ -1,6 +1,6 @@
 import * as yup from 'yup';
-import { TextareaField } from '../../../components/Form';
-import { useAuth } from '../../auth';
+import { TextareaField } from '@/components/Form';
+import { useAuth } from '@/features/auth';
 import { useCreateComment } from '../hooks/useCreateComponent';
 import { CommentEditorState } from '../types';
 

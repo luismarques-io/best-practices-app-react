@@ -1,5 +1,5 @@
-import { api } from '../../../api/api';
-import { User } from '../../auth';
+import { api } from '@/api/api';
+import { User } from '@/features/auth';
 import {
   Post,
   CreatePostDTO,

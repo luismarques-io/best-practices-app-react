@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { Link } from 'react-router-dom';
 import { LoginCredentials, User } from '../types/auth';
-import { InputField } from '../../../components/Form';
+import { InputField } from '@/components/Form';
 import { useLoginUser } from '../hooks/useLoginUser';
 
 const schema: yup.ObjectSchema<LoginCredentials> = yup.object({

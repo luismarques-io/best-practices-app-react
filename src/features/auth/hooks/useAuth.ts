@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { useAppSelector, useAppDispatch } from '../../../hooks/store';
+import { useAppSelector, useAppDispatch } from '@/hooks/store';
 import { selectCurrentUser, logout as _logout } from '../stores/authSlice';
 
 export const useAuth = () => {

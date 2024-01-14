@@ -1,9 +1,9 @@
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from '../../../lib/useForm';
+import { useForm } from '@/lib/useForm';
 import { UserSettingsEditor } from '../types/settings';
 import { useCallback, useEffect } from 'react';
-import { getErrorMessage } from '../../../api/utils';
+import { getErrorMessage } from '@/api/utils';
 import { useLazyGetAuthUserByIdQuery, useUpdateProfileMutation } from '../api/userApi';
 
 type useUpdateSettingsProps = {

@@ -1,10 +1,10 @@
-import { ContentLayout } from '../../../layouts/ContentLayout';
-import { Head } from '../../../components/Head/Head';
+import { ContentLayout } from '@/layouts/ContentLayout';
+import { Head } from '@/components/Head/Head';
 import { PostsList } from '../components/PostsList';
-import { PageSpinner } from '../../../components/Elements/Spinner/PageSpinner';
-import { ErrorPageLayout } from '../../../layouts/ErrorPageLayout';
-import { Pagination } from '../../../components/Pagination/Pagination';
-import { DebouncedInputField } from '../../../components/Form';
+import { PageSpinner } from '@/components/Elements/Spinner/PageSpinner';
+import { ErrorPageLayout } from '@/layouts/ErrorPageLayout';
+import { Pagination } from '@/components/Pagination/Pagination';
+import { DebouncedInputField } from '@/components/Form';
 import { useSearchPostsWithPagination } from '../hooks/useSearchPostsWithPagination';
 
 export const PostsListPage = () => {

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useIsCurrentUser } from '../../auth';
+import { useIsCurrentUser } from '@/features/auth';
 import { useDeletePost } from '../hooks/useDeletePost';
 import { Post } from '../types';
 

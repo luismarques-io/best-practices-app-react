@@ -1,12 +1,12 @@
 import { Params, useParams } from 'react-router-dom';
-import { ContentLayout } from '../../../layouts/ContentLayout';
-import { Head } from '../../../components/Head/Head';
+import { ContentLayout } from '@/layouts/ContentLayout';
+import { Head } from '@/components/Head/Head';
 import { useGetPostQuery } from '../api/postApi';
-import { PageSpinner } from '../../../components/Elements/Spinner/PageSpinner';
-import { getErrorMessage } from '../../../api/utils';
-import { ErrorPageLayout } from '../../../layouts/ErrorPageLayout';
+import { PageSpinner } from '@/components/Elements/Spinner/PageSpinner';
+import { getErrorMessage } from '@/api/utils';
+import { ErrorPageLayout } from '@/layouts/ErrorPageLayout';
 import { TagList } from '../components/TagList';
-import { Comments } from '../../comments';
+import { Comments } from '@/features/comments';
 import { PostDetails } from '../components/PostDetails';
 
 type QueryParamTypes = Params & {

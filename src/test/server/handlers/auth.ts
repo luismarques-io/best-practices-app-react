@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { nanoid } from 'nanoid';
 
-import { API_URL } from '../../../config';
+import { API_URL } from '@/config';
 
 import { db, persistDb } from '../db';
 import { authenticate, delayedResponse, hash, requireAuth } from '../utils';

@@ -1,4 +1,4 @@
-import { PageSpinner } from '../../../components/Elements/Spinner/PageSpinner';
+import { PageSpinner } from '@/components/Elements/Spinner/PageSpinner';
 import { useInitAuth } from '..';
 
 type AuthProviderProps = {

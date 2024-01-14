@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { TextareaField } from '../../../components/Form';
+import { TextareaField } from '@/components/Form';
 import { Comment, CommentEditorState } from '../types';
 import { useUpdateComment } from '../hooks/useUpdateComment';
 

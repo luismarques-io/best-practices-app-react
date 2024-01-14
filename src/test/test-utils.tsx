@@ -3,14 +3,14 @@ import { render, screen, waitForElementToBeRemoved, RenderOptions, waitFor } fro
 import userEvent from '@testing-library/user-event';
 import type { PreloadedState } from '@reduxjs/toolkit';
 
-import { setupStore } from '../stores/store';
-import type { AppStore, RootState } from '../stores/store';
-import { AppProvider } from '../providers/AppProvider';
+import { setupStore } from '@/stores/store';
+import type { AppStore, RootState } from '@/stores/store';
+import { AppProvider } from '@/providers/AppProvider';
 
 import { commentGenerator, postGenerator, userGenerator } from './data-generators';
 import { db } from './server/db';
 import { authenticate, hash } from './server/utils';
-import storage from '../utils/storage';
+import storage from '@/utils/storage';
 
 export const createUser = async (properties?: any) => {
   const user = userGenerator(properties);

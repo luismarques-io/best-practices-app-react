@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDeletePostMutation } from '../api/postApi';
 import { DeletePostResponse } from '../types';
-import { getErrorMessage } from '../../../api/utils';
+import { getErrorMessage } from '@/api/utils';
 
 type useDeletePostProps = {
   postId: string;

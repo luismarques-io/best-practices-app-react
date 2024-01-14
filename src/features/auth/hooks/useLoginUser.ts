@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from '../../../lib/useForm';
-import { getErrorMessage } from '../../../api/utils';
+import { useForm } from '@/lib/useForm';
+import { getErrorMessage } from '@/api/utils';
 import { LoginCredentials, User } from '../types/auth';
 import { useLoginMutation } from '../api/loginApi';
 import { rememberAuth } from '../stores/authSlice';
-import { useAppDispatch } from '../../../hooks/store';
+import { useAppDispatch } from '@/hooks/store';
 
 type useLoginUserProps = {
   schema: yup.ObjectSchema<LoginCredentials>;

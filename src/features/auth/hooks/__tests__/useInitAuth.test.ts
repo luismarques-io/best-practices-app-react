@@ -1,13 +1,13 @@
 import { renderHook } from '@testing-library/react';
 import { useLoginTokenMutation } from '../../api/loginApi';
-import storage from '../../../../utils/storage';
+import storage from '@/utils/storage';
 import { useInitAuth } from '../useInitAuth';
 
 jest.mock('../../api/loginApi', () => ({
   useLoginTokenMutation: jest.fn(),
 }));
 
-jest.mock('../../../../utils/storage', () => ({
+jest.mock('@/utils/storage', () => ({
   getToken: jest.fn(),
 }));
 

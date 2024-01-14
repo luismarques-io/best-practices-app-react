@@ -8,9 +8,9 @@ import {
   userEvent,
   waitFor,
   act,
-} from '../../../../test/test-utils';
+} from '@/test/test-utils';
 
-import { AppRoutes } from '../../../../routes';
+import { AppRoutes } from '@/routes';
 
 const navigate = jest.fn();
 window.alert = jest.fn();

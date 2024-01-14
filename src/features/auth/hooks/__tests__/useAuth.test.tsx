@@ -1,8 +1,8 @@
 import { PropsWithChildren } from 'react';
 import { act, renderHook } from '@testing-library/react';
 import { Provider, useDispatch } from 'react-redux';
-import { AppDispatch, setupStore } from '../../../../stores/store';
-import { userGenerator } from '../../../../test/data-generators';
+import { AppDispatch, setupStore } from '@/stores/store';
+import { userGenerator } from '@/test/data-generators';
 import { useAuth } from '../useAuth';
 
 jest.mock('react-redux', () => ({

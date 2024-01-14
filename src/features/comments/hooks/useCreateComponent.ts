@@ -1,9 +1,9 @@
 import { useCallback, useEffect } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from '../../../lib/useForm';
+import { useForm } from '@/lib/useForm';
 import { useCreateCommentMutation } from '../api/commentsApi';
-import { getErrorMessage } from '../../../api/utils';
+import { getErrorMessage } from '@/api/utils';
 import { CommentEditorState } from '../types';
 
 type useCreateCommentProps = {

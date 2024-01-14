@@ -4,10 +4,10 @@ import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { type AppStore, store as _store } from '../stores/store';
-import { PageSpinner } from '../components/Elements/Spinner/PageSpinner';
-import { ErrorFallback } from '../pages/ErrorFallback/ErrorFallback';
-import { AuthProvider } from '../features/auth';
+import { type AppStore, store as _store } from '@/stores/store';
+import { PageSpinner } from '@/components/Elements/Spinner/PageSpinner';
+import { ErrorFallback } from '@/pages/ErrorFallback/ErrorFallback';
+import { AuthProvider } from '@/features/auth';
 
 type AppProviderProps = {
   children: React.ReactNode;

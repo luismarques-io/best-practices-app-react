@@ -1,8 +1,8 @@
-import { useGetPostsQuery } from '../api/postApi';
-import { PaginationLinkData } from '../../../components/Pagination/Pagination';
-import { useSearchParams } from 'react-router-dom';
-import { getErrorMessage } from '../../../api/utils';
 import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useGetPostsQuery } from '../api/postApi';
+import { PaginationLinkData } from '@/components/Pagination/Pagination';
+import { getErrorMessage } from '@/api/utils';
 
 type useSearchPostsWithPaginationProps = {
   defaultValues?: {

@@ -1,4 +1,4 @@
-import { api } from '../../../api/api';
+import { api } from '@/api/api';
 import { UserResponse, GetUserByIdDTO } from '../types/user';
 import { UserSettings, UserSettingsResponse } from '../types/settings';
 

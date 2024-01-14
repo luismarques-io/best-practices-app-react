@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { APP_TITLE } from '../../config';
+import { APP_TITLE } from '@/config';
 
 export function Footer() {
   return (

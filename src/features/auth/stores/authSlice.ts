@@ -3,8 +3,8 @@ import { loginApi } from '../api/loginApi';
 import { registerApi } from '../api/registerApi';
 import { userApi } from '../api/getUserApi';
 import { AuthState, User } from '../types/auth';
-import type { RootState } from '../../../stores/store';
-import storage from '../../../utils/storage';
+import type { RootState } from '@/stores/store';
+import storage from '@/utils/storage';
 
 const initialState: AuthState = {
   user: null,

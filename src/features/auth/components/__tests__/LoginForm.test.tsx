@@ -1,4 +1,4 @@
-import { createUser, renderWithProviders, screen, userEvent, waitFor } from '../../../../test/test-utils';
+import { createUser, renderWithProviders, screen, userEvent, waitFor } from '@/test/test-utils';
 
 import { LoginForm } from '../LoginForm';
 

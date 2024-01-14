@@ -1,10 +1,10 @@
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from '../../../lib/useForm';
+import { useForm } from '@/lib/useForm';
 import { Comment, CommentEditorState } from '../types';
 import { useUpdateCommentMutation } from '../api/commentsApi';
 import { useCallback } from 'react';
-import { getErrorMessage } from '../../../api/utils';
+import { getErrorMessage } from '@/api/utils';
 
 type useUpdateCommentProps = {
   commentId: string;

@@ -1,4 +1,4 @@
-import { PostRoutes } from '../../features/post';
+import { PostRoutes } from '@/features/post';
 
 export function Posts() {
   return <PostRoutes />;

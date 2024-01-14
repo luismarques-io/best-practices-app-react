@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDeleteCommentMutation } from '../api/commentsApi';
 import { DeleteCommentResponse } from '../types';
-import { getErrorMessage } from '../../../api/utils';
+import { getErrorMessage } from '@/api/utils';
 
 type useDeleteCommentProps = {
   commentId: string;

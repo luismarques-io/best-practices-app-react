@@ -1,4 +1,4 @@
-import { ErrorPageLayout } from '../../layouts/ErrorPageLayout';
+import { ErrorPageLayout } from '@/layouts/ErrorPageLayout';
 
 export function NotFound() {
   return (

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import { User, UserForRegistration } from '../types/auth';
-import { InputField } from '../../../components/Form';
+import { InputField } from '@/components/Form';
 import { useRegisterUser } from '../hooks/useRegisterUser';
 
 const schema: yup.ObjectSchema<UserForRegistration> = yup.object({

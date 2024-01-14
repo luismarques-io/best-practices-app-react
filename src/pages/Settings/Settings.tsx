@@ -1,6 +1,6 @@
-import { Head } from '../../components/Head/Head';
-import { SettingsForm } from '../../features/users';
-import { ContentLayout } from '../../layouts/ContentLayout';
+import { Head } from '@/components/Head/Head';
+import { SettingsForm } from '@/features/users';
+import { ContentLayout } from '@/layouts/ContentLayout';
 
 export function Settings() {
   return (
