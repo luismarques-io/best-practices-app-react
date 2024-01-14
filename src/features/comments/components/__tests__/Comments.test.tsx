@@ -6,10 +6,13 @@ window.alert = jest.fn();
 
 describe('PostPage Comments', () => {
   it('should render public comment list with working pagination (2 items p/ page)', async () => {
+    const commentsPerPage = 2;
+    const totalComments = 4;
+    const totalPages = Math.ceil(totalComments / commentsPerPage);
     const newUser = await createUser();
     const newPost = await createPost({ userId: newUser.id });
     const comments = await Promise.all(
-      Array.from({ length: 4 }).map(() =>
+      Array.from({ length: totalComments }).map(() =>
         createComment({ postId: newPost.id, user: { id: newUser.id, username: newUser.username } })
       )
     );
@@ -20,7 +23,7 @@ describe('PostPage Comments', () => {
     expect(ui.getByText(comments[0].body)).toBeInTheDocument();
     expect(ui.getByText(comments[1].body)).toBeInTheDocument();
     expect(ui.queryAllByText(comments[2].body).length).toBe(0);
-    expect(ui.container.querySelectorAll('.pagination a').length).toBe(2);
+    expect(ui.container.querySelectorAll('.pagination a').length).toBe(totalPages);
 
     act(() => {
       userEvent.click(ui.container.querySelectorAll('.pagination a')[1]);
