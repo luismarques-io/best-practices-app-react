@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useGetPostsQuery } from '../api/postApi';
+import { useGetPostsQuery, useGetUserPostsQuery } from '../api/postApi';
 import { PaginationLinkData } from '@/components/Pagination/Pagination';
 import { getErrorMessage } from '@/api/utils';
 
 type useSearchPostsWithPaginationProps = {
+  userId?: string;
   defaultValues?: {
     query: string;
     skip: number;
@@ -19,7 +20,9 @@ export const useSearchPostsWithPagination = (props: useSearchPostsWithPagination
   const skip = parseInt(searchParams.get('skip') ?? defaultValues.skip.toString());
   const query = searchParams.get('query') ?? defaultValues.query;
 
-  const { data, isFetching, isLoading, error } = useGetPostsQuery({ skip, limit, query });
+  const { data, isFetching, isLoading, error } = props.userId
+    ? useGetUserPostsQuery({ userId: props.userId as string, skip, limit })
+    : useGetPostsQuery({ skip, limit, query });
 
   const handleSearchChange = (value: string) => {
     if (value !== query) {

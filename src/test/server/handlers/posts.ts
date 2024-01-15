@@ -40,7 +40,7 @@ export const postsHandlers = [
     }
   }),
 
-  rest.get(path.join(API_URL, 'users/:userId/posts/'), async (req, res, ctx) => {
+  rest.get(path.join(API_URL, 'users/:userId/posts'), async (req, res, ctx) => {
     try {
       const { userId } = req.params;
       const limit = Number(req.url.searchParams.get('limit') || 0);
