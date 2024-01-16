@@ -1,8 +1,7 @@
 import { Params, useParams } from 'react-router-dom';
 import { Head } from '@/components/Head/Head';
 import { ContentLayout } from '@/layouts/ContentLayout';
-import { ProfileDetails } from '@/features/users/';
-import { UserPosts } from '@/features/users/';
+import { ProfileDetails, UserPosts } from '@/features/users/';
 
 type QueryParamTypes = Params & {
   userId: string;
