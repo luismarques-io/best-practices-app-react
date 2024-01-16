@@ -2,6 +2,7 @@ import { PreloadedState, combineReducers, configureStore } from '@reduxjs/toolki
 import { APP_TITLE } from '@/config';
 import { api } from '@/api/api';
 // Importing reducers with the full path because reexporting from src/features/{featureName} causes issues using preloadedState in tests
+/* eslint-disable no-restricted-imports */
 import authReducer from '@/features/auth/stores/authSlice';
 
 const rootReducer = combineReducers({

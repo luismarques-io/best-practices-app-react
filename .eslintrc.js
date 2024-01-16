@@ -11,6 +11,12 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: ['@/features/*/*'],
+      },
+    ],
     // '@typescript-eslint/no-empty-function': ['error', { allow: ['methods', 'arrowFunctions'] }],
     '@typescript-eslint/no-empty-function': ['off'],
     '@typescript-eslint/no-unused-vars': [
