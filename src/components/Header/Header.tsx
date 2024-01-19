@@ -1,8 +1,8 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { NavItem } from '../NavItem/NavItem';
-
 import { useAuth } from '@/features/auth';
 import { APP_TITLE } from '@/config';
+import logo from '@/assets/logo.svg';
 
 export function Header() {
   const { user } = useAuth();
@@ -12,6 +12,7 @@ export function Header() {
       <div className='container'>
         <NavLink to='/' className='navbar-brand'>
           {APP_TITLE}
+          <img className='align-top' src={logo} alt={APP_TITLE} style={{ height: '30px' }} />
         </NavLink>
 
         <ul className='navbar-nav ms-auto mb-2 mb-lg-0'>{user ? <UserLinks /> : <GuestLinks />}</ul>
