@@ -5,7 +5,7 @@ import { act } from 'react-dom/test-utils';
 window.alert = jest.fn();
 
 describe('PostPage Comments', () => {
-  it('should render public comment list with working pagination (2 items p/ page)', async () => {
+  it('should render public comment list with working pagination', async () => {
     const commentsPerPage = 2;
     const totalComments = 4;
     const totalPages = Math.ceil(totalComments / commentsPerPage);
