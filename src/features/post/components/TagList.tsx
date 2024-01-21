@@ -1,4 +1,6 @@
 export function TagList({ tags }: Readonly<{ tags: string[] }>) {
+  // Remove duplicate tags
+  tags = Array.from(new Set(tags));
   return (
     <>
       {tags.map((tag) => (
