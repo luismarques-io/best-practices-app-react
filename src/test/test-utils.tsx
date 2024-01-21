@@ -39,12 +39,15 @@ export const createComment = async (properties?: any) => {
 export const waitForLoadingToFinish = async () => {
   const tmpLoadingElements = [...screen.queryAllByTestId(/loading/i), ...screen.queryAllByText(/loading/i)];
   if (tmpLoadingElements.length > 0) {
-    await waitFor(async () => {
-      await waitForElementToBeRemoved(() => [
-        ...screen.queryAllByTestId(/loading/i),
-        ...screen.queryAllByText(/loading/i),
-      ]);
-    });
+    await waitFor(
+      async () => {
+        await waitForElementToBeRemoved(() => [
+          ...screen.queryAllByTestId(/loading/i),
+          ...screen.queryAllByText(/loading/i),
+        ]);
+      },
+      { timeout: 10000 }
+    );
   }
 };
 
