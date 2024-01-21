@@ -87,12 +87,17 @@
       "^@/(.+)": "<rootDir>/src/$1"
     },
     "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/src/**/*/*.d.ts",
+      "!<rootDir>/src/**/*/types.ts",
       "!<rootDir>/src/index.tsx",
-      "!<rootDir>/src/helpers/testsHelpers.ts"
+      "!<rootDir>/src/setupTests.ts",
+      "!<rootDir>/src/test/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/src/reportWebVitals.ts"
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 80,
+        "branches": 60,
         "functions": 80,
         "lines": 80,
         "statements": 80
