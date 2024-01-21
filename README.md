@@ -1,6 +1,7 @@
 # Best Practices App - React ⚛️
 
 [![MIT License](https://img.shields.io/github/license/luismarques-io/best-practices-app-react)](https://github.com/luismarques-io/best-practices-app-react/blob/master/LICENSE)
+[![CI](https://github.com/luismarques-io/best-practices-app-react/actions/workflows/ci.yml/badge.svg)](https://github.com/luismarques-io/best-practices-app-react/actions/workflows/ci.yml)
 
 Welcome to the React Best Practices App repository. This project demonstrates a simple, scalable, and powerful architecture designed for building production-ready React applications. It showcases effective practices by leveraging some of the best tools in the React ecosystem.
 
@@ -19,7 +20,7 @@ Please note that this repository is not meant to be a template, boilerplate, or 
 
 - [Tao of React](https://alexkondov.com/tao-of-react/) - Insights into Software Design, Architecture & Best Practices
 - [Patterns.dev](https://www.patterns.dev/) - Elevate your web app architecture
-- [Bulletproof React](https://github.com/alan2207/bulletproof-react) - Example project with a robust architecture
+- [Bulletproof React](https://github.com/luismarques-io/best-practices-app-react) - Example project with a robust architecture
 - [React+TypeScript Cheatsheets](https://github.com/typescript-cheatsheets/react) - Cheatsheets for experienced React developers getting started with TypeScript
 - [RealWorld](https://github.com/gothinkster/realworld) - Comparison between frameworks using a Medium.com clone example app
 - [Tour of Heroes](https://github.com/johnpapa/heroes-react/) - Comparison between frameworks using a simple project
