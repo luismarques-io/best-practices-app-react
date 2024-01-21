@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { postGenerator } from '@/test/data-generators';
-import { renderWithProviders, screen, userEvent, waitFor } from '@/test/test-utils';
+import { act, renderWithProviders, screen, userEvent, waitFor } from '@/test/test-utils';
 
 import { CreatePost } from '../CreatePost';
-import { act } from 'react-dom/test-utils';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),

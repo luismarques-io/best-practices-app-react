@@ -1,6 +1,5 @@
 import { AppRoutes } from '@/routes';
-import { createComment, createPost, createUser, renderWithProviders, userEvent, waitFor } from '@/test/test-utils';
-import { act } from 'react-dom/test-utils';
+import { act, createComment, createPost, createUser, renderWithProviders, userEvent, waitFor } from '@/test/test-utils';
 
 window.alert = jest.fn();
 
