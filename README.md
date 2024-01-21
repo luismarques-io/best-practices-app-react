@@ -2,6 +2,7 @@
 
 [![MIT License](https://img.shields.io/github/license/luismarques-io/best-practices-app-react)](https://github.com/luismarques-io/best-practices-app-react/blob/master/LICENSE)
 [![CI](https://github.com/luismarques-io/best-practices-app-react/actions/workflows/ci.yml/badge.svg)](https://github.com/luismarques-io/best-practices-app-react/actions/workflows/ci.yml)
+[![Coverage Status](https://coveralls.io/repos/github/luismarques-io/best-practices-app-react/badge.svg?branch=master)](https://coveralls.io/github/luismarques-io/best-practices-app-react?branch=master)
 
 Welcome to the React Best Practices App repository. This project demonstrates a simple, scalable, and powerful architecture designed for building production-ready React applications. It showcases effective practices by leveraging some of the best tools in the React ecosystem.
 
