@@ -27,7 +27,9 @@ jobs:
       - run: mv .env.example .env
       - run: npm ci
       - run: npm run build
-      - run: npm run test
+      - run: npm run test:coverage
       - run: npm run lint
       - run: npm run check-format
       - run: npm run check-types
+      - name: Coveralls GitHub Action
+        uses: coverallsapp/github-action@v2.2.3
