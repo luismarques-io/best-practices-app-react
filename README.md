@@ -22,7 +22,7 @@ Please note that this repository is not meant to be a template, boilerplate, or 
 - [Tao of React](https://alexkondov.com/tao-of-react/) - Insights into Software Design, Architecture & Best Practices
 - [Patterns.dev](https://www.patterns.dev/) - Elevate your web app architecture
 - [Bulletproof React](https://github.com/luismarques-io/best-practices-app-react) - Example project with a robust architecture
-- [React+TypeScript Cheatsheets](https://github.com/typescript-cheatsheets/react) - Cheatsheets for experienced React developers getting started with TypeScript
+- [React+TypeScript Cheatsheets](https://github.com/typescript-cheatsheets/react) - Cheatsheets for React developers getting started with TypeScript
 - [RealWorld](https://github.com/gothinkster/realworld) - Comparison between frameworks using a Medium.com clone example app
 - [Tour of Heroes](https://github.com/johnpapa/heroes-react/) - Comparison between frameworks using a simple project
 - [React Boilerplate meets CRA](https://github.com/react-boilerplate/react-boilerplate-cra-template) - The official Create React App template of the discontinued React Boilerplate
