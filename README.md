@@ -8,6 +8,8 @@ Welcome to the React Best Practices App repository. This project demonstrates a 
 
 Please note that this repository is not meant to be a template, boilerplate, or framework. Instead, it provides an opinionated implementation, demonstrating best practices within a specific context.
 
+**Check the demo app:** [best-practices-app-react.luismarques.io](https://best-practices-app-react.luismarques.io/)
+
 ## Table Of Contents
 
 - [Application Overview](docs/application-overview.md)
