@@ -54,6 +54,5 @@ jobs:
           start: npm run test:e2e:run
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
-          browser: chrome
           config-file: cypress.config.ts
           spec: cypress/e2e/**/*
