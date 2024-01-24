@@ -58,6 +58,6 @@ jobs:
           record: true
           parallel: true
           group: 'UI - Chrome'
-          config-file: cypress.json
+          config-file: cypress.config.json
           spec: cypress/e2e/**/*
           # working-directory: .
