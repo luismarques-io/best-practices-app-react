@@ -20,7 +20,11 @@ Integration testing assesses multiple parts of an application simultaneously. Gi
 
 E2E testing evaluates the application as a complete entity, simulating user interactions with both the frontend and backend. These tests are written to mimic the application's actual usage by end-users.
 
-[Example Code (TODO)](./#)
+[Example Code](../cypress/e2e/smoke.cy.ts)
+
+You can also write custom commands to abstract some common tasks:
+
+[Example Code](../cypress/support/commands.ts)
 
 ## Tooling
 
