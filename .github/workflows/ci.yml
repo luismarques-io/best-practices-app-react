@@ -33,3 +33,31 @@ jobs:
       - run: npm run check-types
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2.2.3
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: mv .env.example .env
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npm run pretest:e2e:run
+          start: npm run test:e2e:run
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
+          browser: chrome
+          record: true
+          parallel: true
+          group: 'UI - Chrome'
+          config-file: cypress.json
+          spec: cypress/e2e/**/*
+          # working-directory: .
