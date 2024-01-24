@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from '@/lib/useForm';
 import { UserSettingsEditor } from '../types/settings';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { getErrorMessage } from '@/api/utils';
 import { useLazyGetAuthUserByIdQuery, useUpdateProfileMutation } from '../api/userApi';
 
@@ -44,21 +44,6 @@ export const useUpdateSettings = ({ userId, schema }: useUpdateSettingsProps) =>
     }),
     [handleSubmit, useFormApi.setError, getErrorMessage, updateProfile, userId]
   );
-
-  const handleSuccessfulSubmit = () => {
-    if (formState.isSubmitSuccessful) {
-      useFormApi.reset();
-    }
-  };
-
-  const handleTypingAfterSuccess = () => {
-    if (formState.isDirty && !mutationState.isUninitialized) {
-      mutationState.reset();
-    }
-  };
-
-  useEffect(handleSuccessfulSubmit, [formState.isSubmitSuccessful]);
-  useEffect(handleTypingAfterSuccess, [formState.isDirty]);
 
   const isQueryLoading =
     (queryResult.isLoading || queryResult.isFetching || queryResult.isUninitialized) && !mutationState.isSuccess;

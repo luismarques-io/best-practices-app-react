@@ -1,6 +1,5 @@
 export * from './api/loginApi';
 export * from './api/registerApi';
-export * from './api/getUserApi';
 
 export * from './components/LoginForm';
 export * from './components/RegisterForm';
