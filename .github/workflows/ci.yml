@@ -55,9 +55,7 @@ jobs:
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
           browser: chrome
-          record: true
           parallel: true
           group: 'UI - Chrome'
           config-file: cypress.config.ts
           spec: cypress/e2e/**/*
-          # working-directory: .
