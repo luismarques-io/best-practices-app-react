@@ -28,7 +28,6 @@ export const UpdatePost = () => {
 
   const handleSave = async (payload: PostForEditor) => {
     const { id } = await updatePost({ ...payload, id: postId }).unwrap();
-    alert('Saved! (not actually, just a demo)');
     navigate(`/posts/${id}`);
   };
 

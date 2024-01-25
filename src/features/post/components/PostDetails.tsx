@@ -17,7 +17,6 @@ export const PostDetails = ({ post }: PostDetailsProps) => {
   } = useDeletePost({
     postId: post.id,
     onSuccess: () => {
-      alert('Deleted! (not actually, just a demo)');
       navigate('/posts');
     },
   });

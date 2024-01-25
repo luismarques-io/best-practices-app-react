@@ -15,13 +15,13 @@ type QueryParamTypes = Params & {
 
 export const PostPage = () => {
   const { postId } = useParams<{ postId: string }>() as QueryParamTypes;
-  const { data, isLoading, error } = useGetPostQuery({ postId });
+  const { data, isLoading, isFetching, error } = useGetPostQuery({ postId });
 
   if (error) {
     return <ErrorPageLayout title='Post not found' message={getErrorMessage(error)} />;
   }
 
-  if (isLoading || !data) {
+  if (isLoading || isFetching || !data) {
     return <PageSpinner />;
   }
 

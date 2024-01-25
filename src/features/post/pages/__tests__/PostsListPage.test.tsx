@@ -1,15 +1,19 @@
 import { act, createPost, createUser, renderWithProviders, userEvent } from '@/test/test-utils';
+import { dropDb, initializeDb } from '@/test/server/db';
 import { PostsListPage } from '../PostsListPage';
 
 window.scrollTo = jest.fn();
 
 describe('PostsListPage', () => {
-  it('should show empty message when no posts to show', async () => {
+  it('should load posts page', async () => {
     const ui = await renderWithProviders(<PostsListPage />);
-    expect(ui.getByText(/no posts found/i)).toBeInTheDocument();
+    expect(ui.getByText(/posts/i)).toBeInTheDocument();
+    expect(ui.getByText(/search/i)).toBeInTheDocument();
   });
 
   it('should list posts with working pagination', async () => {
+    dropDb();
+
     const postsPerPage = 10;
     const totalPosts = 20;
     const totalPages = Math.ceil(totalPosts / postsPerPage);
@@ -38,9 +42,9 @@ describe('PostsListPage', () => {
   });
 
   it('should search posts', async () => {
-    const totalPosts = 20;
+    initializeDb();
+
     const newUser = await createUser();
-    await Promise.all(Array.from({ length: totalPosts }).map(() => createPost({ userId: newUser.id })));
     const newPost = await createPost({ userId: newUser.id, title: 'My post', body: 'My post body' });
 
     const ui = await renderWithProviders(<PostsListPage />);
@@ -48,7 +52,7 @@ describe('PostsListPage', () => {
 
     act(() => {
       userEvent.clear(searchInput);
-      userEvent.type(searchInput, 'body of non existing post');
+      userEvent.type(searchInput, 'title-of-invalid-post');
     });
     await ui.findByText(/no posts found/i);
 
@@ -56,7 +60,7 @@ describe('PostsListPage', () => {
 
     act(() => {
       userEvent.clear(searchInput);
-      userEvent.type(searchInput, 'My post body');
+      userEvent.type(searchInput, newPost.title);
     });
     await ui.findByText(newPost.title);
 

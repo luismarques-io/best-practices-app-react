@@ -20,7 +20,7 @@ export const postsHandlers = [
       const limit = Number(req.url.searchParams.get('limit') || 0);
       const skip = Number(req.url.searchParams.get('skip') || 0);
       const where = {
-        body: {
+        title: {
           contains: query,
         },
       };

@@ -1,7 +1,14 @@
 import { AppRoutes } from '@/routes';
-import { act, createComment, createPost, createUser, renderWithProviders, userEvent, waitFor } from '@/test/test-utils';
-
-window.alert = jest.fn();
+import {
+  act,
+  createComment,
+  createPost,
+  createUser,
+  renderWithProviders,
+  userEvent,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@/test/test-utils';
 
 describe('PostPage Comments', () => {
   it('should render public comment list with working pagination', async () => {
@@ -65,9 +72,6 @@ describe('PostPage Comments', () => {
     });
 
     await waitFor(async () => {
-      expect(window.alert).toHaveBeenCalledTimes(1);
-      expect(window.alert).toHaveBeenCalledWith(expect.stringContaining('Saved'));
-      (window.alert as jest.Mock).mockRestore();
       await ui.findByText(/this is a comment edited/i);
     });
 
@@ -78,11 +82,7 @@ describe('PostPage Comments', () => {
       userEvent.click(ui.getByRole('button', { name: /delete/i }));
     });
 
-    await waitFor(async () => {
-      expect(window.alert).toHaveBeenCalledTimes(1);
-      expect(window.alert).toHaveBeenCalledWith(expect.stringContaining('Deleted'));
-      (window.alert as jest.Mock).mockRestore();
-    });
+    await waitForElementToBeRemoved(() => ui.queryAllByText(/this is a comment edited/i));
 
     await ui.findByText(/post comment/i);
 

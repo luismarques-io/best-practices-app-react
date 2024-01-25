@@ -93,7 +93,7 @@ export const SettingsForm = () => {
       {errors.root?.serverError ? (
         <div className='alert alert-danger mt-3'>{errors.root.serverError.message}</div>
       ) : null}
-      {isSuccess ? <div className='alert alert-success mt-3'>Saved! (not actually, just a demo)</div> : null}
+      {isSuccess ? <div className='alert alert-success mt-3'>Saved!</div> : null}
     </form>
   );
 };

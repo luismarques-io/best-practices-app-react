@@ -44,9 +44,7 @@ export const CreateComment = ({ postId }: CreateCommentProps) => {
           {errors.root?.serverError ? (
             <div className='alert alert-danger mt-2'>{errors.root.serverError.message}</div>
           ) : null}
-          {isSuccess ? (
-            <div className='alert alert-success mt-2'>Comment added successfully! (not actually, just a demo)</div>
-          ) : null}
+          {isSuccess ? <div className='alert alert-success mt-2'>Comment added successfully!</div> : null}
         </form>
       ) : null}
     </>

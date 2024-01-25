@@ -1,4 +1,4 @@
-import { factory, primaryKey, nullable } from '@mswjs/data';
+import { factory, drop, primaryKey, nullable } from '@mswjs/data';
 
 const models = {
   user: {
@@ -36,7 +36,6 @@ const models = {
 
 export const db = factory(models);
 
-// export type Model = keyof typeof db;
 export type Model = keyof typeof models;
 
 export const loadDb = () => Object.assign(JSON.parse(window.localStorage.getItem('msw-db') || '{}'));
@@ -48,7 +47,13 @@ export const persistDb = (model: Model) => {
   window.localStorage.setItem('msw-db', JSON.stringify(data));
 };
 
-export const initializeDb = () => {
+export const initializeDb = (seedData?: string) => {
+  drop(db);
+  if (typeof seedData !== 'undefined') {
+    window.localStorage.setItem('msw-db', JSON.stringify(seedData));
+  } else if (process.env.REACT_APP_API_MOCKING_DB_SEED === 'true' && !window.localStorage.getItem('msw-db')) {
+    loadSeedData();
+  }
   const database = loadDb();
   Object.entries(db).forEach(([key, model]) => {
     const dataEntres = database[key];
@@ -62,6 +67,25 @@ export const initializeDb = () => {
 
 export const resetDb = () => {
   window.localStorage.clear();
+};
+
+export const dropDb = () => {
+  resetDb();
+  initializeDb('');
+};
+
+export const getSeedData = () => {
+  const data = {
+    user: require('@/../data/users-seed.json'),
+    post: require('@/../data/posts-seed.json'),
+    comment: require('@/../data/comments-seed.json'),
+  };
+  return JSON.stringify(data);
+};
+
+export const loadSeedData = () => {
+  const data = getSeedData();
+  window.localStorage.setItem('msw-db', data);
 };
 
 initializeDb();

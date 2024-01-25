@@ -154,6 +154,8 @@ describe('smoke', () => {
     // Delete post
     cy.findByRole('button', { name: /delete post/i }).click();
 
+    // View post list
+    cy.findByRole('textbox', { name: /search/i }).type(updatedPost.title);
     cy.findByText(updatedPost.title).should('not.exist');
     cy.findByText(/no posts found/i).should('exist');
   });

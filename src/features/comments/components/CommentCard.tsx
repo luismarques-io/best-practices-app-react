@@ -19,7 +19,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
     error: deleteError,
   } = useDeleteComment({
     commentId,
-    onSuccess: () => alert('Deleted! (not actually, just a demo)'),
+    // onSuccess: () => alert('Deleted!'),
   });
 
   if (isUpdateFormVisible) {

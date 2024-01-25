@@ -21,6 +21,7 @@ export const CommentsList = ({ postId, itemsPerPage = 0 }: CommentsListProps) =>
   const {
     data: { comments, total } = {} as CommentsResponse,
     isLoading,
+    isFetching,
     error,
   } = useGetCommentsQuery({ postId, skip, limit });
 
@@ -28,7 +29,7 @@ export const CommentsList = ({ postId, itemsPerPage = 0 }: CommentsListProps) =>
     return <ErrorPageLayout title='Error loading posts' message={getErrorMessage(error)} />;
   }
 
-  if (isLoading || !comments) {
+  if (isLoading || isFetching || !comments) {
     return <PageSpinner />;
   }
 

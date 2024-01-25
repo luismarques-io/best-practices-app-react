@@ -19,7 +19,6 @@ export const UpdateCommentForm = ({ comment, onCancel, onSuccess }: UpdateCommen
     schema,
     defaultValues: { body: comment.body },
     onSuccess: () => {
-      alert('Saved! (not actually, just a demo)');
       onSuccess();
     },
   });

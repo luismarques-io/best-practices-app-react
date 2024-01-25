@@ -141,9 +141,7 @@ export const RegisterForm = ({ onSuccess, autoLoginOnSuccess = true }: RegisterF
           Submit
         </button>
 
-        {isSuccess ? (
-          <div className='alert alert-success mt-2'>Account created successfully! (not actually, just a demo)</div>
-        ) : null}
+        {isSuccess ? <div className='alert alert-success mt-2'>Account created successfully!</div> : null}
         {errors.root?.serverError ? (
           <div className='alert alert-danger mt-2'>{errors.root.serverError.message}</div>
         ) : null}

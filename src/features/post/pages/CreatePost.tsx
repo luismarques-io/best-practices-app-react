@@ -12,7 +12,6 @@ export const CreatePost = () => {
 
   const handleSave = async (payload: PostForEditor) => {
     const { id } = await createPost({ ...payload, userId }).unwrap();
-    alert(`Post published! (not actually, just a demo)`);
     navigate(`/posts/${id}`);
   };
 
