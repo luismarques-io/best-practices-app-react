@@ -14,10 +14,6 @@ export const UserPosts = ({ userId }: UserPostsProps) => {
     return <PageSpinner />;
   }
 
-  if (!posts.length) {
-    return <p className='mt-5 text-center text-body-secondary'>No posts found</p>;
-  }
-
   return (
     <>
       <div className='mt-3'>

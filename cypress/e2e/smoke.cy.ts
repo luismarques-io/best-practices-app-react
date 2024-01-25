@@ -36,8 +36,8 @@ describe('smoke', () => {
     // Logout
     cy.findByRole('button', { name: /logout/i }).click();
 
-    // Login with redirect to edit profile
-    cy.visit('http://localhost:3000/login?redirect=/settings');
+    // Login with redirect to edit profile (URL will be http://localhost:3000/login?redirect=/settings)
+    cy.visit('http://localhost:3000/settings');
 
     cy.findByRole('textbox', { name: /username/i })
       .clear()
@@ -158,5 +158,38 @@ describe('smoke', () => {
     cy.findByRole('textbox', { name: /search/i }).type(updatedPost.title);
     cy.findByText(updatedPost.title).should('not.exist');
     cy.findByText(/no posts found/i).should('exist');
+
+    // Load not found pages
+    cy.visit('http://localhost:3000/invalid-page');
+    cy.get('.lead')
+      .parent()
+      .within(() => {
+        cy.findByText(/not available/i).should('exist');
+        cy.findByRole('link', { name: /go back to home/i }).should('exist');
+      });
+
+    cy.visit('http://localhost:3000/profile/invalid-profile');
+    cy.get('.lead')
+      .parent()
+      .within(() => {
+        cy.findByText(/not found/i).should('exist');
+        cy.findByRole('link', { name: /go back to home/i }).should('exist');
+      });
+
+    cy.visit('http://localhost:3000/posts/invalid-post');
+    cy.get('.lead')
+      .parent()
+      .within(() => {
+        cy.findByText(/not found/i).should('exist');
+        cy.findByRole('link', { name: /go back to home/i }).should('exist');
+      });
+
+    cy.visit('http://localhost:3000/posts/invalid-post/edit');
+    cy.get('.lead')
+      .parent()
+      .within(() => {
+        cy.findByText(/not found/i).should('exist');
+        cy.findByRole('link', { name: /go back to home/i }).should('exist');
+      });
   });
 });

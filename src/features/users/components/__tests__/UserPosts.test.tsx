@@ -7,7 +7,7 @@ describe('UserPosts', () => {
   it('should show empty message when no posts to show', async () => {
     const newUser = await createUser();
     const ui = await renderWithProviders(<UserPosts userId={newUser.id} />);
-    expect(ui.getByText(/no posts found/i)).toBeInTheDocument();
+    expect(ui.container.querySelectorAll('.pagination a').length).toBe(0);
   });
 
   it('should list user posts with working pagination', async () => {

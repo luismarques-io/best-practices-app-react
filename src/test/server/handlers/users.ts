@@ -44,6 +44,9 @@ export const usersHandlers = [
           },
         },
       });
+      if (!user) {
+        return delayedResponse(ctx.status(404), ctx.json({ message: `User not found` }));
+      }
       return delayedResponse(ctx.json(user));
     } catch (error: any) {
       return delayedResponse(ctx.status(400), ctx.json({ message: error?.message || 'Server Error' }));
