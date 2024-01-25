@@ -13,7 +13,7 @@ import {
 } from '../types';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
-export const postEditorApi = api.injectEndpoints({
+export const postApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getPosts: builder.query<PostsResponse, GetPostsDTO>({
       query: ({ limit = 10, skip = 0, query = '' }) => ({
@@ -70,4 +70,4 @@ export const {
   useGetPostsQuery,
   useGetUserPostsQuery,
   useDeletePostMutation,
-} = postEditorApi;
+} = postApi;

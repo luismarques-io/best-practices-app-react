@@ -1,25 +1,20 @@
-import { PostEditor, PostForEditor } from '..';
-import { useCreatePostMutation } from '../api/postApi';
-import { useAuth } from '@/features/auth';
+import { Post, PostEditor } from '..';
 import { useNavigate } from 'react-router-dom';
 import { ContentLayout } from '@/layouts/ContentLayout';
 import { Head } from '@/components/Head/Head';
 
 export const CreatePost = () => {
-  const [createPost] = useCreatePostMutation();
   const navigate = useNavigate();
-  const { userId = '' } = useAuth();
 
-  const handleSave = async (payload: PostForEditor) => {
-    const { id } = await createPost({ ...payload, userId }).unwrap();
-    navigate(`/posts/${id}`);
+  const handleSaveSuccess = async (payload: Post) => {
+    navigate(`/posts/${payload.id}`);
   };
 
   return (
     <>
       <Head title='Create Post' />
       <ContentLayout title='Create Post'>
-        <PostEditor onSubmit={handleSave} />
+        <PostEditor onSuccess={handleSaveSuccess} />
       </ContentLayout>
     </>
   );

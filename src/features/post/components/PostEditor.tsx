@@ -1,7 +1,8 @@
 import * as yup from 'yup';
 import { InputField, TextareaField } from '@/components/Form';
-import { PostForEditor } from '../types';
+import { Post, PostForEditor } from '../types';
 import { useUpdatePostEditor } from '../hooks/usePostEditor';
+import { useAuth } from '@/features/auth';
 
 const schema: yup.ObjectSchema<PostForEditor> = yup.object({
   title: yup.string().required('Valid title is required'),
@@ -19,12 +20,20 @@ const schema: yup.ObjectSchema<PostForEditor> = yup.object({
 });
 
 type PostEditorProps = {
-  onSubmit: (payload: PostForEditor) => void;
+  postId?: string;
+  onSuccess: (payload: Post) => void;
   defaultValues?: PostForEditor;
 };
 
-export const PostEditor = ({ onSubmit, defaultValues }: PostEditorProps) => {
-  const { handleSubmit, register, errors, isSubmitting } = useUpdatePostEditor({ schema, defaultValues, onSubmit });
+export const PostEditor = ({ postId, onSuccess, defaultValues }: PostEditorProps) => {
+  const { userId = '' } = useAuth();
+  const { handleSubmit, register, errors, isSubmitting } = useUpdatePostEditor({
+    postId,
+    userId,
+    schema,
+    defaultValues,
+    onSuccess,
+  });
 
   return (
     <form onSubmit={handleSubmit}>

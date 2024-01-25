@@ -1,9 +1,9 @@
-import { PostEditor, PostForEditor } from '..';
+import { Post, PostEditor } from '..';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 import { ContentLayout } from '@/layouts/ContentLayout';
 import { ErrorPageLayout } from '@/layouts/ErrorPageLayout';
 import { Head } from '@/components/Head/Head';
-import { useGetPostQuery, useUpdatePostMutation } from '../api/postApi';
+import { useGetPostQuery } from '../api/postApi';
 import { PageSpinner } from '@/components/Elements/Spinner/PageSpinner';
 import { getErrorMessage } from '@/api/utils';
 
@@ -14,7 +14,6 @@ type QueryParamTypes = Params & {
 export const UpdatePost = () => {
   const { postId } = useParams<{ postId: string }>() as QueryParamTypes;
   const { data, isLoading, isFetching, error } = useGetPostQuery({ postId });
-  const [updatePost] = useUpdatePostMutation();
   const navigate = useNavigate();
 
   if (isLoading || isFetching) {
@@ -26,16 +25,15 @@ export const UpdatePost = () => {
     return <ErrorPageLayout title='Edit Post' message={errorMessage} />;
   }
 
-  const handleSave = async (payload: PostForEditor) => {
-    const { id } = await updatePost({ ...payload, id: postId }).unwrap();
-    navigate(`/posts/${id}`);
+  const handleSaveSuccess = async (payload: Post) => {
+    navigate(`/posts/${payload.id}`);
   };
 
   return (
     <>
       <Head title='Edit Post' />
       <ContentLayout title='Edit Post'>
-        <PostEditor onSubmit={handleSave} defaultValues={data} />
+        <PostEditor postId={postId} onSuccess={handleSaveSuccess} defaultValues={data} />
       </ContentLayout>
     </>
   );
