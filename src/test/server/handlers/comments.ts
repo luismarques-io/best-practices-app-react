@@ -1,11 +1,10 @@
 import { rest } from 'msw';
-import path from 'path';
 import { nanoid } from 'nanoid';
 
 import { API_URL } from '@/config';
 
 import { db, persistDb } from '../db';
-import { requireAuth, delayedResponse } from '../utils';
+import { requireAuth, delayedResponse, buildUrl } from '../utils';
 
 type CreateCommentBody = {
   body: string;
@@ -17,7 +16,7 @@ type CreateCommentBody = {
 };
 
 export const commentsHandlers = [
-  rest.get(path.join(API_URL, '/comments/post/:postId'), async (req, res, ctx) => {
+  rest.get(buildUrl(API_URL, '/comments/post/:postId'), async (req, res, ctx) => {
     try {
       const { postId } = req.params;
       const limit = Number(req.url.searchParams.get('limit') || 0);
@@ -43,7 +42,7 @@ export const commentsHandlers = [
     }
   }),
 
-  rest.post<CreateCommentBody>(path.join(API_URL, '/comments/add'), async (req, res, ctx) => {
+  rest.post<CreateCommentBody>(buildUrl(API_URL, '/comments/add'), async (req, res, ctx) => {
     try {
       const user = requireAuth(req);
       const data = await req.json();
@@ -63,7 +62,7 @@ export const commentsHandlers = [
     }
   }),
 
-  rest.put<CreateCommentBody>(path.join(API_URL, '/comments/:commentId'), async (req, res, ctx) => {
+  rest.put<CreateCommentBody>(buildUrl(API_URL, '/comments/:commentId'), async (req, res, ctx) => {
     try {
       const user = requireAuth(req);
       const data = await req.json();
@@ -86,7 +85,7 @@ export const commentsHandlers = [
     }
   }),
 
-  rest.delete(path.join(API_URL, '/comments/:commentId'), async (req, res, ctx) => {
+  rest.delete(buildUrl(API_URL, '/comments/:commentId'), async (req, res, ctx) => {
     try {
       const user = requireAuth(req);
       const { commentId } = req.params;

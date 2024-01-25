@@ -8,6 +8,8 @@ import { db } from './db';
 
 const isTesting = process.env.NODE_ENV === 'test' || ((window as any).Cypress as any);
 
+export const buildUrl = (domain: string, path: string) => new URL(path, domain).href;
+
 export const delayedResponse = createResponseComposition(undefined, [context.delay(isTesting ? 0 : 1000)]);
 
 export const hash = (str: string) => {

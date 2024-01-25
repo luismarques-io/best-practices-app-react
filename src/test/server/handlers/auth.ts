@@ -4,8 +4,7 @@ import { nanoid } from 'nanoid';
 import { API_URL } from '@/config';
 
 import { db, persistDb } from '../db';
-import { authenticate, delayedResponse, hash, requireAuth } from '../utils';
-import path from 'path';
+import { authenticate, delayedResponse, hash, requireAuth, buildUrl } from '../utils';
 
 type RegisterBody = {
   username: string;
@@ -24,8 +23,8 @@ type LoginBody = {
 };
 
 export const authHandlers = [
-  // rest.post<RegisterBody>(path.join(API_URL, '/auth/register'), async (req, res, ctx) => {
-  rest.post<RegisterBody>(path.join(API_URL, '/users/add'), async (req, res, ctx) => {
+  // rest.post<RegisterBody>(buildUrl(API_URL, '/auth/register'), async (req, res, ctx) => {
+  rest.post<RegisterBody>(buildUrl(API_URL, '/users/add'), async (req, res, ctx) => {
     try {
       const userObject = await req.json();
 
@@ -58,7 +57,7 @@ export const authHandlers = [
     }
   }),
 
-  rest.post<LoginBody>(path.join(API_URL, '/auth/login'), async (req, res, ctx) => {
+  rest.post<LoginBody>(buildUrl(API_URL, '/auth/login'), async (req, res, ctx) => {
     try {
       const credentials = await req.json();
 
@@ -75,7 +74,7 @@ export const authHandlers = [
     }
   }),
 
-  rest.get(path.join(API_URL, '/auth/users/:userId'), (req, res, ctx) => {
+  rest.get(buildUrl(API_URL, '/auth/users/:userId'), (req, res, ctx) => {
     try {
       const user = requireAuth(req);
       return delayedResponse(ctx.json(user));
@@ -83,7 +82,7 @@ export const authHandlers = [
       return delayedResponse(ctx.status(400), ctx.json({ message: error?.message || 'Server Error' }));
     }
   }),
-  rest.get(path.join(API_URL, '/auth/users/'), (req, res, ctx) => {
+  rest.get(buildUrl(API_URL, '/auth/users/'), (req, res, ctx) => {
     try {
       const user = requireAuth(req);
 

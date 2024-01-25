@@ -1,10 +1,9 @@
 import { rest } from 'msw';
-import path from 'path';
 
 import { API_URL } from '@/config';
 
 import { db, persistDb } from '../db';
-import { requireAuth, delayedResponse } from '../utils';
+import { requireAuth, delayedResponse, buildUrl } from '../utils';
 
 type ProfileBody = {
   email: string;
@@ -16,7 +15,7 @@ type ProfileBody = {
 };
 
 export const usersHandlers = [
-  rest.put<ProfileBody>(path.join(API_URL, '/auth/users/:userId'), async (req, res, ctx) => {
+  rest.put<ProfileBody>(buildUrl(API_URL, '/auth/users/:userId'), async (req, res, ctx) => {
     try {
       const user = requireAuth(req);
       const data = await req.json();
@@ -35,7 +34,7 @@ export const usersHandlers = [
     }
   }),
 
-  rest.get(path.join(API_URL, '/users/:userId'), (req, res, ctx) => {
+  rest.get(buildUrl(API_URL, '/users/:userId'), (req, res, ctx) => {
     try {
       const { userId } = req.params;
       const user = db.user.findFirst({

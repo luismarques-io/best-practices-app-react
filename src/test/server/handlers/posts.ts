@@ -1,11 +1,10 @@
 import { rest } from 'msw';
-import path from 'path';
 import { nanoid } from 'nanoid';
 
 import { API_URL } from '@/config';
 
 import { db, persistDb } from '../db';
-import { requireAuth, delayedResponse } from '../utils';
+import { requireAuth, delayedResponse, buildUrl } from '../utils';
 
 type CreatePostBody = {
   body: string;
@@ -14,7 +13,7 @@ type CreatePostBody = {
 };
 
 export const postsHandlers = [
-  rest.get(path.join(API_URL, 'posts/search'), async (req, res, ctx) => {
+  rest.get(buildUrl(API_URL, 'posts/search'), async (req, res, ctx) => {
     try {
       const query = req.url.searchParams.get('q') || '';
       const limit = Number(req.url.searchParams.get('limit') || 0);
@@ -40,7 +39,7 @@ export const postsHandlers = [
     }
   }),
 
-  rest.get(path.join(API_URL, 'users/:userId/posts'), async (req, res, ctx) => {
+  rest.get(buildUrl(API_URL, 'users/:userId/posts'), async (req, res, ctx) => {
     try {
       const { userId } = req.params;
       const limit = Number(req.url.searchParams.get('limit') || 0);
@@ -66,7 +65,7 @@ export const postsHandlers = [
     }
   }),
 
-  rest.get(path.join(API_URL, 'posts/:postId'), async (req, res, ctx) => {
+  rest.get(buildUrl(API_URL, 'posts/:postId'), async (req, res, ctx) => {
     try {
       const { postId } = req.params;
       const result = db.post.findFirst({
@@ -85,7 +84,7 @@ export const postsHandlers = [
     }
   }),
 
-  rest.post<CreatePostBody>(path.join(API_URL, '/posts/add'), async (req, res, ctx) => {
+  rest.post<CreatePostBody>(buildUrl(API_URL, '/posts/add'), async (req, res, ctx) => {
     try {
       const user = requireAuth(req);
       const data = await req.json();
@@ -102,7 +101,7 @@ export const postsHandlers = [
     }
   }),
 
-  rest.put<CreatePostBody>(path.join(API_URL, '/posts/:postId'), async (req, res, ctx) => {
+  rest.put<CreatePostBody>(buildUrl(API_URL, '/posts/:postId'), async (req, res, ctx) => {
     try {
       const user = requireAuth(req);
       const data = await req.json();
@@ -125,7 +124,7 @@ export const postsHandlers = [
     }
   }),
 
-  rest.delete(path.join(API_URL, '/posts/:postId'), async (req, res, ctx) => {
+  rest.delete(buildUrl(API_URL, '/posts/:postId'), async (req, res, ctx) => {
     try {
       const user = requireAuth(req);
       const { postId } = req.params;
