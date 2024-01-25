@@ -7,7 +7,7 @@ window.scrollTo = jest.fn();
 describe('PostsListPage', () => {
   it('should load posts page', async () => {
     const ui = await renderWithProviders(<PostsListPage />);
-    expect(ui.getByText(/posts/i)).toBeInTheDocument();
+    expect(ui.getByRole('heading', { name: /posts/i })).toBeInTheDocument();
     expect(ui.getByText(/search/i)).toBeInTheDocument();
   });
 
