@@ -13,14 +13,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
   const { id: commentId, body, user } = comment;
   const isCurrentUser = useIsCurrentUser(user.id);
   const { isUpdateFormVisible, showUpdateForm, hideUpdateForm } = useUpdateFormVisibility(false);
-  const {
-    handleDeleteComment,
-    isLoading: isDeleteLoading,
-    error: deleteError,
-  } = useDeleteComment({
-    commentId,
-    // onSuccess: () => alert('Deleted!'),
-  });
+  const { handleDeleteComment, isLoading: isDeleteLoading, error: deleteError } = useDeleteComment({ commentId });
 
   if (isUpdateFormVisible) {
     return (

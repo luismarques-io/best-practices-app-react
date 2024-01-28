@@ -14,14 +14,14 @@ type useSearchPostsWithPaginationProps = {
 };
 
 export const useSearchPostsWithPagination = (props: useSearchPostsWithPaginationProps = {}) => {
-  const { defaultValues = { query: '', skip: 0, limit: 10 } } = props;
+  const { userId, defaultValues = { query: '', skip: 0, limit: 10 } } = props;
   const [searchParams, setSearchParams] = useSearchParams();
   const limit = parseInt(searchParams.get('limit') ?? defaultValues.limit.toString());
   const skip = parseInt(searchParams.get('skip') ?? defaultValues.skip.toString());
   const query = searchParams.get('query') ?? defaultValues.query;
 
-  const { data, isFetching, isLoading, error } = props.userId
-    ? useGetUserPostsQuery({ userId: props.userId as string, skip, limit })
+  const { data, isFetching, isLoading, error } = userId
+    ? useGetUserPostsQuery({ userId, skip, limit })
     : useGetPostsQuery({ skip, limit, query });
 
   const handleSearchChange = (value: string) => {
@@ -59,8 +59,7 @@ export const useSearchPostsWithPagination = (props: useSearchPostsWithPagination
     limit,
     posts: data?.posts ?? [],
     total: data?.total ?? 0,
-    isFetching,
-    isLoading,
+    isLoading: isFetching || isLoading,
     error: error ? getErrorMessage(error) : '',
     generatePaginationLink,
   };

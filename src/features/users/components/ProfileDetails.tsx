@@ -10,13 +10,13 @@ type ProfileDetailsProps = {
 };
 
 export const ProfileDetails = ({ userId }: ProfileDetailsProps) => {
-  const { user, error, isUninitialized, isLoading, isFetching, isCurrentUser } = useProfileDetails({ userId });
+  const { user, error, isLoading, isCurrentUser } = useProfileDetails({ userId });
 
   if (error) {
     return <ErrorPageLayout title='Error loading user' message={getErrorMessage(error)} />;
   }
 
-  if (isUninitialized || isLoading || isFetching) {
+  if (isLoading) {
     return <PageSpinner />;
   }
 

@@ -7,10 +7,10 @@ type UserPostsProps = {
 };
 
 export const UserPosts = ({ userId }: UserPostsProps) => {
-  const { posts, skip, limit, total, isFetching, isLoading } = useSearchPostsWithPagination({ userId });
+  const { posts, skip, limit, total, isLoading } = useSearchPostsWithPagination({ userId });
   const postsPreview = posts?.map((post) => ({ url: `/posts/${post.id}`, ...post }));
 
-  if (isFetching || isLoading) {
+  if (isLoading) {
     return <PageSpinner />;
   }
 

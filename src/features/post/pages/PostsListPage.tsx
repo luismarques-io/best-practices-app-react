@@ -8,12 +8,12 @@ import { DebouncedInputField } from '@/components/Form';
 import { useSearchPostsWithPagination } from '../hooks/useSearchPostsWithPagination';
 
 export const PostsListPage = () => {
-  const { handleSearchChange, posts, query, skip, limit, total, isFetching, isLoading, error, generatePaginationLink } =
+  const { handleSearchChange, posts, query, skip, limit, total, isLoading, error, generatePaginationLink } =
     useSearchPostsWithPagination();
 
   const renderContent = () => {
     switch (true) {
-      case isFetching || isLoading:
+      case isLoading:
         return <PageSpinner />;
       case !!error:
         return <ErrorPageLayout title='Error loading posts' message={error} />;

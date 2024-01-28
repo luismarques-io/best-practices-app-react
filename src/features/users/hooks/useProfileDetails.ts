@@ -19,9 +19,7 @@ export const useProfileDetails = ({ userId }: useProfileDetailsProps) => {
   return {
     user,
     error,
-    isUninitialized,
-    isLoading,
-    isFetching,
+    isLoading: isUninitialized || isLoading || isFetching,
     isCurrentUser,
   };
 };

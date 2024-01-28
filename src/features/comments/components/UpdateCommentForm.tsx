@@ -18,9 +18,7 @@ export const UpdateCommentForm = ({ comment, onCancel, onSuccess }: UpdateCommen
     commentId: comment.id,
     schema,
     defaultValues: { body: comment.body },
-    onSuccess: () => {
-      onSuccess();
-    },
+    onSuccess,
   });
 
   return (
