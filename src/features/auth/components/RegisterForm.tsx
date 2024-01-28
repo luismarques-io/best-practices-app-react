@@ -25,22 +25,9 @@ type RegisterFormProps = {
 };
 
 export const RegisterForm = ({ onSuccess, autoLoginOnSuccess = true }: RegisterFormProps) => {
-  // Demo data
-  const defaultValues = {
-    username: 'kminchelle',
-    email: 'kminchelle@qq.com',
-    password: '0lelplR',
-    passwordConfirmation: '0lelplR',
-    firstName: 'Jeanne',
-    lastName: 'Halvorson',
-    image: 'https://robohash.org/autquiaut.png',
-    terms: false,
-  };
-
   const { onSubmit, register, errors, isSubmitting, isSuccess } = useRegisterUser({
     autoLoginOnSuccess,
     schema,
-    defaultValues,
     onSuccess,
   });
 

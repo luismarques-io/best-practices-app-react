@@ -28,6 +28,10 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
   return (
     <>
       <h1 className='h3 mb-3 fw-normal'>Please sign in</h1>
+      <p className='mb-1 text-body-secondary fst-italic'>
+        <small>(Pre-filled with demo account)</small>
+      </p>
+
       <form onSubmit={onSubmit}>
         <InputField
           {...register('username')}

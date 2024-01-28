@@ -10,7 +10,7 @@ import { useLoginMutation } from '../api/loginApi';
 type useRegisterUserProps = {
   autoLoginOnSuccess: boolean;
   schema: yup.ObjectSchema<UserForRegistration>;
-  defaultValues: UserForRegistration;
+  defaultValues?: UserForRegistration;
   onSuccess?: (user: User) => void;
 };
 
